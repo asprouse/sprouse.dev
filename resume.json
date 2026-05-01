@@ -6,9 +6,175 @@
         "location": {
             "city": "Brooklyn",
             "state": "NY"
+        },
+        "links": {
+            "website": "https://andrew.sprou.se",
+            "linkedin": "https://www.linkedin.com/in/andrewsprouse-941b611a",
+            "github": "https://github.com/asprouse"
         }
     },
+    "summary": "Engineering leader and co-founder with two decades of experience shipping production software across media, agency, and SaaS. Builder at heart — most comfortable as a player-coach who designs systems, writes the hard code, and grows the team that takes it the rest of the way. Currently focused on AI agent infrastructure: schemas, GraphQL meshes, and the runtime plumbing that turns business data into agents you can trust.",
     "experience": [
+        {
+            "company": "TakeShape",
+            "title": "Co-Founder & CTO",
+            "location": {
+                "city": "Brooklyn",
+                "state": "NY"
+            },
+            "dateRange": {
+                "from": "2018-10",
+                "to": null
+            },
+            "description": "Co-founded TakeShape (Techstars 2019) and have served as CTO and lead engineer through the company's evolution from a GraphQL-based headless CMS, to a GraphQL API mesh, to a hosted AI agent platform. Operate as a player-coach: hands-on individual contributor while also owning architecture, hiring, and product direction across a team that scaled to ten and now runs lean at four. Believe the schema is the missing piece for AI applications — controlling an agent's access to a business's data is paramount, and a single artifact that defines data model, API, and agents is how you get there.",
+            "projects": [
+                {
+                    "description": "Designed the TakeShape schema language — a JSON-based DSL that combines concepts from JSON Schema, OpenAPI, and GraphQL into a single artifact that defines a customer's data model, REST and GraphQL APIs, and AI agents. Customers model their domain once and get an indexed, searchable GraphQL mesh and hosted agent endpoints out of the box. The schema is the throughline that ties every product generation together.",
+                    "technologies": [
+                        "typescript",
+                        "graphql",
+                        "json-schema",
+                        "openapi"
+                    ]
+                },
+                {
+                    "description": "Hands-on designed and built TakeShape's agent framework and runtime — a fully hosted, state-machine-based agent platform with sessions, threads, conversation history, a chat preview UI, and hosted agent endpoints exposed as both GraphQL and REST. Tools are authored as GraphQL queries against the customer's mesh and attached directly to agents, eliminating the bespoke glue most agent frameworks require and ensuring tools never drift from the schema that defines them.",
+                    "technologies": [
+                        "typescript",
+                        "graphql",
+                        "vercel-ai-sdk",
+                        "anthropic",
+                        "openai",
+                        "google-ai",
+                        "aws-bedrock",
+                        "azure-openai",
+                        "arize"
+                    ]
+                },
+                {
+                    "description": "Partnered with Valvoline to build a production agent that verifies vehicle fitment data before suggesting parts — combining product, inventory, and vehicle data from multiple sources into a single grounded reasoning step. Also delivered B2B workflow automation for a leading e-commerce platform, automating purchase ordering and related multi-step flows.",
+                    "technologies": [
+                        "graphql",
+                        "typescript",
+                        "anthropic",
+                        "openai"
+                    ]
+                },
+                {
+                    "description": "Led TakeShape's 2019 pivot from a GraphQL-driven static site generator to a GraphQL API mesh. The mesh combines third-party REST and GraphQL APIs with the customer's own data into a single queryable graph, with built-in indexing and search across the full mesh. This primitive became the foundation for everything that followed, including the agent platform's tool layer.",
+                    "technologies": [
+                        "graphql",
+                        "typescript",
+                        "elasticsearch",
+                        "dynamodb",
+                        "redis"
+                    ]
+                },
+                {
+                    "description": "Architected TakeShape's serverless-everywhere infrastructure. From day one the goal was to run fully on AWS Lambda with TypeScript end-to-end, sharing code across frontend and backend. Wrote and open-sourced the first Serverless Framework webpack plugin (<a href=\"https://github.com/asprouse/serverless-webpack-plugin\">serverless-webpack-plugin</a>) to make this practical when no equivalent tooling existed.",
+                    "technologies": [
+                        "typescript",
+                        "aws-lambda",
+                        "serverless-framework",
+                        "aws-cdk",
+                        "sst",
+                        "pulumi"
+                    ]
+                },
+                {
+                    "description": "Released Penny in 2022 — a Next.js-based e-commerce starter kit that combined Shopify with half a dozen other services through the TakeShape mesh, demonstrating how a few hundred lines of GraphQL could replace what was traditionally thousands of lines of integration code.",
+                    "technologies": [
+                        "next-js",
+                        "react",
+                        "graphql",
+                        "typescript",
+                        "shopify"
+                    ]
+                },
+                {
+                    "description": "Started life as a headless CMS and GraphQL-driven static site generator after spinning out of Ronik in 2018, debuting at the inaugural JAMstack Conf in San Francisco. The TakeShape schema would auto-generate a GraphQL API from a visual model; templates and queries would compile to a static site deployable to Netlify or S3 — a first-of-its-kind GraphQL-driven SSG.",
+                    "technologies": [
+                        "graphql",
+                        "react",
+                        "typescript",
+                        "netlify",
+                        "s3"
+                    ]
+                }
+            ]
+        },
+        {
+            "company": "Ronik",
+            "title": "Director of Technology",
+            "location": {
+                "city": "Brooklyn",
+                "state": "NY"
+            },
+            "dateRange": {
+                "from": "2016-07",
+                "to": "2018-09"
+            },
+            "description": "Returned to Ronik after Fair Tread to incubate the API-first headless CMS concept that would become TakeShape, using client work as the proving ground. The thesis: a content platform should be defined by a schema that auto-generates a GraphQL API. The technology built during this period spun out as TakeShape in October 2018.",
+            "projects": [
+                {
+                    "description": "Led technology across a portfolio of environmentally and editorially focused client projects, including work for the Leonardo DiCaprio Fund and <a href=\"https://massivesci.com\">Massive Science</a>, an independent science journalism publication. These projects shipped on the early TakeShape codebase and validated the headless-CMS-with-GraphQL approach against real-world editorial and content workflows before the broader JAMstack ecosystem standardized on the pattern.",
+                    "technologies": [
+                        "react",
+                        "next-js",
+                        "graphql",
+                        "typescript",
+                        "aws-lambda",
+                        "serverless-framework"
+                    ]
+                },
+                {
+                    "description": "Architected the prototype of what became TakeShape: a JSON-Schema-based content modeling tool, an automatically generated GraphQL API, and a static site generator that produced sites from GraphQL queries and templates. The agency's client work doubled as the validation harness — every project either confirmed an assumption or surfaced a gap that drove the next iteration of the platform.",
+                    "technologies": [
+                        "graphql",
+                        "json-schema",
+                        "typescript",
+                        "react",
+                        "aws-lambda",
+                        "s3"
+                    ]
+                }
+            ]
+        },
+        {
+            "company": "Fair Tread",
+            "title": "Co-Founder & CTO",
+            "location": {
+                "city": "New York",
+                "state": "NY"
+            },
+            "dateRange": {
+                "from": "2015-07",
+                "to": "2016-07"
+            },
+            "description": "Co-founded Fair Tread with CEO Matt Minkins (former CTO of Fast Company; web mail pioneer) to build an HTTP 402-based content monetization standard — nearly a decade before agentic micropayments and the x402 spec made the category a mainstream conversation. Three-person team: CEO, CTO, and business development. This is also where I learned AWS Lambda and serverless infrastructure, foundations that carried directly into Ronik and TakeShape.",
+            "projects": [
+                {
+                    "description": "Designed and built Fair Tread's payment gateway: a standardized HTTP 402-based payment protocol paired with anti-adblock JavaScript that hooked into a custom Nginx and OpenResty proxy. The system blocked adblockers at the HTTP level — robust, but pre-Lambda@Edge it required publisher infrastructure changes that proved a hard sell. Began a less-invasive Fastly VCL integration before the company wound down.",
+                    "technologies": [
+                        "nginx",
+                        "openresty",
+                        "lua",
+                        "javascript",
+                        "http-402",
+                        "fastly-vcl"
+                    ]
+                },
+                {
+                    "description": "Built <a href=\"https://web.archive.org/web/20160323002156/https://www.atri.me/\">Atri.me</a> (<a href=\"https://news.ycombinator.com/item?id=11211752\">Hacker News</a>) to drive consumer-side demand for the Fair Tread protocol. A browser extension tracked users' web browsing and let them split a monthly budget across the sites they actually used; identifying request headers let participating sites detect Atri users and respond — for example, by disabling ads for paying readers. The 90-day experiment was structured to leave a pool of unclaimed funds that would incentivize publishers to integrate Fair Tread directly.",
+                    "technologies": [
+                        "javascript",
+                        "browser-extensions",
+                        "node-js",
+                        "aws-lambda"
+                    ]
+                }
+            ]
+        },
         {
             "company": "Ronik Design",
             "title": "Director of Technology",
@@ -20,10 +186,10 @@
                 "from": "2013-09",
                 "to": "2014-11"
             },
-            "description": "",
+            "description": "First stint at Ronik. This is where the API-first and static-site-generation opinions that later defined Fair Tread and TakeShape started forming.",
             "projects": [
                 {
-                    "description": "Led the development of <a href=\"http://http://www.walkforclimate.com\">walkforclimate.com</a> a social campaign to raise awareness for climate change. The site features a randomized map of user-submitted videos can be shared via social networks. To handle the problem of playing so many videos without crashing or terrible performance frame rate based throttling was implemented. In addition to throttling videos waiting to be played are prioritized by visual impact to enhance the effect. Due to large amount of DOM manipulation required by the grid ReactJS was a natural choice.",
+                    "description": "Led the development of <a href=\"http://www.walkforclimate.com\">walkforclimate.com</a>, a social campaign to raise awareness for climate change. The site features a randomized map of user-submitted videos that can be shared via social networks. To handle the problem of playing many videos without crashing or terrible performance, frame-rate-based throttling was implemented; videos waiting to be played were prioritized by visual impact to enhance the effect. Due to the large amount of DOM manipulation required by the grid, ReactJS was a natural choice.",
                     "technologies": [
                         "html5-video-api",
                         "sass",
@@ -36,7 +202,7 @@
                     ]
                 },
                 {
-                    "description": "Led the development of <a href=\"http://www.luxesource.com/\">luxesource.org</a> a single page app-like experience for viewing architecture and design images. The foundation of the site is a robust RESTful API implemented with Django REST Framework. Django is used to serve minimal SEO optimized HTML while all of the UI is rendered using Marionette and Dust.",
+                    "description": "Led the development of <a href=\"http://www.luxesource.com/\">luxesource.org</a>, a single-page app-like experience for viewing architecture and design images. The foundation of the site is a robust RESTful API implemented with Django REST Framework. Django served minimal SEO-optimized HTML while all of the UI was rendered using Marionette and Dust.",
                     "technologies": [
                         "django",
                         "postgresql",
@@ -60,7 +226,7 @@
                     ]
                 },
                 {
-                    "description": "Led the development of <a href=\"http://www.unlockiran.org/\">unlockiran.org</a> a rich multimedia campaign to bring public awareness to political prisoners in Iran.",
+                    "description": "Led the development of <a href=\"http://www.unlockiran.org/\">unlockiran.org</a>, a rich multimedia campaign to bring public awareness to political prisoners in Iran.",
                     "technologies": [
                         "html",
                         "sass",
@@ -91,7 +257,7 @@
             "description": "",
             "projects": [
                 {
-                    "description": "Developed a single page web client to aid in automatic video annotation. The client was responsible for fixing annotations that were missed or misplaced by the computer vision algorithm. Bootstrap and EaselJS were used to create a Photoshop-esque annotation experience with auto-scaling and pan/zoom functionality.",
+                    "description": "Developed a single-page web client to aid in automatic video annotation. The client was responsible for fixing annotations that were missed or misplaced by the computer vision algorithm. Bootstrap and EaselJS were used to create a Photoshop-esque annotation experience with auto-scaling and pan/zoom functionality.",
                     "technologies": [
                         "html",
                         "css",
@@ -118,13 +284,12 @@
             },
             "dateRange": {
                 "from": "2010-05",
-                "to": "2013-06"
-
+                "to": "2013-05"
             },
-            "description": "",
+            "description": "Joined as a Software Engineer and progressed through Senior Developer to Lead Developer over three years, owning increasingly large portions of the publishing platform.",
             "projects": [
                 {
-                    "description": "Led the \"Newsweek Global\" project, which was an effort to relaunch Newsweek magazine as a purpose built online magazine. The project was developed on an accelerated schedule without sacrificing features or quality. This was made possible by leveraging the",
+                    "description": "Led the \"Newsweek Global\" project, an effort to relaunch Newsweek magazine as a purpose-built online magazine. The project was developed on an accelerated schedule without sacrificing features or quality, made possible by leveraging the in-house View API and Dust.js templating module described below.",
                     "technologies": [
                         "html",
                         "css",
@@ -153,7 +318,7 @@
                     ]
                 },
                 {
-                    "description": "Led the thedailybeast.com gallery redesign. The <a href=\"http://www.thedailybeast.com/galleries/2014/01/02/photo-of-the-day.html\">new gallery design</a> places an emphasis on large high quality images, with snappy client-side and intelligent recirculation. Isomorphic Dust.js templating replaced traditional JSP to increase responsiveness and ease development. To optimize load timesImages were loaded dynamically based on screen size. Each gallery was indexed in Solr, this index powers the each gallery's recirculation components.",
+                    "description": "Led the thedailybeast.com gallery redesign. The <a href=\"http://www.thedailybeast.com/galleries/2014/01/02/photo-of-the-day.html\">new gallery design</a> placed an emphasis on large high-quality images, with snappy client-side rendering and intelligent recirculation. Isomorphic Dust.js templating replaced traditional JSP to increase responsiveness and ease development. To optimize load times, images were loaded dynamically based on screen size. Each gallery was indexed in Solr; this index powered each gallery's recirculation components.",
                     "technologies": [
                         "java",
                         "html",
@@ -178,7 +343,7 @@
                     ]
                 },
                 {
-                    "description": "Developed the Newsweek/Daily Beast Dust.js Module. This module allows for isomorphic javascript templating i.e. the same template can be utilized on both the server and client. A custom Rhino-powered service was written to compile and render Dust.js templates on the server. The compiled templates were then minified and served to the client for client-side rendering.",
+                    "description": "Developed the Newsweek/Daily Beast Dust.js Module, allowing isomorphic JavaScript templating — the same template could be used on both the server and client. A custom Rhino-powered service was written to compile and render Dust.js templates on the server. The compiled templates were then minified and served to the client for client-side rendering.",
                     "technologies": [
                         "java",
                         "dust-js",
@@ -188,7 +353,7 @@
                     ]
                 },
                 {
-                    "description": "Improved Newsweek/Daily Beast image processing servlet. Added advanced features such as dynamic sizing and custom cropping.",
+                    "description": "Improved the Newsweek/Daily Beast image processing servlet. Added advanced features such as dynamic sizing and custom cropping.",
                     "technologies": [
                         "sling",
                         "jcr",
@@ -197,7 +362,7 @@
                     ]
                 },
                 {
-                    "description": "thedailybeast.com content API",
+                    "description": "thedailybeast.com content API.",
                     "technologies": [
                         "java",
                         "gson",
@@ -206,7 +371,7 @@
                     ]
                 },
                 {
-                    "description": "Newsweek/The Daily Beast Page List Service",
+                    "description": "Newsweek/The Daily Beast Page List Service.",
                     "technologies": [
                         "java",
                         "html",
@@ -217,7 +382,7 @@
                     ]
                 },
                 {
-                    "description": "Developed the Newsweek/Daily Beast Indexing Module. This module is responsible for listening for content changes in the CMS and then normalizing and indexing that content into a separate Solr index.",
+                    "description": "Developed the Newsweek/Daily Beast Indexing Module, responsible for listening for content changes in the CMS and then normalizing and indexing that content into a separate Solr index.",
                     "technologies": [
                         "java",
                         "jcr",
@@ -228,7 +393,7 @@
                     ]
                 },
                 {
-                    "description": "Was part of the small team to convert thedailybeast.com from a custom Ruby based CMS to a ground-up CQ 5.4 implementation.",
+                    "description": "Was part of the small team that converted thedailybeast.com from a custom Ruby-based CMS to a ground-up CQ 5.4 implementation.",
                     "technologies": [
                         "java",
                         "html",
@@ -239,7 +404,7 @@
                     ]
                 },
                 {
-                    "description": "Developed Newsweek/Daily Beast Syndication Module which powers all of the RSS, ATOM and custom vendor feeds.",
+                    "description": "Developed the Newsweek/Daily Beast Syndication Module, which powered all of the RSS, ATOM, and custom vendor feeds.",
                     "technologies": [
                         "rss",
                         "atom",
@@ -265,7 +430,7 @@
             "description": "",
             "projects": [
                 {
-                    "description": "Implemented a complete frontend reimplementation of a video search engine and metadata-rich video player which was used for \"Open Source\" intelligence gathering. This product was the The interface allowed the search and playback of semi-realtime data captured from broadcast news and was the research version of Autonomy's <a href=\"http://www.autonomy.com/content/Solutions/video-broadcast-monitoring/index.en.html\">Broadcast Monitoring</a> software. The video player provided syncrhonized transcript and keyframe highlighting as well as the ability to download screencaps and export video clips based on user selected time ranges. RESTful JSON and XML APIs were built to feed the highly dynamic UI via AJAX.",
+                    "description": "Implemented a complete frontend reimplementation of a video search engine and metadata-rich video player used for open-source intelligence gathering. The interface allowed search and playback of semi-realtime data captured from broadcast news and was the research version of Autonomy's <a href=\"http://www.autonomy.com/content/Solutions/video-broadcast-monitoring/index.en.html\">Broadcast Monitoring</a> software. The video player provided synchronized transcript and keyframe highlighting, plus the ability to download screencaps and export video clips based on user-selected time ranges. RESTful JSON and XML APIs were built to feed the highly dynamic UI via AJAX.",
                     "technologies": [
                         "html",
                         "css",
@@ -287,7 +452,7 @@
                     ]
                 },
                 {
-                    "description": "Designed and implemented the frontend and backend of a new collaborative \"Workspace\" to allow users to comment on and annotate video and other documents. This user content is indexed (Autonomy IDOL) and then could be leveraged for searching.",
+                    "description": "Designed and implemented the frontend and backend of a new collaborative \"Workspace\" to allow users to comment on and annotate video and other documents. This user content was indexed (Autonomy IDOL) and then could be leveraged for searching.",
                     "technologies": [
                         "html",
                         "css",
@@ -301,7 +466,7 @@
                     ]
                 },
                 {
-                    "description": "Completely internationalized our Video Search/Player product. This involved the design and implementation a custom i18n framework which supported Unicode and right-to-left layouts (Arabic, Hebrew, etc). Once the framework was built, the all strings were refactored out of the code into resource bundles and sent out for Arabic translation.",
+                    "description": "Completely internationalized the Video Search/Player product. This involved the design and implementation of a custom i18n framework that supported Unicode and right-to-left layouts (Arabic, Hebrew, etc.). Once the framework was built, all strings were refactored out of the code into resource bundles and sent out for Arabic translation.",
                     "technologies": [
                         "java",
                         "resource-bundles",
@@ -310,7 +475,7 @@
                     ]
                 },
                 {
-                    "description": "Resposible for maintaining a server rack of 10+ machines running the complete stack for our video search/player product. These machines captured, encoded, stored, streamed satellite video, performed ASR and MT on the streaming video, stored this structured data in a relational database, indexed it for search and provided a webserver to host the web-based interface.",
+                    "description": "Responsible for maintaining a server rack of 10+ machines running the complete stack for the video search/player product. These machines captured, encoded, stored, and streamed satellite video; performed ASR and MT on the streaming video; stored the structured data in a relational database; indexed it for search; and provided a web server to host the web-based interface.",
                     "technologies": [
                         "windows-server-2003",
                         "glassfish",
@@ -322,7 +487,7 @@
                     ]
                 },
                 {
-                    "description": "Designed and implemented a web crawler to scrape large amounts (>1GB) of data for Persian language model training. The crawler could be configured with domain specific scraping/normalization rules to deal with the variation in document structure and broken markup.",
+                    "description": "Designed and implemented a web crawler to scrape large amounts (>1GB) of data for Persian language model training. The crawler could be configured with domain-specific scraping/normalization rules to deal with the variation in document structure and broken markup.",
                     "technologies": [
                         "perl",
                         "wget",
@@ -346,7 +511,7 @@
             "description": "",
             "projects": [
                 {
-                    "description": "Designed and implemented an internal web application to collect and display <a href=\"http://www.ll.mit.edu/HPECchallenge/\">HPEC Challenge</a> benchmark data. The application was prototyped in Ruby on Rails and then ported to PHP Symfony (due to archaic server resource constraints). Both versions of the application featured a custom ImageMagick based graphing component for charting kiviat diagrams.",
+                    "description": "Designed and implemented an internal web application to collect and display <a href=\"http://www.ll.mit.edu/HPECchallenge/\">HPEC Challenge</a> benchmark data. The application was prototyped in Ruby on Rails and then ported to PHP Symfony (due to archaic server resource constraints). Both versions of the application featured a custom ImageMagick-based graphing component for charting kiviat diagrams.",
                     "technologies": [
                         "ruby",
                         "rails",
@@ -369,10 +534,10 @@
                 "from": "2005-01",
                 "to": "2005-06"
             },
-            "description": "Not the most glamorous gig, but it's worth noting because this is where I learned the art/science of spec writing and issue reporting.",
+            "description": "Not the most glamorous gig, but it's worth noting because this is where I learned the art and science of spec writing and issue reporting.",
             "projects": [
                 {
-                    "description": "Wrote and executed test cases for the Bose Wave Music System to verify the system met the functional specification",
+                    "description": "Wrote and executed test cases for the Bose Wave Music System to verify the system met the functional specification.",
                     "technologies": [
                         "bugzilla",
                         "blood",
@@ -393,10 +558,10 @@
                 "from": "2004-05",
                 "to": "2004-08"
             },
-            "description": "Hello World, web development, my first time writing code professionally",
+            "description": "Hello world — web development, my first time writing code professionally.",
             "projects": [
                 {
-                    "description": "Constructed a web application to track the maintenance activity of Pfizer's database admin team. The application was written using the latest DHTML tricks and the lesser-known <a href=\"http://sourceforge.net/projects/wingnut/\">WingNut</a> framework and Oracles as the backend.",
+                    "description": "Constructed a web application to track the maintenance activity of Pfizer's database admin team. The application was written using the latest DHTML tricks and the lesser-known <a href=\"http://sourceforge.net/projects/wingnut/\">WingNut</a> framework with Oracle as the backend.",
                     "technologies": [
                         "html",
                         "dhtml",
@@ -412,46 +577,67 @@
     ],
     "knowledge": {
         "languages": [
+            "TypeScript",
+            "JavaScript",
             "Java",
-            "Javascript",
+            "SQL",
+            "GraphQL",
             "HTML",
             "CSS",
-            "SQL",
-            "XML",
-            "UML",
-            "Scheme",
-            "Ruby",
-            "PHP",
-            "Perl"
+            "Python",
+            "Lua"
         ],
-        "technologies": [
+        "frameworks": [
+            "React",
+            "Next.js",
+            "Tailwind CSS",
+            "Zustand",
+            "Monaco",
+            "Vercel AI SDK"
+        ],
+        "platforms": [
+            "AWS Lambda",
+            "DynamoDB",
+            "OpenSearch / Elasticsearch",
+            "Redis",
+            "S3",
+            "SQS / SNS",
+            "Athena",
+            "KMS",
+            "Stripe"
+        ],
+        "ai": [
+            "OpenAI",
+            "Anthropic",
+            "Google AI",
+            "AWS Bedrock",
+            "Azure OpenAI",
+            "Vercel AI SDK",
+            "Arize"
+        ],
+        "infrastructure": [
+            "AWS CDK",
+            "CloudFormation",
+            "SST",
+            "Pulumi",
+            "Serverless Framework",
+            "OpenTelemetry",
+            "X-Ray",
+            "Sentry"
+        ],
+        "concepts": [
+            "GraphQL",
+            "REST",
+            "JSON Schema",
+            "OpenAPI",
             "HTTP",
             "AJAX",
-            "REST",
-            "Apache Struts",
             "JSON",
-            "JDBC",
-            "JMS",
-            "JUnit",
-            "TestNG",
-            "Selenium",
-            "XPATH",
-            "XSLT",
-            "Rails",
-            "Active Record",
-            "Symfony"
-        ],
-        "applications": [
-            "Intellij IDEA",
-            "Eclipse",
-            "Subversion",
-            "Ant",
-            "Apache httpd",
-            "Glassfish",
-            "MySQL",
-            "Saxon",
-            "Microsoft Office",
-            "Adobe Creative Suite"
+            "Server-Sent Events",
+            "Agent runtimes",
+            "API mesh",
+            "Headless CMS",
+            "Static site generation"
         ]
     },
     "education": [
@@ -483,15 +669,167 @@
             ]
         }
     ],
+    "openSource": [
+        {
+            "name": "serverless-webpack-plugin",
+            "url": "https://github.com/asprouse/serverless-webpack-plugin",
+            "description": "The first webpack plugin for the Serverless Framework, written to make TypeScript-everywhere TakeShape practical when no equivalent tooling existed."
+        }
+    ],
     "technologies": {
+        "typescript": {
+            "name": "TypeScript",
+            "url": "https://www.typescriptlang.org/",
+            "description": ""
+        },
         "react": {
             "name": "React",
-            "url": "http://facebook.github.io/react/",
+            "url": "https://react.dev/",
+            "description": ""
+        },
+        "next-js": {
+            "name": "Next.js",
+            "url": "https://nextjs.org/",
+            "description": ""
+        },
+        "node-js": {
+            "name": "Node.js",
+            "url": "https://nodejs.org/",
+            "description": ""
+        },
+        "graphql": {
+            "name": "GraphQL",
+            "url": "https://graphql.org/",
+            "description": ""
+        },
+        "json-schema": {
+            "name": "JSON Schema",
+            "url": "https://json-schema.org/",
+            "description": ""
+        },
+        "openapi": {
+            "name": "OpenAPI",
+            "url": "https://www.openapis.org/",
+            "description": ""
+        },
+        "aws-lambda": {
+            "name": "AWS Lambda",
+            "url": "https://aws.amazon.com/lambda/",
+            "description": ""
+        },
+        "aws-cdk": {
+            "name": "AWS CDK",
+            "url": "https://aws.amazon.com/cdk/",
+            "description": ""
+        },
+        "sst": {
+            "name": "SST",
+            "url": "https://sst.dev/",
+            "description": ""
+        },
+        "pulumi": {
+            "name": "Pulumi",
+            "url": "https://www.pulumi.com/",
+            "description": ""
+        },
+        "serverless-framework": {
+            "name": "Serverless Framework",
+            "url": "https://www.serverless.com/",
+            "description": ""
+        },
+        "dynamodb": {
+            "name": "DynamoDB",
+            "url": "https://aws.amazon.com/dynamodb/",
+            "description": ""
+        },
+        "elasticsearch": {
+            "name": "Elasticsearch / OpenSearch",
+            "url": "https://opensearch.org/",
+            "description": ""
+        },
+        "s3": {
+            "name": "Amazon S3",
+            "url": "https://aws.amazon.com/s3/",
+            "description": ""
+        },
+        "vercel-ai-sdk": {
+            "name": "Vercel AI SDK",
+            "url": "https://ai-sdk.dev/",
+            "description": ""
+        },
+        "anthropic": {
+            "name": "Anthropic",
+            "url": "https://www.anthropic.com/",
+            "description": ""
+        },
+        "openai": {
+            "name": "OpenAI",
+            "url": "https://openai.com/",
+            "description": ""
+        },
+        "google-ai": {
+            "name": "Google AI",
+            "url": "https://ai.google/",
+            "description": ""
+        },
+        "aws-bedrock": {
+            "name": "AWS Bedrock",
+            "url": "https://aws.amazon.com/bedrock/",
+            "description": ""
+        },
+        "azure-openai": {
+            "name": "Azure OpenAI",
+            "url": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+            "description": ""
+        },
+        "arize": {
+            "name": "Arize",
+            "url": "https://arize.com/",
+            "description": ""
+        },
+        "shopify": {
+            "name": "Shopify",
+            "url": "https://www.shopify.com/",
+            "description": ""
+        },
+        "netlify": {
+            "name": "Netlify",
+            "url": "https://www.netlify.com/",
+            "description": ""
+        },
+        "nginx": {
+            "name": "Nginx",
+            "url": "https://nginx.org/",
+            "description": ""
+        },
+        "openresty": {
+            "name": "OpenResty",
+            "url": "https://openresty.org/",
+            "description": ""
+        },
+        "lua": {
+            "name": "Lua",
+            "url": "https://www.lua.org/",
+            "description": ""
+        },
+        "fastly-vcl": {
+            "name": "Fastly VCL",
+            "url": "https://www.fastly.com/documentation/reference/vcl/",
+            "description": ""
+        },
+        "browser-extensions": {
+            "name": "Browser Extensions",
+            "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions",
+            "description": ""
+        },
+        "http-402": {
+            "name": "HTTP 402 Payment Required",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402",
             "description": ""
         },
         "jsx": {
             "name": "JSX",
-            "url": "http://facebook.github.io/react/docs/jsx-in-depth.html",
+            "url": "https://react.dev/learn/writing-markup-with-jsx",
             "description": ""
         },
         "django": {
@@ -501,32 +839,32 @@
         },
         "django-rest": {
             "name": "Django REST Framework",
-            "url": "http://www.django-rest-framework.org/",
+            "url": "https://www.django-rest-framework.org/",
             "description": ""
         },
         "postgresql": {
             "name": "PostgreSQL",
-            "url": "http://www.postgresql.org/",
+            "url": "https://www.postgresql.org/",
             "description": ""
         },
         "south": {
             "name": "South",
-            "url": "http://south.aeracode.org/",
+            "url": "https://south.readthedocs.io/",
             "description": ""
         },
         "haystack": {
             "name": "Haystack",
-            "url": "http://haystacksearch.org/",
+            "url": "https://django-haystack.readthedocs.io/",
             "description": ""
         },
         "rqueue": {
             "name": "Python RQ",
-            "url": "http://python-rq.org/",
+            "url": "https://python-rq.org/",
             "description": ""
         },
         "redis": {
             "name": "Redis",
-            "url": "http://redis.io/",
+            "url": "https://redis.io/",
             "description": ""
         },
         "vagrant": {
@@ -536,17 +874,17 @@
         },
         "sass": {
             "name": "SASS",
-            "url": "http://sass-lang.com/",
+            "url": "https://sass-lang.com/",
             "description": ""
         },
         "backbone": {
             "name": "Backbone",
-            "url": "http://backbonejs.org/",
+            "url": "https://backbonejs.org/",
             "description": ""
         },
         "backbone-marionette": {
             "name": "Backbone Marionette",
-            "url": "http://marionettejs.com/",
+            "url": "https://marionettejs.com/",
             "description": ""
         },
         "travis-ci": {
@@ -556,7 +894,7 @@
         },
         "webpack": {
             "name": "Webpack",
-            "url": "http://webpack.github.io/",
+            "url": "https://webpack.js.org/",
             "description": ""
         },
         "commonjs": {
@@ -566,12 +904,12 @@
         },
         "grunt": {
             "name": "Grunt",
-            "url": "http://gruntjs.com/",
+            "url": "https://gruntjs.com/",
             "description": ""
         },
         "easel-js": {
             "name": "EaselJS",
-            "url": "http://www.createjs.com/#!/EaselJS",
+            "url": "https://createjs.com/easeljs",
             "description": ""
         },
         "canvas": {
@@ -581,37 +919,37 @@
         },
         "html": {
             "name": "HTML",
-            "url": "http://en.wikipedia.org/wiki/HTML",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
             "description": ""
         },
         "css": {
             "name": "CSS",
-            "url": "http://en.wikipedia.org/wiki/Cascading_Style_Sheets",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
             "description": ""
         },
         "jquery": {
             "name": "jQuery",
-            "url": "http://jquery.com/",
+            "url": "https://jquery.com/",
             "description": ""
         },
         "json": {
             "name": "JSON",
-            "url": "http://www.json.org/",
+            "url": "https://www.json.org/",
             "description": ""
         },
         "dust-js": {
             "name": "Dust.js",
-            "url": "http://linkedin.github.io/dustjs/",
+            "url": "https://www.dustjs.com/",
             "description": ""
         },
         "moment-js": {
             "name": "moment.js",
-            "url": "http://momentjs.com/",
+            "url": "https://momentjs.com/",
             "description": ""
         },
         "moment-timezone-js": {
             "name": "moment-timezone.js",
-            "url": "http://momentjs.com/timezone/",
+            "url": "https://momentjs.com/timezone/",
             "description": ""
         },
         "nwdb-view-api": {
@@ -626,27 +964,32 @@
         },
         "adobe-cq": {
             "name": "Adobe CQ",
-            "url": "http://www.adobe.com/sea/products/cq.html",
+            "url": "https://business.adobe.com/products/experience-manager/sites/aem-sites.html",
             "description": ""
         },
         "sling": {
-            "name": "Sling",
-            "url": "http://sling.apache.org/",
+            "name": "Apache Sling",
+            "url": "https://sling.apache.org/",
             "description": ""
         },
         "jcr": {
             "name": "JCR",
-            "url": "http://en.wikipedia.org/wiki/Content_repository_API_for_Java",
+            "url": "https://en.wikipedia.org/wiki/Content_repository_API_for_Java",
             "description": ""
         },
         "java": {
             "name": "Java",
-            "url": "https://www.java.com/en/",
+            "url": "https://www.java.com/",
+            "description": ""
+        },
+        "javascript": {
+            "name": "JavaScript",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
             "description": ""
         },
         "autonomy-idol": {
             "name": "Autonomy IDOL",
-            "url": "http://www.autonomy.com/products/idol",
+            "url": "",
             "description": ""
         },
         "nwdb-dust-js-module": {
@@ -656,12 +999,12 @@
         },
         "ajax": {
             "name": "AJAX",
-            "url": "http://en.wikipedia.org/wiki/Ajax_%28programming%29",
+            "url": "https://en.wikipedia.org/wiki/Ajax_(programming)",
             "description": ""
         },
         "gson": {
             "name": "Gson",
-            "url": "https://code.google.com/p/google-gson/",
+            "url": "https://github.com/google/gson",
             "description": ""
         },
         "rhino": {
@@ -671,42 +1014,42 @@
         },
         "junit": {
             "name": "JUnit",
-            "url": "http://junit.org/",
+            "url": "https://junit.org/",
             "description": ""
         },
         "osgi": {
             "name": "OSGi",
-            "url": "http://www.osgi.org/Main/HomePage",
+            "url": "https://www.osgi.org/",
             "description": ""
         },
         "solr": {
-            "name": "Solr",
-            "url": "http://lucene.apache.org/solr/",
+            "name": "Apache Solr",
+            "url": "https://solr.apache.org/",
             "description": ""
         },
         "rss": {
             "name": "RSS",
-            "url": "http://en.wikipedia.org/wiki/RSS",
+            "url": "https://en.wikipedia.org/wiki/RSS",
             "description": ""
         },
         "atom": {
             "name": "ATOM",
-            "url": "http://en.wikipedia.org/wiki/Atom_(standard)",
+            "url": "https://en.wikipedia.org/wiki/Atom_(web_standard)",
             "description": ""
         },
         "rome": {
             "name": "Rome",
-            "url": "http://rometools.github.io/rome/",
+            "url": "https://rometools.github.io/rome/",
             "description": ""
         },
         "xml": {
             "name": "XML",
-            "url": "http://en.wikipedia.org/wiki/XML",
+            "url": "https://en.wikipedia.org/wiki/XML",
             "description": ""
         },
         "html5-video-api": {
             "name": "HTML5 Video API",
-            "url": "http://www.w3.org/2010/05/video/mediaevents.html",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement",
             "description": ""
         },
         "windows-media-player-js-api": {
@@ -715,43 +1058,43 @@
             "description": ""
         },
         "struts": {
-            "name": "Struts",
+            "name": "Apache Struts",
             "url": "https://struts.apache.org/",
             "description": ""
         },
         "rest": {
             "name": "REST",
-            "url": "http://en.wikipedia.org/wiki/Representational_state_transfer",
+            "url": "https://en.wikipedia.org/wiki/Representational_state_transfer",
             "description": ""
         },
         "jms": {
             "name": "JMS",
-            "url": "http://en.wikipedia.org/wiki/Java_Message_Service",
+            "url": "https://en.wikipedia.org/wiki/Java_Message_Service",
             "description": ""
         },
         "mysql": {
             "name": "MySQL",
-            "url": "http://www.mysql.com/",
+            "url": "https://www.mysql.com/",
             "description": ""
         },
         "resource-bundles": {
             "name": "Java Resource Bundles",
-            "url": "http://en.wikipedia.org/wiki/Java_resource_bundle",
+            "url": "https://en.wikipedia.org/wiki/Java_resource_bundle",
             "description": ""
         },
         "icu4j": {
             "name": "ICU4J",
-            "url": "http://site.icu-project.org/",
+            "url": "https://icu.unicode.org/",
             "description": ""
         },
         "windows-server-2003": {
             "name": "Windows Server 2003",
-            "url": "http://en.wikipedia.org/wiki/Windows_Server_2003",
+            "url": "https://en.wikipedia.org/wiki/Windows_Server_2003",
             "description": ""
         },
         "glassfish": {
-            "name": "Glassfish",
-            "url": "https://glassfish.java.net/",
+            "name": "GlassFish",
+            "url": "https://glassfish.org/",
             "description": ""
         },
         "windows-media-server": {
@@ -761,12 +1104,12 @@
         },
         "autonomy-virage-videologger": {
             "name": "Autonomy Virage Videologger",
-            "url": "http://www.autonomy.com/offerings/information-analytics/video-surveillance",
+            "url": "",
             "description": ""
         },
         "autonomy-softsound": {
             "name": "Autonomy Softsound",
-            "url": "http://www.autonomy.com/technology/idol-the-os/video-audio-capabilities",
+            "url": "",
             "description": ""
         },
         "perl": {
@@ -780,13 +1123,13 @@
             "description": ""
         },
         "lynx": {
-            "name": "lynx",
-            "url": "http://lynx.isc.org/",
+            "name": "Lynx",
+            "url": "https://lynx.invisible-island.net/",
             "description": ""
         },
         "tidy": {
-            "name": "Tidy",
-            "url": "http://tidy.sourceforge.net/",
+            "name": "HTML Tidy",
+            "url": "https://www.html-tidy.org/",
             "description": ""
         },
         "ruby": {
@@ -795,23 +1138,23 @@
             "description": ""
         },
         "rails": {
-            "name": "Rails",
-            "url": "http://rubyonrails.org/",
+            "name": "Ruby on Rails",
+            "url": "https://rubyonrails.org/",
             "description": ""
         },
         "php": {
             "name": "PHP",
-            "url": "http://php.net/",
+            "url": "https://www.php.net/",
             "description": ""
         },
         "symfony-mvc": {
-            "name": "Symfony MVC",
-            "url": "http://symfony.com/",
+            "name": "Symfony",
+            "url": "https://symfony.com/",
             "description": ""
         },
         "imagemagick": {
             "name": "ImageMagick",
-            "url": "http://www.imagemagick.org/",
+            "url": "https://imagemagick.org/",
             "description": ""
         },
         "bugzilla": {
@@ -821,37 +1164,37 @@
         },
         "blood": {
             "name": "Blood",
-            "url": "http://en.wikipedia.org/wiki/Blood",
+            "url": "https://en.wikipedia.org/wiki/Blood",
             "description": ""
         },
         "sweat": {
             "name": "Sweat",
-            "url": "http://en.wikipedia.org/wiki/Perspiration",
+            "url": "https://en.wikipedia.org/wiki/Perspiration",
             "description": ""
         },
         "tears": {
             "name": "Tears",
-            "url": "http://en.wikipedia.org/wiki/Tears",
+            "url": "https://en.wikipedia.org/wiki/Tears",
             "description": ""
         },
         "dhtml": {
             "name": "DHTML",
-            "url": "http://en.wikipedia.org/wiki/Dynamic_HTML",
-            "description": ""
-        },
-        "javascript": {
-            "name": "Javascript",
-            "url": "http://en.wikipedia.org/wiki/JavaScript",
+            "url": "https://en.wikipedia.org/wiki/Dynamic_HTML",
             "description": ""
         },
         "oracle": {
             "name": "Oracle",
-            "url": "https://www.oracle.com/database",
+            "url": "https://www.oracle.com/database/",
             "description": ""
         },
         "wingnut": {
             "name": "WingNut",
-            "url": "http://sourceforge.net/projects/wingnut/",
+            "url": "https://sourceforge.net/projects/wingnut/",
+            "description": ""
+        },
+        "bootstrap": {
+            "name": "Bootstrap",
+            "url": "https://getbootstrap.com/",
             "description": ""
         }
     }
