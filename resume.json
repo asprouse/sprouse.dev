@@ -26,10 +26,10 @@
                 "from": "2018-10",
                 "to": null
             },
-            "description": "Co-founded TakeShape (Techstars 2019) and have served as CTO and lead engineer through the company's evolution from a GraphQL-based headless CMS, to a GraphQL API mesh, to a hosted AI agent platform. Operate as a player-coach: hands-on individual contributor while also owning architecture, hiring, and product direction across a team that scaled to ten and now runs lean at four. Believe the schema is the missing piece for AI applications — controlling an agent's access to a business's data is paramount, and a single artifact that defines data model, API, and agents is how you get there.",
+            "description": "Co-founded TakeShape (Techstars 2019) and have served as CTO and lead engineer through the company's evolution from a GraphQL-based headless CMS, to a GraphQL API mesh, to a hosted AI agent platform. Operate as a player-coach across individual contribution, architecture, hiring, and product direction. Believe the schema is the missing piece for AI applications — controlling an agent's access to a business's data is paramount, and a single artifact that defines data model, API, and agents is how you get there.",
             "projects": [
                 {
-                    "description": "Designed the TakeShape schema language — a JSON-based DSL that combines concepts from JSON Schema, OpenAPI, and GraphQL into a single artifact that defines a customer's data model, REST and GraphQL APIs, and AI agents. Customers model their domain once and get an indexed, searchable GraphQL mesh and hosted agent endpoints out of the box. The schema is the throughline that ties every product generation together.",
+                    "description": "Designed the TakeShape schema language — a JSON-based DSL with a JSON Schema-derived type system, borrowing concepts from OpenAPI and GraphQL. The schema defines a customer's data model, REST and GraphQL APIs, and AI agents in a single artifact. Customers model their domain once and get an indexed, searchable GraphQL mesh and hosted agent endpoints out of the box. The schema is the throughline that ties every product generation together.",
                     "technologies": [
                         "typescript",
                         "graphql",
@@ -38,7 +38,7 @@
                     ]
                 },
                 {
-                    "description": "Hands-on designed and built TakeShape's agent framework and runtime — a fully hosted, state-machine-based agent platform with sessions, threads, conversation history, a chat preview UI, and hosted agent endpoints exposed as both GraphQL and REST. Tools are authored as GraphQL queries against the customer's mesh and attached directly to agents, eliminating the bespoke glue most agent frameworks require and ensuring tools never drift from the schema that defines them.",
+                    "description": "Hands-on designed and built TakeShape's agent framework and runtime — a fully hosted, stateful agent platform with sessions, threads, conversation history, a chat preview UI, and hosted agent endpoints exposed as both GraphQL and REST. Tools are authored as GraphQL queries against the customer's mesh and attached directly to agents, eliminating the bespoke glue most agent frameworks require and ensuring tools never drift from the schema that defines them.",
                     "technologies": [
                         "typescript",
                         "graphql",
@@ -82,7 +82,7 @@
                     ]
                 },
                 {
-                    "description": "Released Penny in 2022 — a Next.js-based e-commerce starter kit that combined Shopify with half a dozen other services through the TakeShape mesh, demonstrating how a few hundred lines of GraphQL could replace what was traditionally thousands of lines of integration code.",
+                    "description": "Released Penny in 2022 — a Next.js-based e-commerce starter kit that combined Shopify with half a dozen other services through the TakeShape mesh. Penny showcased the developer-experience win of consolidating disparate APIs behind a single GraphQL endpoint, with TakeShape handling the cross-cutting concerns server-side — API indexing for performance, authentication, and the integration glue that typically lives scattered across an e-commerce codebase.",
                     "technologies": [
                         "next-js",
                         "react",
@@ -151,7 +151,7 @@
                 "from": "2015-07",
                 "to": "2016-07"
             },
-            "description": "Co-founded Fair Tread with CEO Matt Minkins (former CTO of Fast Company; web mail pioneer) to build an HTTP 402-based content monetization standard — nearly a decade before agentic micropayments and the x402 spec made the category a mainstream conversation. Three-person team: CEO, CTO, and business development. This is also where I learned AWS Lambda and serverless infrastructure, foundations that carried directly into Ronik and TakeShape.",
+            "description": "Co-founded Fair Tread with CEO Matt Mankins (former CTO of Fast Company; web mail pioneer) to build an HTTP 402-based content monetization standard — nearly a decade before agentic micropayments and the x402 spec made the category a mainstream conversation. Three-person team: CEO, CTO, and business development. This is also where I learned AWS Lambda and serverless infrastructure, foundations that carried directly into Ronik and TakeShape.",
             "projects": [
                 {
                     "description": "Designed and built Fair Tread's payment gateway: a standardized HTTP 402-based payment protocol paired with anti-adblock JavaScript that hooked into a custom Nginx and OpenResty proxy. The system blocked adblockers at the HTTP level — robust, but pre-Lambda@Edge it required publisher infrastructure changes that proved a hard sell. Began a less-invasive Fastly VCL integration before the company wound down.",
@@ -575,71 +575,6 @@
             ]
         }
     ],
-    "knowledge": {
-        "languages": [
-            "TypeScript",
-            "JavaScript",
-            "Java",
-            "SQL",
-            "GraphQL",
-            "HTML",
-            "CSS",
-            "Python",
-            "Lua"
-        ],
-        "frameworks": [
-            "React",
-            "Next.js",
-            "Tailwind CSS",
-            "Zustand",
-            "Monaco",
-            "Vercel AI SDK"
-        ],
-        "platforms": [
-            "AWS Lambda",
-            "DynamoDB",
-            "OpenSearch / Elasticsearch",
-            "Redis",
-            "S3",
-            "SQS / SNS",
-            "Athena",
-            "KMS",
-            "Stripe"
-        ],
-        "ai": [
-            "OpenAI",
-            "Anthropic",
-            "Google AI",
-            "AWS Bedrock",
-            "Azure OpenAI",
-            "Vercel AI SDK",
-            "Arize"
-        ],
-        "infrastructure": [
-            "AWS CDK",
-            "CloudFormation",
-            "SST",
-            "Pulumi",
-            "Serverless Framework",
-            "OpenTelemetry",
-            "X-Ray",
-            "Sentry"
-        ],
-        "concepts": [
-            "GraphQL",
-            "REST",
-            "JSON Schema",
-            "OpenAPI",
-            "HTTP",
-            "AJAX",
-            "JSON",
-            "Server-Sent Events",
-            "Agent runtimes",
-            "API mesh",
-            "Headless CMS",
-            "Static site generation"
-        ]
-    },
     "education": [
         {
             "school": "Northeastern University",
@@ -680,521 +615,625 @@
         "typescript": {
             "name": "TypeScript",
             "url": "https://www.typescriptlang.org/",
+            "category": "language",
             "description": ""
         },
         "react": {
             "name": "React",
             "url": "https://react.dev/",
+            "category": "framework",
             "description": ""
         },
         "next-js": {
             "name": "Next.js",
             "url": "https://nextjs.org/",
+            "category": "framework",
             "description": ""
         },
         "node-js": {
             "name": "Node.js",
             "url": "https://nodejs.org/",
+            "category": "platform",
             "description": ""
         },
         "graphql": {
             "name": "GraphQL",
             "url": "https://graphql.org/",
+            "category": "language",
             "description": ""
         },
         "json-schema": {
             "name": "JSON Schema",
             "url": "https://json-schema.org/",
+            "category": "protocol",
             "description": ""
         },
         "openapi": {
             "name": "OpenAPI",
             "url": "https://www.openapis.org/",
+            "category": "protocol",
             "description": ""
         },
         "aws-lambda": {
             "name": "AWS Lambda",
             "url": "https://aws.amazon.com/lambda/",
+            "category": "platform",
             "description": ""
         },
         "aws-cdk": {
             "name": "AWS CDK",
             "url": "https://aws.amazon.com/cdk/",
+            "category": "tooling",
             "description": ""
         },
         "sst": {
             "name": "SST",
             "url": "https://sst.dev/",
+            "category": "tooling",
             "description": ""
         },
         "pulumi": {
             "name": "Pulumi",
             "url": "https://www.pulumi.com/",
+            "category": "tooling",
             "description": ""
         },
         "serverless-framework": {
             "name": "Serverless Framework",
             "url": "https://www.serverless.com/",
+            "category": "tooling",
             "description": ""
         },
         "dynamodb": {
             "name": "DynamoDB",
             "url": "https://aws.amazon.com/dynamodb/",
+            "category": "platform",
             "description": ""
         },
         "elasticsearch": {
             "name": "Elasticsearch / OpenSearch",
             "url": "https://opensearch.org/",
+            "category": "platform",
             "description": ""
         },
         "s3": {
             "name": "Amazon S3",
             "url": "https://aws.amazon.com/s3/",
+            "category": "platform",
             "description": ""
         },
         "vercel-ai-sdk": {
             "name": "Vercel AI SDK",
             "url": "https://ai-sdk.dev/",
+            "category": "ai",
             "description": ""
         },
         "anthropic": {
             "name": "Anthropic",
             "url": "https://www.anthropic.com/",
+            "category": "ai",
             "description": ""
         },
         "openai": {
             "name": "OpenAI",
             "url": "https://openai.com/",
+            "category": "ai",
             "description": ""
         },
         "google-ai": {
             "name": "Google AI",
             "url": "https://ai.google/",
+            "category": "ai",
             "description": ""
         },
         "aws-bedrock": {
             "name": "AWS Bedrock",
             "url": "https://aws.amazon.com/bedrock/",
+            "category": "ai",
             "description": ""
         },
         "azure-openai": {
             "name": "Azure OpenAI",
             "url": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+            "category": "ai",
             "description": ""
         },
         "arize": {
             "name": "Arize",
             "url": "https://arize.com/",
+            "category": "ai",
             "description": ""
         },
         "shopify": {
             "name": "Shopify",
             "url": "https://www.shopify.com/",
+            "category": "platform",
             "description": ""
         },
         "netlify": {
             "name": "Netlify",
             "url": "https://www.netlify.com/",
+            "category": "platform",
             "description": ""
         },
         "nginx": {
             "name": "Nginx",
             "url": "https://nginx.org/",
+            "category": "platform",
             "description": ""
         },
         "openresty": {
             "name": "OpenResty",
             "url": "https://openresty.org/",
+            "category": "platform",
             "description": ""
         },
         "lua": {
             "name": "Lua",
             "url": "https://www.lua.org/",
+            "category": "language",
             "description": ""
         },
         "fastly-vcl": {
             "name": "Fastly VCL",
             "url": "https://www.fastly.com/documentation/reference/vcl/",
+            "category": "platform",
             "description": ""
         },
         "browser-extensions": {
             "name": "Browser Extensions",
             "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions",
+            "category": "concept",
             "description": ""
         },
         "http-402": {
             "name": "HTTP 402 Payment Required",
             "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402",
+            "category": "protocol",
             "description": ""
         },
         "jsx": {
             "name": "JSX",
             "url": "https://react.dev/learn/writing-markup-with-jsx",
+            "category": "concept",
             "description": ""
         },
         "django": {
             "name": "Django",
             "url": "https://www.djangoproject.com/",
+            "category": "framework",
             "description": ""
         },
         "django-rest": {
             "name": "Django REST Framework",
             "url": "https://www.django-rest-framework.org/",
+            "category": "framework",
             "description": ""
         },
         "postgresql": {
             "name": "PostgreSQL",
             "url": "https://www.postgresql.org/",
+            "category": "platform",
             "description": ""
         },
         "south": {
             "name": "South",
             "url": "https://south.readthedocs.io/",
+            "category": "library",
             "description": ""
         },
         "haystack": {
             "name": "Haystack",
             "url": "https://django-haystack.readthedocs.io/",
+            "category": "library",
             "description": ""
         },
         "rqueue": {
             "name": "Python RQ",
             "url": "https://python-rq.org/",
+            "category": "library",
             "description": ""
         },
         "redis": {
             "name": "Redis",
             "url": "https://redis.io/",
+            "category": "platform",
             "description": ""
         },
         "vagrant": {
             "name": "Vagrant",
             "url": "https://www.vagrantup.com/",
+            "category": "tooling",
             "description": ""
         },
         "sass": {
             "name": "SASS",
             "url": "https://sass-lang.com/",
+            "category": "language",
             "description": ""
         },
         "backbone": {
             "name": "Backbone",
             "url": "https://backbonejs.org/",
+            "category": "framework",
             "description": ""
         },
         "backbone-marionette": {
             "name": "Backbone Marionette",
             "url": "https://marionettejs.com/",
+            "category": "framework",
             "description": ""
         },
         "travis-ci": {
             "name": "Travis CI",
             "url": "https://travis-ci.com/",
+            "category": "tooling",
             "description": ""
         },
         "webpack": {
             "name": "Webpack",
             "url": "https://webpack.js.org/",
+            "category": "tooling",
             "description": ""
         },
         "commonjs": {
             "name": "CommonJS",
             "url": "http://wiki.commonjs.org/wiki/CommonJS",
+            "category": "concept",
             "description": ""
         },
         "grunt": {
             "name": "Grunt",
             "url": "https://gruntjs.com/",
+            "category": "tooling",
             "description": ""
         },
         "easel-js": {
             "name": "EaselJS",
             "url": "https://createjs.com/easeljs",
+            "category": "library",
             "description": ""
         },
         "canvas": {
             "name": "Canvas",
             "url": "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API",
+            "category": "concept",
             "description": ""
         },
         "html": {
             "name": "HTML",
             "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+            "category": "language",
             "description": ""
         },
         "css": {
             "name": "CSS",
             "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+            "category": "language",
             "description": ""
         },
         "jquery": {
             "name": "jQuery",
             "url": "https://jquery.com/",
+            "category": "library",
             "description": ""
         },
         "json": {
             "name": "JSON",
             "url": "https://www.json.org/",
+            "category": "protocol",
             "description": ""
         },
         "dust-js": {
             "name": "Dust.js",
             "url": "https://www.dustjs.com/",
+            "category": "library",
             "description": ""
         },
         "moment-js": {
             "name": "moment.js",
             "url": "https://momentjs.com/",
+            "category": "library",
             "description": ""
         },
         "moment-timezone-js": {
             "name": "moment-timezone.js",
             "url": "https://momentjs.com/timezone/",
+            "category": "library",
             "description": ""
         },
         "nwdb-view-api": {
             "name": "Newsweek/Daily Beast View API",
             "url": "",
+            "category": "internal",
             "description": ""
         },
         "nwdb-dust-js-templating": {
             "name": "Newsweek/Daily Beast Dust.js templating",
             "url": "",
+            "category": "internal",
             "description": ""
         },
         "adobe-cq": {
             "name": "Adobe CQ",
             "url": "https://business.adobe.com/products/experience-manager/sites/aem-sites.html",
+            "category": "platform",
             "description": ""
         },
         "sling": {
             "name": "Apache Sling",
             "url": "https://sling.apache.org/",
+            "category": "platform",
             "description": ""
         },
         "jcr": {
             "name": "JCR",
             "url": "https://en.wikipedia.org/wiki/Content_repository_API_for_Java",
+            "category": "protocol",
             "description": ""
         },
         "java": {
             "name": "Java",
             "url": "https://www.java.com/",
+            "category": "language",
             "description": ""
         },
         "javascript": {
             "name": "JavaScript",
             "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+            "category": "language",
             "description": ""
         },
         "autonomy-idol": {
             "name": "Autonomy IDOL",
             "url": "",
+            "category": "ai",
             "description": ""
         },
         "nwdb-dust-js-module": {
             "name": "Newsweek Dust.js Module",
             "url": "",
+            "category": "internal",
             "description": ""
         },
         "ajax": {
             "name": "AJAX",
             "url": "https://en.wikipedia.org/wiki/Ajax_(programming)",
+            "category": "protocol",
             "description": ""
         },
         "gson": {
             "name": "Gson",
             "url": "https://github.com/google/gson",
+            "category": "library",
             "description": ""
         },
         "rhino": {
             "name": "Rhino",
             "url": "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino",
+            "category": "library",
             "description": ""
         },
         "junit": {
             "name": "JUnit",
             "url": "https://junit.org/",
+            "category": "library",
             "description": ""
         },
         "osgi": {
             "name": "OSGi",
             "url": "https://www.osgi.org/",
+            "category": "protocol",
             "description": ""
         },
         "solr": {
             "name": "Apache Solr",
             "url": "https://solr.apache.org/",
+            "category": "platform",
             "description": ""
         },
         "rss": {
             "name": "RSS",
             "url": "https://en.wikipedia.org/wiki/RSS",
+            "category": "protocol",
             "description": ""
         },
         "atom": {
             "name": "ATOM",
             "url": "https://en.wikipedia.org/wiki/Atom_(web_standard)",
+            "category": "protocol",
             "description": ""
         },
         "rome": {
             "name": "Rome",
             "url": "https://rometools.github.io/rome/",
+            "category": "library",
             "description": ""
         },
         "xml": {
             "name": "XML",
             "url": "https://en.wikipedia.org/wiki/XML",
+            "category": "protocol",
             "description": ""
         },
         "html5-video-api": {
             "name": "HTML5 Video API",
             "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement",
+            "category": "concept",
             "description": ""
         },
         "windows-media-player-js-api": {
             "name": "Windows Media Player JS API",
             "url": "",
+            "category": "concept",
             "description": ""
         },
         "struts": {
             "name": "Apache Struts",
             "url": "https://struts.apache.org/",
+            "category": "framework",
             "description": ""
         },
         "rest": {
             "name": "REST",
             "url": "https://en.wikipedia.org/wiki/Representational_state_transfer",
+            "category": "protocol",
             "description": ""
         },
         "jms": {
             "name": "JMS",
             "url": "https://en.wikipedia.org/wiki/Java_Message_Service",
+            "category": "protocol",
             "description": ""
         },
         "mysql": {
             "name": "MySQL",
             "url": "https://www.mysql.com/",
+            "category": "platform",
             "description": ""
         },
         "resource-bundles": {
             "name": "Java Resource Bundles",
             "url": "https://en.wikipedia.org/wiki/Java_resource_bundle",
+            "category": "concept",
             "description": ""
         },
         "icu4j": {
             "name": "ICU4J",
             "url": "https://icu.unicode.org/",
+            "category": "library",
             "description": ""
         },
         "windows-server-2003": {
             "name": "Windows Server 2003",
             "url": "https://en.wikipedia.org/wiki/Windows_Server_2003",
+            "category": "platform",
             "description": ""
         },
         "glassfish": {
             "name": "GlassFish",
             "url": "https://glassfish.org/",
+            "category": "platform",
             "description": ""
         },
         "windows-media-server": {
             "name": "Windows Media Server",
             "url": "",
+            "category": "platform",
             "description": ""
         },
         "autonomy-virage-videologger": {
             "name": "Autonomy Virage Videologger",
             "url": "",
+            "category": "platform",
             "description": ""
         },
         "autonomy-softsound": {
             "name": "Autonomy Softsound",
             "url": "",
+            "category": "ai",
             "description": ""
         },
         "perl": {
             "name": "Perl",
             "url": "https://www.perl.org/",
+            "category": "language",
             "description": ""
         },
         "wget": {
             "name": "wget",
             "url": "https://www.gnu.org/software/wget/",
+            "category": "tooling",
             "description": ""
         },
         "lynx": {
             "name": "Lynx",
             "url": "https://lynx.invisible-island.net/",
+            "category": "tooling",
             "description": ""
         },
         "tidy": {
             "name": "HTML Tidy",
             "url": "https://www.html-tidy.org/",
+            "category": "tooling",
             "description": ""
         },
         "ruby": {
             "name": "Ruby",
             "url": "https://www.ruby-lang.org/",
+            "category": "language",
             "description": ""
         },
         "rails": {
             "name": "Ruby on Rails",
             "url": "https://rubyonrails.org/",
+            "category": "framework",
             "description": ""
         },
         "php": {
             "name": "PHP",
             "url": "https://www.php.net/",
+            "category": "language",
             "description": ""
         },
         "symfony-mvc": {
             "name": "Symfony",
             "url": "https://symfony.com/",
+            "category": "framework",
             "description": ""
         },
         "imagemagick": {
             "name": "ImageMagick",
             "url": "https://imagemagick.org/",
+            "category": "tooling",
             "description": ""
         },
         "bugzilla": {
             "name": "Bugzilla",
             "url": "https://www.bugzilla.org/",
+            "category": "tooling",
             "description": ""
         },
         "blood": {
             "name": "Blood",
             "url": "https://en.wikipedia.org/wiki/Blood",
+            "category": "humor",
             "description": ""
         },
         "sweat": {
             "name": "Sweat",
             "url": "https://en.wikipedia.org/wiki/Perspiration",
+            "category": "humor",
             "description": ""
         },
         "tears": {
             "name": "Tears",
             "url": "https://en.wikipedia.org/wiki/Tears",
+            "category": "humor",
             "description": ""
         },
         "dhtml": {
             "name": "DHTML",
             "url": "https://en.wikipedia.org/wiki/Dynamic_HTML",
+            "category": "concept",
             "description": ""
         },
         "oracle": {
             "name": "Oracle",
             "url": "https://www.oracle.com/database/",
+            "category": "platform",
             "description": ""
         },
         "wingnut": {
             "name": "WingNut",
             "url": "https://sourceforge.net/projects/wingnut/",
+            "category": "framework",
             "description": ""
         },
         "bootstrap": {
             "name": "Bootstrap",
             "url": "https://getbootstrap.com/",
+            "category": "framework",
             "description": ""
         }
     }
