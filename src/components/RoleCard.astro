@@ -1,0 +1,38 @@
+---
+import TechChip from "./TechChip.astro";
+import { formatDateRange } from "../lib/resume";
+import type { ExperienceEntry } from "../types/resume";
+
+interface Props {
+    role: ExperienceEntry;
+}
+
+const { role } = Astro.props;
+---
+
+<article class="role py-7 border-t border-[var(--color-rule)] first:border-t-0 first:pt-0">
+    <h3 class="text-lg font-semibold tracking-tight mb-1">{role.company}</h3>
+
+    <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px] mb-3.5 text-[var(--color-muted)]">
+        <span class="whitespace-nowrap">{role.title}</span>
+        <span class="text-[var(--color-muted-2)]">·</span>
+        <span class="whitespace-nowrap">{formatDateRange(role.dateRange.from, role.dateRange.to)}</span>
+        <span class="text-[var(--color-muted-2)]">·</span>
+        <span class="whitespace-nowrap">{role.location.city}, {role.location.state}</span>
+    </div>
+
+    {role.description && <p class="m-0" set:html={role.description} />}
+
+    {
+        role.projects.map((project) => (
+            <div class="mt-4">
+                <p class="m-0" set:html={project.description} />
+                {project.technologies.length > 0 && (
+                    <div class="flex flex-wrap gap-1.5 mt-2.5">
+                        {project.technologies.map((slug) => <TechChip slug={slug} />)}
+                    </div>
+                )}
+            </div>
+        ))
+    }
+</article>

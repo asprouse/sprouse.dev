@@ -1,0 +1,18 @@
+---
+import { resume } from "../lib/resume";
+
+interface Props {
+    slug: string;
+}
+
+const { slug } = Astro.props;
+const tech = resume.technologies[slug];
+---
+
+{
+    tech && (
+        <span class="chip" title={tech.category}>
+            {tech.url ? <a href={tech.url} rel="noopener">{tech.name}</a> : tech.name}
+        </span>
+    )
+}

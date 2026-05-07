@@ -1,0 +1,47 @@
+---
+import { deriveSkills } from "../lib/resume";
+import type { TechCategory } from "../types/resume";
+
+const skills = deriveSkills();
+
+const VISIBLE: { key: TechCategory; label: string }[] = [
+    { key: "language", label: "Languages" },
+    { key: "framework", label: "Frameworks" },
+    { key: "platform", label: "Platforms" },
+    { key: "ai", label: "AI / LLM" },
+    { key: "tooling", label: "Tooling" },
+    { key: "library", label: "Libraries" },
+    { key: "protocol", label: "Protocols" },
+    { key: "concept", label: "Concepts" },
+];
+
+const groups = VISIBLE
+    .map((g) => ({ ...g, items: skills[g.key] }))
+    .filter((g) => g.items.length > 0);
+---
+
+<div class="grid gap-x-8 gap-y-6 [grid-template-columns:repeat(auto-fit,minmax(240px,1fr))]">
+    {
+        groups.map((group) => (
+            <div>
+                <h3 class="text-xs font-semibold uppercase tracking-wider mb-2.5 text-[var(--color-muted)]">
+                    {group.label}
+                </h3>
+                <div class="flex flex-wrap gap-1.5">
+                    {group.items.map((s) => (
+                        <span
+                            class:list={["chip", s.isCurrent && "chip-current"]}
+                            title={`${s.companies.join(", ")} · ${s.projectCount} project${s.projectCount === 1 ? "" : "s"}${s.isCurrent ? " · currently using" : ""}`}
+                        >
+                            {s.tech.name}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<p class="mt-6 text-[13px] max-w-[56ch] text-[var(--color-muted)]">
+    Derived from the projects above — every chip has receipts. Hover to see where each was used; outlined chips are currently in use.
+</p>
