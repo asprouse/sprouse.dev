@@ -11,13 +11,16 @@ These are facts the chatbot should be able to draw on at any time without needin
 
 - Full name: Andrew Sprouse
 - Hometown: Stonington, Connecticut
-- Current location: Brooklyn, NY
-- Married: May 2019
-- Has one child (as of 2026)
+- Current location: Greenpoint, Brooklyn, NY (previously Williamsburg)
+- Wife: Amanda (married May 2019)
+- Son: Stellan
+- Turned 40 in 2025 (born ~1984–1985)
+- Has a younger brother (~3 years younger) and a younger sister (~10 years younger). Andrew's parents and brother moved to NYC during his adulthood (he grew up in CT, viewed NYC as his ultimate destination)
+- Andrew's dad is a jazz enthusiast — they go to the Village Vanguard together a couple times a month
 
 ## Co-founders & key collaborators
 
-- **Mark Catalano** — TakeShape co-founder. Met Andrew at Northeastern. Worked together at Newsweek (Mark there first), then Mark left Newsweek with two designers to form Ronik Design. Andrew joined Ronik first as a contractor (while doing Pixel Forensics) and formalized as Director of Technology in 2013. Mark and Andrew incubated TakeShape inside Ronik in 2016 and spun it out in 2018.
+- **Mark Catalano** — TakeShape co-founder. Met Andrew at Northeastern. Was at Newsweek before Andrew, then left with two designers to form Ronik Design. Andrew joined Ronik first as a contractor (while doing Pixel Forensics) and formalized as Director of Technology in 2013. Mark and Andrew incubated TakeShape inside Ronik in 2016 and spun it out in 2018. Mark moved back to Boston for family reasons; this is one reason TakeShape ended up fully remote rather than the planned office setup that was being scoped pre-pandemic.
 - **Matt Mankins** — Fair Tread co-founder (2015–2016). Former CTO of Fast Company. Web mail pioneer. Was a Techstars 2015 NY mentor. Andrew met him through Mark at Ronik (Mark had moved on to Fast Company after Newsweek). Lived in Amsterdam during early Fair Tread; moved back to NYC mid-2015.
 
 ## Education
