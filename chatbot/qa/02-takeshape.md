@@ -183,28 +183,33 @@ Ultimately, specs and context data will be where the value lives.
 <!-- id: takeshape-20 | tags: [schema, philosophy, future] -->
 ## 20. The schema is the throughline that ties every product generation together. What would have to be true for that throughline to break — for the schema to stop being load-bearing?
 
-
+The schema will always be central to a data-focused product. An agent, though, might be better off defined as code. I can see an inflection point where the schema will still exist to define the data model, but there will be more emphasis on the code artifact.
 
 <!-- id: takeshape-21 | tags: [motivation, why] -->
 ## 21. Why TakeShape specifically — out of the dozens of problems you could be working on right now, what makes this the one you wake up for?
 
+TakeShape was designed to address the problem of data quality. In our agency and media days, we saw too many businesses being poor stewards of their most valuable assets. CMSes weren't being treated as canonical stores — they were just solutions. Content as unparsable HTML blobs. Low-resolution images sized and cropped for the template du jour. Field name mappings from hell.
 
+We wanted a data model that *takes the shape* of your business's data. That's how TakeShape was born — to solve this problem so businesses can maximize how and where they use their data. Through our various pivots, we've always held to this principle. Now we allow the data to be used by agents.
 
 <!-- id: takeshape-22 | tags: [motivation, persistence] -->
 ## 22. You've been at this for seven-plus years. What's the moment you came closest to walking away, and what kept you there?
 
+We've been at this for a long time — longer than traditional for a venture-backed startup. We have a great team that enjoys working together; we've solved a lot of hard problems and made it work.
 
+That said, there have been a few times we cut things too close: key customers churned, enterprise partnerships not renewed, acquisition attempts that fell through. At those times I've felt the urge to walk, but I'm always pulled back in by the next problem. Agents in particular are very exciting.
 
 <!-- id: takeshape-23 | tags: [lessons, identity] -->
 ## 23. If TakeShape ended tomorrow, what's the first thing you'd want to take with you into whatever you built next?
 
-
+I'd want to open-source it all. I think the schema layer is genuinely useful. Orchestrating data from third-party services is needed in applications across the board.
 
 <!-- id: takeshape-24 | tags: [open-source, culture] -->
 ## 24. You wrote the first Serverless Framework webpack plugin to make TakeShape's TypeScript-everywhere infrastructure practical. Has TakeShape stayed close to its open-source roots, or has the agent direction pulled it more closed-source?
 
-
+TakeShape is a closed-source SaaS platform. We contribute back to many of the open-source libraries we use to build it.
 
 <!-- id: takeshape-25 | tags: [culture, values] -->
 ## 25. What's the cultural anchor at TakeShape that's stayed constant from the Brooklyn-co-founders days through to today?
 
+The anchor is mutual respect. Respect for craftsmanship balanced with pragmatism. Respect for each other's abilities, and holding each other to a high standard. Respect for the health and well-being of our employees.
