@@ -11,6 +11,14 @@ export default defineConfig({
     integrations: [react()],
     vite: {
         plugins: [tailwindcss()],
+        resolve: {
+            alias: [
+                {
+                    find: /^react-dom\/server$/,
+                    replacement: "react-dom/server.edge",
+                },
+            ],
+        },
     },
     site: "https://sprouse.dev",
 });
