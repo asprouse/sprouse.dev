@@ -10,14 +10,14 @@ interface Props {
 const { role } = Astro.props;
 ---
 
-<article class="role py-7 border-t border-[var(--color-rule)] first:border-t-0 first:pt-0">
+<article class="role py-7 border-t border-rule first:border-t-0 first:pt-0">
     <h3 class="text-lg font-semibold tracking-tight mb-1">{role.company}</h3>
 
-    <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px] mb-3.5 text-[var(--color-muted)]">
+    <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px] mb-3.5 text-muted">
         <span class="whitespace-nowrap">{role.title}</span>
-        <span class="text-[var(--color-muted-2)]">·</span>
+        <span class="text-muted-2">·</span>
         <span class="whitespace-nowrap">{formatDateRange(role.dateRange.from, role.dateRange.to)}</span>
-        <span class="text-[var(--color-muted-2)]">·</span>
+        <span class="text-muted-2">·</span>
         <span class="whitespace-nowrap">{role.location.city}, {role.location.state}</span>
     </div>
 

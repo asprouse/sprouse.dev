@@ -1,0 +1,3 @@
+# Copy to .dev.vars (gitignored) and fill in.
+# Required for /api/chat to work locally.
+ANTHROPIC_API_KEY=sk-ant-...

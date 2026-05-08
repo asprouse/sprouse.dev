@@ -2,16 +2,16 @@
 @import "@fontsource-variable/inter";
 
 @theme {
-    --color-bg: #fafaf9;
-    --color-bg-raised: #ffffff;
-    --color-fg: #0c0a09;
+    --color-canvas: #fafaf9;
+    --color-surface: #ffffff;
+    --color-ink: #0c0a09;
     --color-muted: #57534e;
     --color-muted-2: #78716c;
     --color-rule: #e7e5e4;
     --color-accent: #ea580c;
-    --color-accent-fg: #ffffff;
-    --color-chip-bg: #f5f5f4;
-    --color-chip-fg: #292524;
+    --color-accent-ink: #ffffff;
+    --color-chip: #f5f5f4;
+    --color-chip-ink: #292524;
 
     --font-sans:
         "Inter Variable", ui-sans-serif, -apple-system, BlinkMacSystemFont,
@@ -19,21 +19,21 @@
     --font-mono:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-    --container-prose: 760px;
+    --container-page: 760px;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-bg: #0c0a09;
-        --color-bg-raised: #1c1917;
-        --color-fg: #fafaf9;
+        --color-canvas: #0c0a09;
+        --color-surface: #1c1917;
+        --color-ink: #fafaf9;
         --color-muted: #a8a29e;
         --color-muted-2: #78716c;
         --color-rule: #292524;
         --color-accent: #fb923c;
-        --color-accent-fg: #1c1917;
-        --color-chip-bg: #1c1917;
-        --color-chip-fg: #d6d3d1;
+        --color-accent-ink: #1c1917;
+        --color-chip: #1c1917;
+        --color-chip-ink: #d6d3d1;
     }
 }
 
@@ -43,9 +43,7 @@
     }
 
     body {
-        background: var(--color-bg);
-        color: var(--color-fg);
-        font-family: var(--font-sans);
+        @apply bg-canvas text-ink;
         font-feature-settings: "ss01", "cv11";
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -53,13 +51,11 @@
     }
 
     ::selection {
-        background: var(--color-accent);
-        color: var(--color-accent-fg);
+        @apply bg-accent text-accent-ink;
     }
 
     a {
-        color: var(--color-fg);
-        text-decoration-color: var(--color-accent);
+        @apply text-ink decoration-accent;
         text-decoration-thickness: 1.5px;
         text-underline-offset: 3px;
         transition:
@@ -68,19 +64,16 @@
     }
 
     a:hover {
-        color: var(--color-accent);
+        @apply text-accent;
         text-decoration-thickness: 2.5px;
     }
 }
 
 @utility chip {
-    @apply inline-block px-2 py-[3px] text-xs font-medium tracking-tight rounded-full border border-transparent transition-colors cursor-default;
-    background: var(--color-chip-bg);
-    color: var(--color-chip-fg);
+    @apply inline-block px-2 py-[3px] text-xs font-medium tracking-tight rounded-full border border-transparent transition-colors cursor-default bg-chip text-chip-ink;
 }
 .chip:hover {
-    border-color: var(--color-rule);
-    color: var(--color-fg);
+    @apply border-rule text-ink;
 }
 .chip a {
     color: inherit;
@@ -88,11 +81,9 @@
 }
 
 @utility chip-current {
-    border-color: var(--color-accent);
-    color: var(--color-fg);
+    @apply border-accent text-ink;
 }
 
 @utility section-label {
-    @apply text-xs font-semibold uppercase tracking-[0.12em];
-    color: var(--color-muted);
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted;
 }

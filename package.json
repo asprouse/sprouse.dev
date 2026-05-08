@@ -11,10 +11,13 @@
         "astro": "astro"
     },
     "dependencies": {
+        "@ai-sdk/anthropic": "^3.0.76",
+        "@ai-sdk/react": "^3.0.177",
         "@astrojs/cloudflare": "^12.0.0",
         "@astrojs/react": "^4.0.0",
         "@fontsource-variable/inter": "^5.2.8",
         "@tailwindcss/vite": "^4.2.4",
+        "ai": "6.0.175",
         "astro": "^5.0.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",

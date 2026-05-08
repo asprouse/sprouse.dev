@@ -13,24 +13,20 @@ const headline = currentRole ? `${currentRole.title} · ${currentRole.company}` 
 ---
 
 <Layout title={`${fullName} — Resume`} description={summary}>
-    <main class="max-w-[var(--container-prose)] mx-auto px-6 pt-20 pb-28">
+    <main class="max-w-page mx-auto px-6 pt-20 pb-28">
         <header class="grid grid-cols-[1fr_auto] gap-8 items-start mb-10 max-[600px]:grid-cols-1 max-[600px]:gap-5">
             <div class="min-w-0 max-[600px]:order-2">
                 <h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-[-0.035em] leading-[1.05] m-0 mb-3">
                     {fullName}
                 </h1>
-                {
-                    headline && (
-                        <p class="text-[17px] m-0 mb-2 text-[var(--color-muted)]">{headline}</p>
-                    )
-                }
-                <p class="text-sm text-[var(--color-muted)] m-0">
+                {headline && <p class="text-[17px] m-0 mb-2 text-muted">{headline}</p>}
+                <p class="text-sm text-muted m-0">
                     {person.location.city}, {person.location.state} ·{" "}
                     <a href={`mailto:${person.email}`}>{person.email}</a> ·{" "}
                     <a href={person.links.github} rel="noopener">GitHub</a> ·{" "}
                     <a href={person.links.linkedin} rel="noopener">LinkedIn</a>
                 </p>
-                <p class="text-[17px] leading-relaxed mt-6 max-w-[62ch] text-[var(--color-muted)]">
+                <p class="text-[17px] leading-relaxed mt-6 max-w-[62ch] text-muted">
                     {summary}
                 </p>
             </div>

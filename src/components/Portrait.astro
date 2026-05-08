@@ -5,7 +5,7 @@ import promptText from "../../illustration/prompt.txt?raw";
 <div class="portrait group relative inline-block w-[180px] max-md:w-[140px]">
     <button
         type="button"
-        class="portrait-trigger appearance-none bg-transparent border-none p-0 m-0 block w-full text-center cursor-pointer font-inherit"
+        class="appearance-none bg-transparent border-none p-0 m-0 block w-full text-center cursor-pointer font-inherit portrait-trigger"
         aria-label="Show the source photo and AI prompt used to create this illustration"
         aria-expanded="false"
     >
@@ -14,16 +14,16 @@ import promptText from "../../illustration/prompt.txt?raw";
             alt="Pencil-and-watercolor illustration of Andrew Sprouse generated from a photograph."
             width="180"
             height="240"
-            class="block w-full h-auto rounded-lg bg-[var(--color-bg-raised)] shadow-sm transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:shadow-lg group-focus-within:-translate-y-0.5 group-focus-within:shadow-lg"
+            class="block w-full h-auto rounded-lg bg-surface shadow-sm transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:shadow-lg group-focus-within:-translate-y-0.5 group-focus-within:shadow-lg"
         />
-        <span class="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-[var(--color-muted)]">
-            <span class="dot-pulse w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]"></span>
+        <span class="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted">
+            <span class="dot-pulse w-1.5 h-1.5 rounded-full bg-accent"></span>
             How this was made
         </span>
     </button>
 
     <div
-        class="reveal absolute top-[calc(100%+0.75rem)] right-0 w-[420px] z-10 p-5 rounded-xl border border-[var(--color-rule)] bg-[var(--color-bg-raised)] shadow-2xl opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto group-[.open]:opacity-100 group-[.open]:translate-y-0 group-[.open]:pointer-events-auto max-md:fixed max-md:inset-x-4 max-md:bottom-4 max-md:top-auto max-md:right-auto max-md:w-auto"
+        class="reveal absolute top-[calc(100%+0.75rem)] right-0 w-[420px] z-10 p-5 rounded-xl border border-rule bg-surface shadow-2xl opacity-0 -translate-y-2 pointer-events-none transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto group-[.open]:opacity-100 group-[.open]:translate-y-0 group-[.open]:pointer-events-auto max-md:fixed max-md:inset-x-4 max-md:bottom-4 max-md:top-auto max-md:right-auto max-md:w-auto"
         role="region"
         aria-label="Source photo and prompt"
     >
@@ -37,15 +37,15 @@ import promptText from "../../illustration/prompt.txt?raw";
                     loading="lazy"
                     class="w-full h-auto rounded-md block"
                 />
-                <figcaption class="mt-1.5 text-[11px] uppercase tracking-wider text-[var(--color-muted)]">
+                <figcaption class="mt-1.5 text-[11px] uppercase tracking-wider text-muted">
                     Original photo
                 </figcaption>
             </figure>
             <div>
-                <p class="mt-0 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                <p class="mt-0 mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted">
                     Prompt to GPT-4o image
                 </p>
-                <pre class="m-0 font-mono text-[11px] leading-[1.55] text-[var(--color-fg)] whitespace-pre-wrap break-words max-h-[280px] overflow-y-auto max-md:max-h-[200px]">{promptText.trim()}</pre>
+                <pre class="m-0 font-mono text-[11px] leading-[1.55] text-ink whitespace-pre-wrap break-words max-h-[280px] overflow-y-auto max-md:max-h-[200px]">{promptText.trim()}</pre>
             </div>
         </div>
     </div>

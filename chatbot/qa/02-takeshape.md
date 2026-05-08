@@ -213,3 +213,13 @@ TakeShape is a closed-source SaaS platform. We contribute back to many of the op
 ## 25. What's the cultural anchor at TakeShape that's stayed constant from the Brooklyn-co-founders days through to today?
 
 The anchor is mutual respect. Respect for craftsmanship balanced with pragmatism. Respect for each other's abilities, and holding each other to a high standard. Respect for the health and well-being of our employees.
+
+<!-- id: takeshape-26 | tags: [why-now, leaving, market] -->
+## 26. TakeShape is your seven-year baby. What's pulling you out of it?
+
+It's time to move on. I've loved building TakeShape for the last 7+ years, but it's time for a fresh start — to leverage the hard-fought experience and put my passion into a new project. The explosion of AI coding tools has taken some of the shine off "SaaS platform that provides API connectors" — most engineers will generate custom data models directly from each platform's API specs. The more interesting work now is creating primitives that coding agents can leverage. Instead of a third pivot, it's time for a fresh sheet.
+
+<!-- id: takeshape-27 | tags: [next, thesis, application-first] -->
+## 27. If you started fresh tomorrow, what would you actually build?
+
+The best dev tools come out of actual need, not a vacuum — that's why TakeShape ended up doing professional services to guide its AI work. So my honest answer is: build an application first. Pick a real user problem AI now makes solvable, ship it, and let the gaps in tooling I hit along the way be the second product. I've always been drawn to making success repeatable — that's what got me into tools in the first place — but the only way I trust the tools I'd build is if they came out of trying to ship something real.
