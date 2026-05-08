@@ -12,9 +12,32 @@ export const prerender = false;
 const index = buildIndex(corpus);
 const COMPANY_NAMES = resume.experience.map((r) => r.company);
 
+interface RateLimiter {
+    limit: (input: { key: string }) => Promise<{ success: boolean }>;
+}
+
+interface RuntimeEnv {
+    ANTHROPIC_API_KEY?: string;
+    CHAT_RATE_LIMITER?: RateLimiter;
+    GLOBAL_RATE_LIMITER?: RateLimiter;
+}
+
+function rateLimitResponse(message: string) {
+    return new Response(JSON.stringify({ error: message }), {
+        status: 429,
+        headers: {
+            "content-type": "application/json",
+            "retry-after": "60",
+        },
+    });
+}
+
 export const POST: APIRoute = async ({ request, locals }) => {
+    const env: RuntimeEnv =
+        (locals as { runtime?: { env?: RuntimeEnv } }).runtime?.env ?? {};
+
     const apiKey =
-        (locals as any)?.runtime?.env?.ANTHROPIC_API_KEY ??
+        env.ANTHROPIC_API_KEY ??
         (typeof process !== "undefined" ? process.env.ANTHROPIC_API_KEY : undefined);
 
     if (!apiKey) {
@@ -22,6 +45,26 @@ export const POST: APIRoute = async ({ request, locals }) => {
             JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }),
             { status: 500, headers: { "content-type": "application/json" } },
         );
+    }
+
+    const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
+
+    if (env.CHAT_RATE_LIMITER) {
+        const { success } = await env.CHAT_RATE_LIMITER.limit({ key: clientIp });
+        if (!success) {
+            return rateLimitResponse(
+                "You're hitting the chat too fast. Give it a minute and try again.",
+            );
+        }
+    }
+
+    if (env.GLOBAL_RATE_LIMITER) {
+        const { success } = await env.GLOBAL_RATE_LIMITER.limit({ key: "global" });
+        if (!success) {
+            return rateLimitResponse(
+                "Chat is at capacity right now. Try again in a minute.",
+            );
+        }
     }
 
     const body = (await request.json()) as { messages?: UIMessage[] };
