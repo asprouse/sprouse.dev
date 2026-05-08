@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
+@import "streamdown/styles.css";
 
 @theme {
     --color-canvas: #fafaf9;
@@ -86,4 +87,11 @@
 
 @utility section-label {
     @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+}
+
+.chat-markdown > :first-child {
+    margin-top: 0;
+}
+.chat-markdown > :last-child {
+    margin-bottom: 0;
 }

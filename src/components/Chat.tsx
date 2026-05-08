@@ -1,6 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { Streamdown } from "streamdown";
 
 const PROMPTS = [
     "What's TakeShape's agent architecture?",
@@ -33,6 +34,11 @@ function slugifyCompany(name: string): string {
     return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+function flashRole(el: HTMLElement) {
+    el.classList.add("role-flash");
+    window.setTimeout(() => el.classList.remove("role-flash"), 1700);
+}
+
 function scrollToRole(company: string) {
     const slug = slugifyCompany(company);
     const el = document.getElementById(`role-${slug}`);
@@ -41,8 +47,43 @@ function scrollToRole(company: string) {
         el.open = true;
     }
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-    el.classList.add("role-flash");
-    window.setTimeout(() => el.classList.remove("role-flash"), 1700);
+    flashRole(el);
+}
+
+function expandRole(company: string) {
+    const slug = slugifyCompany(company);
+    const el = document.getElementById(`role-${slug}`);
+    if (!el) return;
+    if (el instanceof HTMLDetailsElement && !el.open) {
+        el.open = true;
+    }
+    flashRole(el);
+}
+
+const VARIANT_PATHS: Record<string, string> = {
+    cto: "/",
+    principal: "/principal",
+    cofounder: "/cofounder",
+};
+
+async function navigateClient(path: string) {
+    if (window.location.pathname === path) return;
+    try {
+        const { navigate } = await import("astro:transitions/client");
+        navigate(path);
+    } catch {
+        window.location.href = path;
+    }
+}
+
+function switchVariant(variant: string) {
+    const path = VARIANT_PATHS[variant];
+    if (!path) return;
+    void navigateClient(path);
+}
+
+function showMethodology() {
+    void navigateClient("/about-the-bot");
 }
 
 function useToolCallDispatcher(messages: UIMessage[]) {
@@ -61,6 +102,14 @@ function useToolCallDispatcher(messages: UIMessage[]) {
                 if (part.type === "tool-scroll_to_role") {
                     const input = part.input as { company?: string } | undefined;
                     if (input?.company) scrollToRole(input.company);
+                } else if (part.type === "tool-expand_role") {
+                    const input = part.input as { company?: string } | undefined;
+                    if (input?.company) expandRole(input.company);
+                } else if (part.type === "tool-switch_variant") {
+                    const input = part.input as { variant?: string } | undefined;
+                    if (input?.variant) switchVariant(input.variant);
+                } else if (part.type === "tool-show_methodology") {
+                    showMethodology();
                 }
             }
         }
@@ -69,7 +118,7 @@ function useToolCallDispatcher(messages: UIMessage[]) {
 
 export default function Chat() {
     const transport = useRef(new DefaultChatTransport({ api: "/api/chat" }));
-    const { messages, sendMessage, status, error, stop } = useChat({
+    const { messages, sendMessage, status, error, stop, setMessages } = useChat({
         transport: transport.current,
     });
     const [open, setOpen] = useState(false);
@@ -157,16 +206,39 @@ export default function Chat() {
                         <p className="text-[13px] font-semibold m-0">Ask Andrew</p>
                         <p className="text-[11px] text-muted m-0">Grounded in his Q&A corpus</p>
                     </div>
-                    <button
-                        type="button"
-                        onClick={() => setOpen(false)}
-                        aria-label="Close chat"
-                        className="text-muted hover:text-ink p-1 -m-1"
-                    >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            <path d="M18 6 6 18M6 6l12 12" />
-                        </svg>
-                    </button>
+                    <div className="flex items-center gap-1">
+                        {messages.length > 0 && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    if (isBusy) stop();
+                                    setMessages([]);
+                                    setInput("");
+                                }}
+                                aria-label="Start a new chat"
+                                title="Start a new chat"
+                                className="flex items-center gap-1 text-[12px] text-muted hover:text-ink px-2 py-1 rounded transition-colors"
+                            >
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                                    <path d="M21 3v5h-5" />
+                                    <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                                    <path d="M8 16H3v5" />
+                                </svg>
+                                New
+                            </button>
+                        )}
+                        <button
+                            type="button"
+                            onClick={() => setOpen(false)}
+                            aria-label="Close chat"
+                            className="text-muted hover:text-ink p-1"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M18 6 6 18M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </header>
 
                 <div ref={scrollRef} className="flex-1 px-4 py-4 overflow-y-auto">
@@ -255,11 +327,18 @@ function Message({ message }: { message: UIMessage }) {
             </div>
         );
     }
+    if (!text) {
+        return (
+            <div className="self-start max-w-[95%]">
+                <span className="text-muted text-[14px]">…</span>
+            </div>
+        );
+    }
     return (
         <div className="self-start max-w-[95%]">
-            <div className="text-[14px] leading-relaxed whitespace-pre-wrap">
-                {text || <span className="text-muted">…</span>}
-            </div>
+            <Streamdown className="chat-markdown text-[14px] leading-relaxed">
+                {text}
+            </Streamdown>
         </div>
     );
 }

@@ -89,6 +89,6 @@ const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_
             )
         }
 
-        <Chat client:load />
+        <Chat client:load transition:persist="chat" />
     </main>
 </Layout>

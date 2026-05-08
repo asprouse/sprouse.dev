@@ -45,7 +45,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         tools: {
             scroll_to_role: tool({
                 description:
-                    "Scroll the user's page to a specific role card and briefly highlight it. Use only when the answer is genuinely about that role.",
+                    "Scroll the user's page to a specific role card and briefly highlight it. Auto-expands the role if it's collapsed in the career retrospective. Use only when the answer is genuinely about that role.",
                 inputSchema: z.object({
                     company: z
                         .string()
@@ -54,6 +54,34 @@ export const POST: APIRoute = async ({ request, locals }) => {
                         ),
                 }),
                 execute: async ({ company }) => ({ scrolled_to: company }),
+            }),
+            expand_role: tool({
+                description:
+                    "Expand a compressed (pre-2015) role's details inline WITHOUT scrolling. Use when the user is reading something nearby and you want to surface adjacent context.",
+                inputSchema: z.object({
+                    company: z
+                        .string()
+                        .describe(
+                            `Company name. Must be one of: ${COMPANY_NAMES.join(", ")}.`,
+                        ),
+                }),
+                execute: async ({ company }) => ({ expanded: company }),
+            }),
+            switch_variant: tool({
+                description:
+                    "Navigate the user to a different archetype landing page when their question maps strongly to a different lens. Use sparingly.",
+                inputSchema: z.object({
+                    variant: z
+                        .enum(["cto", "principal", "cofounder"])
+                        .describe("Which archetype landing to switch to."),
+                }),
+                execute: async ({ variant }) => ({ switched_to: variant }),
+            }),
+            show_methodology: tool({
+                description:
+                    "Navigate the user to /about-the-bot — the methodology page documenting how this chatbot was built (Q&A corpus, retrieval, persona prompt, corpus stats). Use when the user asks how the bot works, asks about its architecture, or wants the deeper meta explanation.",
+                inputSchema: z.object({}),
+                execute: async () => ({ navigated_to: "about-the-bot" }),
             }),
         },
     });
