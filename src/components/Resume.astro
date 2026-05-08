@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Chat from "./Chat";
+import CompressedRoleCard from "./CompressedRoleCard.astro";
 import Portrait from "./Portrait.astro";
 import RoleCard from "./RoleCard.astro";
 import SkillsMatrix from "./SkillsMatrix.astro";
@@ -17,6 +18,10 @@ const { person, experience, openSource } = resume;
 const fullName = `${person.first} ${person.last}`;
 const currentRole = experience.find((r) => r.dateRange.to === null);
 const currentLine = currentRole ? `Currently ${currentRole.title} at ${currentRole.company}` : "";
+
+const RETROSPECTIVE_CUTOFF = "2015-01";
+const currentEra = experience.filter((r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF);
+const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_CUTOFF);
 ---
 
 <Layout title={variant.metaTitle} description={variant.metaDescription}>
@@ -51,7 +56,19 @@ const currentLine = currentRole ? `Currently ${currentRole.title} at ${currentRo
         </header>
 
         <h2 class="section-label mt-12 mb-5">Experience</h2>
-        {experience.map((role) => <RoleCard role={role} />)}
+        {currentEra.map((role) => <RoleCard role={role} />)}
+
+        {
+            retrospective.length > 0 && (
+                <>
+                    <h2 class="section-label mt-12 mb-2">Career retrospective (2004–2014)</h2>
+                    <p class="text-[14px] text-muted mt-0 mb-4 max-w-[62ch]">
+                        Earlier work — collapsed by default. Click any to expand, or ask the chatbot to dig in.
+                    </p>
+                    {retrospective.map((role) => <CompressedRoleCard role={role} />)}
+                </>
+            )
+        }
 
         <h2 class="section-label mt-12 mb-5">Skills</h2>
         <SkillsMatrix />

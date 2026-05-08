@@ -37,6 +37,9 @@ function scrollToRole(company: string) {
     const slug = slugifyCompany(company);
     const el = document.getElementById(`role-${slug}`);
     if (!el) return;
+    if (el instanceof HTMLDetailsElement) {
+        el.open = true;
+    }
     el.scrollIntoView({ behavior: "smooth", block: "start" });
     el.classList.add("role-flash");
     window.setTimeout(() => el.classList.remove("role-flash"), 1700);
