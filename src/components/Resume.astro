@@ -1,0 +1,78 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Chat from "./Chat";
+import Portrait from "./Portrait.astro";
+import RoleCard from "./RoleCard.astro";
+import SkillsMatrix from "./SkillsMatrix.astro";
+import VariantSwitcher from "./VariantSwitcher.astro";
+import { resume } from "../lib/resume";
+import type { Variant } from "../lib/variants";
+
+interface Props {
+    variant: Variant;
+}
+
+const { variant } = Astro.props;
+const { person, experience, openSource } = resume;
+const fullName = `${person.first} ${person.last}`;
+const currentRole = experience.find((r) => r.dateRange.to === null);
+const currentLine = currentRole ? `Currently ${currentRole.title} at ${currentRole.company}` : "";
+---
+
+<Layout title={variant.metaTitle} description={variant.metaDescription}>
+    <main class="max-w-page mx-auto px-6 pt-20 pb-28">
+        <header class="grid grid-cols-[1fr_auto] gap-8 items-start mb-10 max-[600px]:grid-cols-1 max-[600px]:gap-5">
+            <div class="min-w-0 max-[600px]:order-2">
+                <h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-[-0.035em] leading-[1.05] m-0 mb-3">
+                    {fullName}
+                </h1>
+                {currentLine && <p class="text-[17px] m-0 mb-2 text-muted">{currentLine} · {person.location.city}, {person.location.state}</p>}
+                <p class="text-sm text-muted m-0">
+                    <a href={`mailto:${person.email}`}>{person.email}</a> ·{" "}
+                    <a href={person.links.github} rel="noopener">GitHub</a> ·{" "}
+                    <a href={person.links.linkedin} rel="noopener">LinkedIn</a>
+                </p>
+
+                <p class="text-[17px] leading-relaxed mt-6 max-w-[62ch] text-ink">
+                    {variant.headline}
+                </p>
+
+                <div class="mt-5 p-3.5 rounded-lg border border-rule bg-surface text-[14px] leading-relaxed max-w-[62ch]">
+                    <span class="font-medium text-ink">{variant.openTo}</span>
+                </div>
+
+                <div class="mt-5">
+                    <VariantSwitcher current={variant.slug} />
+                </div>
+            </div>
+            <div class="justify-self-end max-[600px]:justify-self-start max-[600px]:order-1">
+                <Portrait />
+            </div>
+        </header>
+
+        <h2 class="section-label mt-12 mb-5">Experience</h2>
+        {experience.map((role) => <RoleCard role={role} />)}
+
+        <h2 class="section-label mt-12 mb-5">Skills</h2>
+        <SkillsMatrix />
+
+        {
+            openSource.length > 0 && (
+                <>
+                    <h2 class="section-label mt-12 mb-5">Open Source</h2>
+                    {openSource.map((entry) => (
+                        <article class="mb-4">
+                            <h3 class="text-lg font-semibold tracking-tight mb-1">
+                                <a href={entry.url} rel="noopener">{entry.name}</a>
+                            </h3>
+                            <p class="m-0">{entry.description}</p>
+                        </article>
+                    ))}
+                </>
+            )
+        }
+
+        <h2 class="section-label mt-12 mb-5">Talk to me</h2>
+        <Chat client:load />
+    </main>
+</Layout>
