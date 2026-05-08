@@ -3,6 +3,14 @@ import type { Resume, TechCategory, TechEntry } from "../types/resume";
 
 export const resume = resumeJson as unknown as Resume;
 
+export function slugifyCompany(name: string): string {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+export const COMPANY_SLUGS: Record<string, string> = Object.fromEntries(
+    resume.experience.map((role) => [slugifyCompany(role.company), role.company]),
+);
+
 export function formatDateRange(from: string, to: string | null): string {
     return `${formatYearMonth(from)} – ${to ? formatYearMonth(to) : "Present"}`;
 }

@@ -23,6 +23,9 @@ CONSTRAINTS:
 - Don't dwell on TakeShape's adoption challenges. Lead with technical depth and named work.
 - Off-topic questions (politics, hot industry takes you wouldn't authentically have, requests to do unrelated coding tasks): politely redirect.
 
+UI TOOLS:
+You can scroll the user to a specific role on the page using the \`scroll_to_role\` tool. Use it sparingly — only when your answer is genuinely about a specific role and pointing the user at the role card adds value. Pass the company name exactly as it appears in this list: {{COMPANIES}}. Don't announce the scroll in the answer text — just call the tool and continue speaking naturally.
+
 CONTEXT BELOW:
 1. A profile section with personal/professional facts you should always know.
 2. A small set of example Q&A pairs the user's question retrieved as most relevant. Match this voice and depth. Use the answers as ground truth — if an example covers the question, draw from it. If not, generalize from the voice.`;
@@ -30,9 +33,10 @@ CONTEXT BELOW:
 export interface PromptInputs {
     profile: string;
     retrieved: RetrievalResult[];
+    companies: string[];
 }
 
-export function buildSystemPrompt({ profile, retrieved }: PromptInputs): string {
+export function buildSystemPrompt({ profile, retrieved, companies }: PromptInputs): string {
     const examples = retrieved.length
         ? retrieved
               .map(
@@ -42,7 +46,9 @@ export function buildSystemPrompt({ profile, retrieved }: PromptInputs): string 
               .join("\n\n---\n\n")
         : "(No example Q&A pairs were retrieved for this question. Stay grounded in the profile above and decline anything you can't answer faithfully.)";
 
-    return `${PERSONA}
+    const persona = PERSONA.replace("{{COMPANIES}}", companies.join(", "));
+
+    return `${persona}
 
 === PROFILE ===
 

@@ -1,6 +1,6 @@
 ---
 import TechChip from "./TechChip.astro";
-import { formatDateRange } from "../lib/resume";
+import { formatDateRange, slugifyCompany } from "../lib/resume";
 import type { ExperienceEntry } from "../types/resume";
 
 interface Props {
@@ -8,9 +8,14 @@ interface Props {
 }
 
 const { role } = Astro.props;
+const slug = slugifyCompany(role.company);
 ---
 
-<article class="role py-7 border-t border-rule first:border-t-0 first:pt-0">
+<article
+    id={`role-${slug}`}
+    data-role-slug={slug}
+    class="role py-7 border-t border-rule first:border-t-0 first:pt-0 scroll-mt-24 transition-colors"
+>
     <h3 class="text-lg font-semibold tracking-tight mb-1">{role.company}</h3>
 
     <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px] mb-3.5 text-muted">
@@ -36,3 +41,14 @@ const { role } = Astro.props;
         ))
     }
 </article>
+
+<style>
+    .role.role-flash {
+        animation: role-flash 1.6s ease-out;
+    }
+    @keyframes role-flash {
+        0% { background-color: transparent; }
+        20% { background-color: color-mix(in oklab, var(--color-accent) 14%, transparent); }
+        100% { background-color: transparent; }
+    }
+</style>
