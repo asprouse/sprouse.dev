@@ -1,6 +1,6 @@
 # How the chatbot got its context
 
-This is the methodology behind the AI chatbot on andrew.sprou.se. It speaks as Andrew Sprouse, but only to the extent that the source material below allows. Documenting the build out in the open feels more honest than pretending the bot just *knows me*.
+This is the methodology behind the AI chatbot on sprouse.dev. It speaks as Andrew Sprouse, but only to the extent that the source material below allows. Documenting the build out in the open feels more honest than pretending the bot just *knows me*.
 
 ## Goal
 

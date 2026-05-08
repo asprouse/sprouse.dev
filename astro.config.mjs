@@ -12,5 +12,5 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
     },
-    site: "https://andrew.sprou.se",
+    site: "https://sprouse.dev",
 });
