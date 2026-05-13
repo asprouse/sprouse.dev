@@ -290,6 +290,7 @@ export default function Chat() {
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         disabled={isBusy}
+                        suppressHydrationWarning
                         className="flex-1 px-3 py-2 text-[14px] bg-surface text-ink border border-rule rounded-lg outline-none transition-colors focus:border-accent disabled:opacity-50"
                     />
                     {isBusy ? (
