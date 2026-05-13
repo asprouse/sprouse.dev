@@ -27,7 +27,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_
 <Layout title={variant.metaTitle} description={variant.metaDescription}>
     <main class="max-w-page mx-auto px-6 pt-20 pb-28">
         <header class="grid grid-cols-[1fr_auto] gap-8 items-start mb-10 max-[600px]:grid-cols-1 max-[600px]:gap-5">
-            <div class="min-w-0 max-[600px]:order-2">
+            <div class="min-w-0 max-[600px]:order-1">
                 <h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-[-0.035em] leading-[1.05] m-0 mb-3">
                     {fullName}
                 </h1>
@@ -50,7 +50,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_
                     <VariantSwitcher current={variant.slug} />
                 </div>
             </div>
-            <div class="justify-self-end max-[600px]:justify-self-start max-[600px]:order-1">
+            <div class="justify-self-end max-[600px]:justify-self-start max-[600px]:order-2">
                 <Portrait />
             </div>
         </header>
