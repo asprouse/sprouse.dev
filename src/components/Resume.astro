@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Chat from "./Chat";
 import CompressedRoleCard from "./CompressedRoleCard.astro";
+import LeadershipPhilosophy from "./LeadershipPhilosophy.astro";
 import Portrait from "./Portrait.astro";
 import RoleCard from "./RoleCard.astro";
 import SkillsMatrix from "./SkillsMatrix.astro";
@@ -69,6 +70,8 @@ const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_
                 </>
             )
         }
+
+        <LeadershipPhilosophy />
 
         <h2 class="section-label mt-12 mb-5">Skills</h2>
         <SkillsMatrix />
