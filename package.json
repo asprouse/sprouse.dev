@@ -15,6 +15,7 @@
         "@ai-sdk/react": "^3.0.177",
         "@astrojs/cloudflare": "^12.0.0",
         "@astrojs/react": "^4.0.0",
+        "@astrojs/sitemap": "^3.7.2",
         "@fontsource-variable/inter": "^5.2.8",
         "@tailwindcss/vite": "^4.2.4",
         "ai": "6.0.175",

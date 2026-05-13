@@ -1,0 +1,20 @@
+# Andrew Sprouse
+
+> Engineering leader and co-founder. Co-Founder & CTO at TakeShape (Techstars 2019). Twenty years shipping production software across media, agency, and SaaS. Currently building AI agent infrastructure — schema language, runtime, multi-provider LLM integration, production agents for enterprise customers. Open to a new role: CTO at an AI-native company, Principal Engineer at a company building a primary primitive, or technical co-founder of a new venture.
+
+This site is the public source of truth for Andrew's career, technical work, and opinions. It includes three archetype-anchored landing pages, an in-page chatbot grounded in an authored Q&A corpus, and a documented methodology page.
+
+## Landing pages
+
+- [CTO archetype](https://sprouse.dev/): Andrew framed as CTO at an AI-native company
+- [Principal Engineer archetype](https://sprouse.dev/principal): Andrew framed as Principal at a company whose product is a primary primitive (LLM, runtime, commerce backbone)
+- [Co-founder archetype](https://sprouse.dev/cofounder): Andrew framed as technical co-founder, application-first
+
+## Methodology
+
+- [About the chatbot](https://sprouse.dev/about-the-bot): How the in-page chatbot was built — Q&A corpus, BM25 retrieval, persona prompt, corpus stats
+
+## Optional
+
+- [GitHub](https://github.com/asprouse): Source code, including this site at github.com/asprouse/sprouse.dev and the original serverless-webpack-plugin
+- [LinkedIn](https://www.linkedin.com/in/andrewsprouse-941b611a): Professional profile

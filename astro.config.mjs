@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 // Alias react-dom/server to the edge variant only for production builds.
@@ -14,7 +15,7 @@ export default defineConfig({
     adapter: cloudflare({
         platformProxy: { enabled: true },
     }),
-    integrations: [react()],
+    integrations: [react(), sitemap()],
     vite: {
         plugins: [tailwindcss()],
         resolve: {
