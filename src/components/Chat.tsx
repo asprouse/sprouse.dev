@@ -5,9 +5,10 @@ import { Streamdown } from "streamdown";
 
 const PROMPTS = [
     "What's TakeShape's agent architecture?",
+    "How do you hire?",
     "Hot take on TypeScript?",
     "How did Fair Tread end?",
-    "What music are you into?",
+    "Why are you leaving TakeShape?",
 ];
 
 interface UIPart {

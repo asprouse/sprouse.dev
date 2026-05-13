@@ -15,7 +15,13 @@ export default defineConfig({
     adapter: cloudflare({
         platformProxy: { enabled: true },
     }),
-    integrations: [react(), sitemap()],
+    integrations: [
+        react(),
+        sitemap({
+            // /og is a noindex internal route used to generate the OG image.
+            filter: (page) => !page.includes("/og/"),
+        }),
+    ],
     vite: {
         plugins: [tailwindcss()],
         resolve: {
