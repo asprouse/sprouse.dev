@@ -184,11 +184,12 @@ const summaryText = currentRole
                 text-transform: uppercase;
                 color: var(--cv-muted);
                 border-bottom: 1px solid var(--cv-rule);
+                break-after: avoid-page;
+                page-break-after: avoid;
             }
 
             .role {
                 margin: 0.7em 0 1em;
-                page-break-inside: avoid;
             }
 
             .role-header {
@@ -197,6 +198,8 @@ const summaryText = currentRole
                 align-items: baseline;
                 gap: 12px;
                 margin-bottom: 0.15em;
+                break-after: avoid-page;
+                page-break-after: avoid;
             }
             .role-name {
                 font-size: 11.5pt;
