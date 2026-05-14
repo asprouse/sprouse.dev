@@ -1,31 +1,39 @@
 ---
-import { VARIANTS, VARIANT_ORDER, type VariantSlug } from "../lib/variants";
+import { VARIANTS, VARIANT_ORDER, type VariantSlug } from '../lib/variants';
 
 interface Props {
-    current: VariantSlug;
+  current: VariantSlug;
 }
 
 const { current } = Astro.props;
 ---
 
-<div class="text-[13px] text-muted">
-    <span class="mr-2">Read this site as:</span>
-    <span class="inline-flex flex-wrap gap-1">
-        {
-            VARIANT_ORDER.map((slug, i) => {
-                const variant = VARIANTS[slug];
-                const isCurrent = slug === current;
-                return (
-                    <>
-                        {i > 0 && <span class="text-muted-2 mx-0.5" aria-hidden="true">·</span>}
-                        {isCurrent ? (
-                            <span class="font-medium text-ink" aria-current="page">{variant.label}</span>
-                        ) : (
-                            <a href={variant.path} class="hover:text-accent">{variant.label}</a>
-                        )}
-                    </>
-                );
-            })
-        }
-    </span>
+<div class="text-muted text-[13px]">
+  <span class="mr-2">Read this site as:</span>
+  <span class="inline-flex flex-wrap gap-1">
+    {
+      VARIANT_ORDER.map((slug, i) => {
+        const variant = VARIANTS[slug];
+        const isCurrent = slug === current;
+        return (
+          <>
+            {i > 0 && (
+              <span class="text-muted-2 mx-0.5" aria-hidden="true">
+                ·
+              </span>
+            )}
+            {isCurrent ? (
+              <span class="text-ink font-medium" aria-current="page">
+                {variant.label}
+              </span>
+            ) : (
+              <a href={variant.path} class="hover:text-accent">
+                {variant.label}
+              </a>
+            )}
+          </>
+        );
+      })
+    }
+  </span>
 </div>

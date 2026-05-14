@@ -1,10 +1,10 @@
 ---
-import TechChip from "./TechChip.astro";
-import { formatDateRange, slugifyCompany } from "../lib/resume";
-import type { ExperienceEntry } from "../types/resume";
+import TechChip from './TechChip.astro';
+import { formatDateRange, slugifyCompany } from '../lib/resume';
+import type { ExperienceEntry } from '../types/resume';
 
 interface Props {
-    role: ExperienceEntry;
+  role: ExperienceEntry;
 }
 
 const { role } = Astro.props;
@@ -12,67 +12,77 @@ const slug = slugifyCompany(role.company);
 ---
 
 <details
-    id={`role-${slug}`}
-    data-role-slug={slug}
-    class="compressed-role group/role border-t border-rule first:border-t-0 scroll-mt-24 transition-colors"
+  id={`role-${slug}`}
+  data-role-slug={slug}
+  class="compressed-role group/role border-rule scroll-mt-24 border-t transition-colors first:border-t-0"
 >
-    <summary class="flex items-center gap-3 py-3 cursor-pointer list-none select-none hover:[&_.company]:text-accent">
-        <svg
-            class="w-3 h-3 text-muted-2 shrink-0 transition-transform duration-150 group-open/role:rotate-90"
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-        >
-            <path d="M4.5 2.5L8 6l-3.5 3.5" />
-        </svg>
-        <span class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 min-w-0">
-            <span class="company text-[15px] font-semibold tracking-tight transition-colors">
-                {role.company}
-            </span>
-            <span class="text-muted-2 text-[13px]">·</span>
-            <span class="text-[13px] text-muted whitespace-nowrap">{role.title}</span>
-            <span class="text-muted-2 text-[13px]">·</span>
-            <span class="text-[13px] text-muted whitespace-nowrap">
-                {formatDateRange(role.dateRange.from, role.dateRange.to)}
-            </span>
-        </span>
-    </summary>
+  <summary
+    class="hover:[&_.company]:text-accent flex cursor-pointer list-none items-center gap-3 py-3 select-none"
+  >
+    <svg
+      class="text-muted-2 h-3 w-3 shrink-0 transition-transform duration-150 group-open/role:rotate-90"
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4.5 2.5L8 6l-3.5 3.5"></path>
+    </svg>
+    <span class="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5">
+      <span class="company text-[15px] font-semibold tracking-tight transition-colors">
+        {role.company}
+      </span>
+      <span class="text-muted-2 text-[13px]">·</span>
+      <span class="text-muted text-[13px] whitespace-nowrap">{role.title}</span>
+      <span class="text-muted-2 text-[13px]">·</span>
+      <span class="text-muted text-[13px] whitespace-nowrap">
+        {formatDateRange(role.dateRange.from, role.dateRange.to)}
+      </span>
+    </span>
+  </summary>
 
-    <div class="pl-6 pb-5 pt-1">
-        {role.description && <p class="m-0 mb-3 text-[14px]" set:html={role.description} />}
+  <div class="pt-1 pb-5 pl-6">
+    {role.description && <p class="m-0 mb-3 text-[14px]" set:html={role.description} />}
 
-        {
-            role.projects.map((project) => (
-                <div class="mt-3">
-                    {project.title && (
-                        <h4 class="text-[14px] font-semibold tracking-tight m-0 mb-0.5">
-                            {project.title}
-                        </h4>
-                    )}
-                    <p class="m-0 text-[14px]" set:html={project.description} />
-                    {project.technologies.length > 0 && (
-                        <div class="flex flex-wrap gap-1.5 mt-2">
-                            {project.technologies.map((slug) => <TechChip slug={slug} />)}
-                        </div>
-                    )}
-                </div>
-            ))
-        }
-    </div>
+    {
+      role.projects.map((project) => (
+        <div class="mt-3">
+          {project.title && (
+            <h4 class="m-0 mb-0.5 text-[14px] font-semibold tracking-tight">{project.title}</h4>
+          )}
+          <p class="m-0 text-[14px]" set:html={project.description} />
+          {project.technologies.length > 0 && (
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              {project.technologies.map((slug) => (
+                <TechChip slug={slug} />
+              ))}
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
 </details>
 
 <style>
-    .compressed-role.role-flash {
-        animation: role-flash 1.6s ease-out;
+  .compressed-role.role-flash {
+    animation: role-flash 1.6s ease-out;
+  }
+  @keyframes role-flash {
+    0% {
+      background-color: transparent;
     }
-    @keyframes role-flash {
-        0% { background-color: transparent; }
-        20% { background-color: color-mix(in oklab, var(--color-accent) 14%, transparent); }
-        100% { background-color: transparent; }
+    20% {
+      background-color: color-mix(in oklab, var(--color-accent) 14%, transparent);
     }
-    summary::-webkit-details-marker { display: none; }
+    100% {
+      background-color: transparent;
+    }
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
 </style>

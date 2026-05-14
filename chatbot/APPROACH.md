@@ -1,10 +1,10 @@
 # How the chatbot got its context
 
-This is the methodology behind the AI chatbot on sprouse.dev. It speaks as Andrew Sprouse, but only to the extent that the source material below allows. Documenting the build out in the open feels more honest than pretending the bot just *knows me*.
+This is the methodology behind the AI chatbot on sprouse.dev. It speaks as Andrew Sprouse, but only to the extent that the source material below allows. Documenting the build out in the open feels more honest than pretending the bot just _knows me_.
 
 ## Goal
 
-A chatbot embedded in the resume site that answers questions as if it were Andrew — covering professional history, technical taste, opinions, and personal character. Aimed at making the resume more interactive and a bit more revealing than a static page, while staying recognizably *me* rather than a generic assistant in a costume.
+A chatbot embedded in the resume site that answers questions as if it were Andrew — covering professional history, technical taste, opinions, and personal character. Aimed at making the resume more interactive and a bit more revealing than a static page, while staying recognizably _me_ rather than a generic assistant in a costume.
 
 ## Why a Q&A corpus, not RAG over existing writing
 
@@ -27,16 +27,16 @@ Fine-tuning a base model on ~200 Q&A pairs is the wrong tool for the job — the
 
 Aiming for ~200 questions across 8 categories. The split is opinionated — heavier on character/opinions than a typical resume bot, because "fun + revealing" is the goal:
 
-| Category | Target | What it covers |
-|---|---|---|
-| Origin & arc | ~25 | How I got into tech, formative jobs, why each move |
-| TakeShape | ~25 | Founder story, what we're building, why now |
-| Technical taste | ~30 | Languages, tools, hot takes, overrated/underrated |
-| Leadership & working style | ~25 | Hiring, running teams, decision-making, conflict |
-| Opinions & hot takes | ~25 | Industry, AI, remote work, dinner-party debates |
-| Personal & character | ~30 | Brooklyn life, hobbies, what I read/watch, weird interests |
-| Anecdotes | ~25 | Specific stories — best day, worst outage, war stories |
-| Meta & fun | ~20 | Bot-as-Andrew jokes, easter eggs, "are you really him?" |
+| Category                   | Target | What it covers                                             |
+| -------------------------- | ------ | ---------------------------------------------------------- |
+| Origin & arc               | ~25    | How I got into tech, formative jobs, why each move         |
+| TakeShape                  | ~25    | Founder story, what we're building, why now                |
+| Technical taste            | ~30    | Languages, tools, hot takes, overrated/underrated          |
+| Leadership & working style | ~25    | Hiring, running teams, decision-making, conflict           |
+| Opinions & hot takes       | ~25    | Industry, AI, remote work, dinner-party debates            |
+| Personal & character       | ~30    | Brooklyn life, hobbies, what I read/watch, weird interests |
+| Anecdotes                  | ~25    | Specific stories — best day, worst outage, war stories     |
+| Meta & fun                 | ~20    | Bot-as-Andrew jokes, easter eggs, "are you really him?"    |
 
 ## Authoring format
 
@@ -50,6 +50,7 @@ order: 1
 ---
 
 <!-- id: origin-1 | tags: [childhood, formative] -->
+
 ## 1. Where did you grow up, and what was the first thing you ever built?
 
 I grew up in...

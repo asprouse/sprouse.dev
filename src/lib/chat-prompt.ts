@@ -1,5 +1,4 @@
-import type { QAEntry } from "./qa-corpus";
-import type { RetrievalResult } from "./retrieval";
+import type { RetrievalResult } from './retrieval';
 
 const PERSONA = `You are Andrew Sprouse — co-founder and CTO at TakeShape, currently open to a new role.
 
@@ -36,24 +35,24 @@ CONTEXT BELOW:
 2. A small set of example Q&A pairs the user's question retrieved as most relevant. Match this voice and depth. Use the answers as ground truth — if an example covers the question, draw from it. If not, generalize from the voice.`;
 
 export interface PromptInputs {
-    profile: string;
-    retrieved: RetrievalResult[];
-    companies: string[];
+  profile: string;
+  retrieved: RetrievalResult[];
+  companies: string[];
 }
 
 export function buildSystemPrompt({ profile, retrieved, companies }: PromptInputs): string {
-    const examples = retrieved.length
-        ? retrieved
-              .map(
-                  (r, i) =>
-                      `EXAMPLE ${i + 1} (id: ${r.entry.id}, category: ${r.entry.category})\nQ: ${r.entry.question}\nA: ${r.entry.answer}`,
-              )
-              .join("\n\n---\n\n")
-        : "(No example Q&A pairs were retrieved for this question. Stay grounded in the profile above and decline anything you can't answer faithfully.)";
+  const examples = retrieved.length
+    ? retrieved
+        .map(
+          (r, i) =>
+            `EXAMPLE ${i + 1} (id: ${r.entry.id}, category: ${r.entry.category})\nQ: ${r.entry.question}\nA: ${r.entry.answer}`
+        )
+        .join('\n\n---\n\n')
+    : "(No example Q&A pairs were retrieved for this question. Stay grounded in the profile above and decline anything you can't answer faithfully.)";
 
-    const persona = PERSONA.replace("{{COMPANIES}}", companies.join(", "));
+  const persona = PERSONA.replace('{{COMPANIES}}', companies.join(', '));
 
-    return `${persona}
+  return `${persona}
 
 === PROFILE ===
 
@@ -68,19 +67,21 @@ ${examples}
 Answer the user's next question as Andrew, in his voice, drawing on the profile and examples above.`;
 }
 
-export function extractQueryFromMessages(messages: { role: string; parts?: Array<{ type: string; text?: string }>; content?: unknown }[]): string {
-    // Find the last user message and extract its text
-    for (let i = messages.length - 1; i >= 0; i--) {
-        const m = messages[i];
-        if (m.role !== "user") continue;
-        if (Array.isArray(m.parts)) {
-            return m.parts
-                .filter((p) => p.type === "text" && typeof p.text === "string")
-                .map((p) => p.text)
-                .join(" ")
-                .trim();
-        }
-        if (typeof m.content === "string") return m.content.trim();
+export function extractQueryFromMessages(
+  messages: { role: string; parts?: Array<{ type: string; text?: string }>; content?: unknown }[]
+): string {
+  // Find the last user message and extract its text
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
+    if (m.role !== 'user') continue;
+    if (Array.isArray(m.parts)) {
+      return m.parts
+        .filter((p) => p.type === 'text' && typeof p.text === 'string')
+        .map((p) => p.text)
+        .join(' ')
+        .trim();
     }
-    return "";
+    if (typeof m.content === 'string') return m.content.trim();
+  }
+  return '';
 }

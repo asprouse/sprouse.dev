@@ -1,97 +1,95 @@
-@import "tailwindcss";
-@import "@fontsource-variable/inter";
-@import "streamdown/styles.css";
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import 'streamdown/styles.css';
 
 @theme {
-    --color-canvas: #fafaf9;
-    --color-surface: #ffffff;
-    --color-ink: #0c0a09;
-    --color-muted: #57534e;
-    --color-muted-2: #78716c;
-    --color-rule: #e7e5e4;
-    --color-accent: #ea580c;
-    --color-accent-ink: #ffffff;
-    --color-chip: #f5f5f4;
-    --color-chip-ink: #292524;
+  --color-canvas: #fafaf9;
+  --color-surface: #ffffff;
+  --color-ink: #0c0a09;
+  --color-muted: #57534e;
+  --color-muted-2: #78716c;
+  --color-rule: #e7e5e4;
+  --color-accent: #ea580c;
+  --color-accent-ink: #ffffff;
+  --color-chip: #f5f5f4;
+  --color-chip-ink: #292524;
 
-    --font-sans:
-        "Inter Variable", ui-sans-serif, -apple-system, BlinkMacSystemFont,
-        system-ui, sans-serif;
-    --font-mono:
-        ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --font-sans:
+    'Inter Variable', ui-sans-serif, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
-    --container-page: 760px;
+  --container-page: 760px;
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --color-canvas: #0c0a09;
-        --color-surface: #1c1917;
-        --color-ink: #fafaf9;
-        --color-muted: #a8a29e;
-        --color-muted-2: #78716c;
-        --color-rule: #292524;
-        --color-accent: #fb923c;
-        --color-accent-ink: #1c1917;
-        --color-chip: #1c1917;
-        --color-chip-ink: #d6d3d1;
-    }
+  :root {
+    --color-canvas: #0c0a09;
+    --color-surface: #1c1917;
+    --color-ink: #fafaf9;
+    --color-muted: #a8a29e;
+    --color-muted-2: #78716c;
+    --color-rule: #292524;
+    --color-accent: #fb923c;
+    --color-accent-ink: #1c1917;
+    --color-chip: #1c1917;
+    --color-chip-ink: #d6d3d1;
+  }
 }
 
 @layer base {
-    html {
-        scroll-behavior: smooth;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 
-    body {
-        @apply bg-canvas text-ink;
-        font-feature-settings: "ss01", "cv11";
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-    }
+  body {
+    @apply bg-canvas text-ink;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
-    ::selection {
-        @apply bg-accent text-accent-ink;
-    }
+  ::selection {
+    @apply bg-accent text-accent-ink;
+  }
 
-    a {
-        @apply text-ink decoration-accent;
-        text-decoration-thickness: 1.5px;
-        text-underline-offset: 3px;
-        transition:
-            text-decoration-thickness 120ms ease,
-            color 120ms ease;
-    }
+  a {
+    @apply text-ink decoration-accent;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition:
+      text-decoration-thickness 120ms ease,
+      color 120ms ease;
+  }
 
-    a:hover {
-        @apply text-accent;
-        text-decoration-thickness: 2.5px;
-    }
+  a:hover {
+    @apply text-accent;
+    text-decoration-thickness: 2.5px;
+  }
 }
 
 @utility chip {
-    @apply inline-block px-2 py-[3px] text-xs font-medium tracking-tight rounded-full border border-transparent transition-colors cursor-default bg-chip text-chip-ink;
+  @apply bg-chip text-chip-ink inline-block cursor-default rounded-full border border-transparent px-2 py-[3px] text-xs font-medium tracking-tight transition-colors;
 }
 .chip:hover {
-    @apply border-rule text-ink;
+  @apply border-rule text-ink;
 }
 .chip a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 @utility chip-current {
-    @apply border-accent text-ink;
+  @apply border-accent text-ink;
 }
 
 @utility section-label {
-    @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted;
+  @apply text-muted text-xs font-semibold tracking-[0.12em] uppercase;
 }
 
 .chat-markdown > :first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 .chat-markdown > :last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }

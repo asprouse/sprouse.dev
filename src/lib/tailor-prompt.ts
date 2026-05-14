@@ -1,46 +1,78 @@
-import { resume } from "./resume";
-import { slugifyCompany } from "./resume";
+import { resume } from './resume';
+import { slugifyCompany } from './resume';
 
-const RETROSPECTIVE_CUTOFF = "2015-01";
+const RETROSPECTIVE_CUTOFF = '2015-01';
 
 function formatResumeForPrompt(): string {
-    const currentEra = resume.experience.filter(
-        (r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF,
-    );
+  const currentEra = resume.experience.filter((r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF);
 
-    const rolesText = currentEra
-        .map((role) => {
-            const slug = slugifyCompany(role.company);
-            const projects = role.projects
-                .map((p, idx) => {
-                    const title = p.title ? `${p.title} — ` : "";
-                    const desc = p.description.replace(/<[^>]+>/g, "").slice(0, 300);
-                    return `    [${idx}] ${title}${desc}`;
-                })
-                .join("\n");
-            const desc = role.description.replace(/<[^>]+>/g, "");
-            return `${role.company} (slug: ${slug}) — ${role.title}\n  Summary: ${desc}\n  Projects:\n${projects}`;
+  const rolesText = currentEra
+    .map((role) => {
+      const slug = slugifyCompany(role.company);
+      const projects = role.projects
+        .map((p, idx) => {
+          const title = p.title ? `${p.title} — ` : '';
+          const desc = p.description.replace(/<[^>]+>/g, '').slice(0, 300);
+          return `    [${idx}] ${title}${desc}`;
         })
-        .join("\n\n");
+        .join('\n');
+      const desc = role.description.replace(/<[^>]+>/g, '');
+      return `${role.company} (slug: ${slug}) — ${role.title}\n  Summary: ${desc}\n  Projects:\n${projects}`;
+    })
+    .join('\n\n');
 
-    return rolesText;
+  return rolesText;
 }
 
 const SKILL_VOCABULARY = [
-    "TypeScript", "GraphQL", "JavaScript", "HTML", "CSS", "Lua",
-    "React", "Next.js", "Tailwind CSS",
-    "Anthropic SDK", "OpenAI SDK", "Vercel AI SDK", "LangChain",
-    "Anthropic", "OpenAI", "Google AI", "AWS Bedrock", "Azure OpenAI", "Arize",
-    "AWS Lambda", "DynamoDB", "OpenSearch", "Redis", "S3",
-    "SQS / SNS", "KMS", "Athena", "Stripe", "Shopify", "Netlify", "Node.js",
-    "AWS CDK", "SST", "Pulumi", "Serverless Framework",
-    "OpenTelemetry", "AWS X-Ray", "Sentry",
-    "Zustand", "Monaco Editor",
-    "JSON Schema", "OpenAPI", "REST", "HTTP 402",
+  'TypeScript',
+  'GraphQL',
+  'JavaScript',
+  'HTML',
+  'CSS',
+  'Lua',
+  'React',
+  'Next.js',
+  'Tailwind CSS',
+  'Anthropic SDK',
+  'OpenAI SDK',
+  'Vercel AI SDK',
+  'LangChain',
+  'Anthropic',
+  'OpenAI',
+  'Google AI',
+  'AWS Bedrock',
+  'Azure OpenAI',
+  'Arize',
+  'AWS Lambda',
+  'DynamoDB',
+  'OpenSearch',
+  'Redis',
+  'S3',
+  'SQS / SNS',
+  'KMS',
+  'Athena',
+  'Stripe',
+  'Shopify',
+  'Netlify',
+  'Node.js',
+  'AWS CDK',
+  'SST',
+  'Pulumi',
+  'Serverless Framework',
+  'OpenTelemetry',
+  'AWS X-Ray',
+  'Sentry',
+  'Zustand',
+  'Monaco Editor',
+  'JSON Schema',
+  'OpenAPI',
+  'REST',
+  'HTTP 402'
 ];
 
 export function buildTailorSystemPrompt(): string {
-    return `You are tailoring Andrew Sprouse's CV for a specific job description (JD).
+  return `You are tailoring Andrew Sprouse's CV for a specific job description (JD).
 
 # Your job
 Read the JD. Re-rank Andrew's existing projects, hide irrelevant ones, pick the best positioning variant, rewrite the summary, and emphasize matching skills. You are NOT writing new project descriptions or fabricating experience — only re-ranking and re-emphasizing what already exists.
@@ -67,7 +99,7 @@ If the JD doesn't cleanly map to one, pick the closest and explain why in the ra
 
 # Skill emphasis
 Pick 5–15 skills from this vocabulary that map to the JD's requirements:
-${SKILL_VOCABULARY.join(", ")}
+${SKILL_VOCABULARY.join(', ')}
 
 Use EXACT spellings from the list. If the JD asks for something not in this vocabulary, just don't include it — don't make up a skill.
 

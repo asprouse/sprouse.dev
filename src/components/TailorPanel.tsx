@@ -1,107 +1,107 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 import {
-    applyPatch,
-    clearPatch,
-    initTailorFromHash,
-    readPatchFromHash,
-    writePatchToHash,
-    type TailorPatch,
-} from "../lib/tailor-client";
+  applyPatch,
+  clearPatch,
+  initTailorFromHash,
+  readPatchFromHash,
+  writePatchToHash,
+  type TailorPatch
+} from '../lib/tailor-client';
 
-type State = "idle" | "loading" | "applied" | "error";
+type State = 'idle' | 'loading' | 'applied' | 'error';
 
-const SAMPLE_JD_HINT = "Paste a job description — full text or just the key parts.";
+const SAMPLE_JD_HINT = 'Paste a job description — full text or just the key parts.';
 
 export default function TailorPanel() {
-    const [open, setOpen] = useState(false);
-    const [state, setState] = useState<State>("idle");
-    const [error, setError] = useState<string | null>(null);
-    const [jd, setJd] = useState("");
-    const detailsRef = useRef<HTMLDetailsElement>(null);
+  const [state, setState] = useState<State>(() =>
+    typeof window !== 'undefined' && readPatchFromHash() ? 'applied' : 'idle'
+  );
+  const [error, setError] = useState<string | null>(null);
+  const [jd, setJd] = useState('');
+  const detailsRef = useRef<HTMLDetailsElement>(null);
 
-    useEffect(() => {
-        initTailorFromHash();
-        if (readPatchFromHash()) setState("applied");
+  useEffect(() => {
+    initTailorFromHash();
 
-        const onCleared = () => {
-            setState("idle");
-            setError(null);
-            setJd("");
-        };
-        window.addEventListener("tailor:cleared", onCleared);
-        return () => window.removeEventListener("tailor:cleared", onCleared);
-    }, []);
+    const onCleared = () => {
+      setState('idle');
+      setError(null);
+      setJd('');
+    };
+    window.addEventListener('tailor:cleared', onCleared);
+    return () => window.removeEventListener('tailor:cleared', onCleared);
+  }, []);
 
-    async function submit(e: React.FormEvent) {
-        e.preventDefault();
-        const value = jd.trim();
-        if (value.length < 40) {
-            setError("Paste a longer job description (a few sentences at minimum).");
-            return;
-        }
-        setState("loading");
-        setError(null);
-        try {
-            const res = await fetch("/api/tailor", {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({ jobDescription: value }),
-            });
-            if (!res.ok) {
-                const body = (await res.json().catch(() => null)) as { error?: string } | null;
-                throw new Error(body?.error || `Request failed (${res.status})`);
-            }
-            const patch = (await res.json()) as TailorPatch;
-            applyPatch(patch);
-            writePatchToHash(patch);
-            setState("applied");
-            detailsRef.current?.removeAttribute("open");
-        } catch (err) {
-            setState("error");
-            setError(err instanceof Error ? err.message : "Tailoring failed.");
-        }
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    const value = jd.trim();
+    if (value.length < 40) {
+      setError('Paste a longer job description (a few sentences at minimum).');
+      return;
     }
-
-    function onClear() {
-        clearPatch();
-        setJd("");
+    setState('loading');
+    setError(null);
+    try {
+      const res = await fetch('/api/tailor', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jobDescription: value })
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(body?.error || `Request failed (${res.status})`);
+      }
+      const patch = (await res.json()) as TailorPatch;
+      applyPatch(patch);
+      writePatchToHash(patch);
+      setState('applied');
+      detailsRef.current?.removeAttribute('open');
+    } catch (err) {
+      setState('error');
+      setError(err instanceof Error ? err.message : 'Tailoring failed.');
     }
+  }
 
-    return (
-        <details ref={detailsRef} className="tailor-panel" suppressHydrationWarning>
-            <summary className="tailor-panel-summary">
-                {state === "applied" ? "Tailor: edit JD" : "Tailor for a job"}
-            </summary>
-            <form onSubmit={submit} className="tailor-panel-body">
-                <textarea
-                    className="tailor-textarea"
-                    placeholder={SAMPLE_JD_HINT}
-                    value={jd}
-                    onChange={(e) => setJd(e.target.value)}
-                    rows={8}
-                    disabled={state === "loading"}
-                    suppressHydrationWarning
-                />
-                <div className="tailor-actions">
-                    <button
-                        type="submit"
-                        className="tailor-submit"
-                        disabled={state === "loading" || jd.trim().length < 40}
-                    >
-                        {state === "loading" ? "Tailoring…" : "Tailor CV"}
-                    </button>
-                    {state === "applied" && (
-                        <button type="button" className="tailor-clear" onClick={onClear}>
-                            Reset to default
-                        </button>
-                    )}
-                    <span className="tailor-meta">
-                        Re-ranks + emphasizes. Doesn't fabricate experience.
-                    </span>
-                </div>
-                {error && <p className="tailor-error">{error}</p>}
-            </form>
-            <style>{`
+  function onClear() {
+    clearPatch();
+    setJd('');
+  }
+
+  return (
+    <details ref={detailsRef} className="tailor-panel" suppressHydrationWarning>
+      <summary className="tailor-panel-summary">
+        {state === 'applied' ? 'Tailor: edit JD' : 'Tailor for a job'}
+      </summary>
+      <form onSubmit={submit} className="tailor-panel-body">
+        <textarea
+          className="tailor-textarea"
+          placeholder={SAMPLE_JD_HINT}
+          value={jd}
+          onChange={(e) => setJd(e.target.value)}
+          rows={8}
+          disabled={state === 'loading'}
+          suppressHydrationWarning
+        />
+        <div className="tailor-actions">
+          <button
+            type="submit"
+            className="tailor-submit"
+            disabled={state === 'loading' || jd.trim().length < 40}
+          >
+            {state === 'loading' ? 'Tailoring…' : 'Tailor CV'}
+          </button>
+          {state === 'applied' && (
+            <button type="button" className="tailor-clear" onClick={onClear}>
+              Reset to default
+            </button>
+          )}
+          <span className="tailor-meta">
+            Re-ranks + emphasizes. Doesn&rsquo;t fabricate experience.
+          </span>
+        </div>
+        {error && <p className="tailor-error">{error}</p>}
+      </form>
+      <style>{`
                 .tailor-panel {
                     position: relative;
                 }
@@ -202,6 +202,6 @@ export default function TailorPanel() {
                     font-size: 12px;
                 }
             `}</style>
-        </details>
-    );
+    </details>
+  );
 }

@@ -1,10 +1,10 @@
 ---
-import TechChip from "./TechChip.astro";
-import { formatDateRange, slugifyCompany } from "../lib/resume";
-import type { ExperienceEntry } from "../types/resume";
+import TechChip from './TechChip.astro';
+import { formatDateRange, slugifyCompany } from '../lib/resume';
+import type { ExperienceEntry } from '../types/resume';
 
 interface Props {
-    role: ExperienceEntry;
+  role: ExperienceEntry;
 }
 
 const { role } = Astro.props;
@@ -12,48 +12,55 @@ const slug = slugifyCompany(role.company);
 ---
 
 <article
-    id={`role-${slug}`}
-    data-role-slug={slug}
-    class="role py-7 border-t border-rule first:border-t-0 first:pt-0 scroll-mt-24 transition-colors"
+  id={`role-${slug}`}
+  data-role-slug={slug}
+  class="role border-rule scroll-mt-24 border-t py-7 transition-colors first:border-t-0 first:pt-0"
 >
-    <h3 class="text-lg font-semibold tracking-tight mb-1">{role.company}</h3>
+  <h3 class="mb-1 text-lg font-semibold tracking-tight">{role.company}</h3>
 
-    <div class="flex flex-wrap gap-x-2.5 gap-y-1 text-[13px] mb-3.5 text-muted">
-        <span class="whitespace-nowrap">{role.title}</span>
-        <span class="text-muted-2">·</span>
-        <span class="whitespace-nowrap">{formatDateRange(role.dateRange.from, role.dateRange.to)}</span>
-        <span class="text-muted-2">·</span>
-        <span class="whitespace-nowrap">{role.location.city}, {role.location.state}</span>
-    </div>
+  <div class="text-muted mb-3.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[13px]">
+    <span class="whitespace-nowrap">{role.title}</span>
+    <span class="text-muted-2">·</span>
+    <span class="whitespace-nowrap">{formatDateRange(role.dateRange.from, role.dateRange.to)}</span>
+    <span class="text-muted-2">·</span>
+    <span class="whitespace-nowrap">{role.location.city}, {role.location.state}</span>
+  </div>
 
-    {role.description && <p class="m-0" set:html={role.description} />}
+  {role.description && <p class="m-0" set:html={role.description} />}
 
-    {
-        role.projects.map((project) => (
-            <div class="mt-4">
-                {project.title && (
-                    <h4 class="text-[15px] font-semibold tracking-tight m-0 mb-1">
-                        {project.title}
-                    </h4>
-                )}
-                <p class="m-0" set:html={project.description} />
-                {project.technologies.length > 0 && (
-                    <div class="flex flex-wrap gap-1.5 mt-2.5">
-                        {project.technologies.map((slug) => <TechChip slug={slug} />)}
-                    </div>
-                )}
-            </div>
-        ))
-    }
+  {
+    role.projects.map((project) => (
+      <div class="mt-4">
+        {project.title && (
+          <h4 class="m-0 mb-1 text-[15px] font-semibold tracking-tight">{project.title}</h4>
+        )}
+        <p class="m-0" set:html={project.description} />
+        {project.technologies.length > 0 && (
+          <div class="mt-2.5 flex flex-wrap gap-1.5">
+            {project.technologies.map((slug) => (
+              <TechChip slug={slug} />
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  }
 </article>
 
 <style>
-    .role.role-flash {
-        animation: role-flash 1.6s ease-out;
+  .role.role-flash {
+    animation: role-flash 1.6s ease-out;
+  }
+
+  @keyframes role-flash {
+    0% {
+      background-color: transparent;
     }
-    @keyframes role-flash {
-        0% { background-color: transparent; }
-        20% { background-color: color-mix(in oklab, var(--color-accent) 14%, transparent); }
-        100% { background-color: transparent; }
+    20% {
+      background-color: color-mix(in oklab, var(--color-accent) 14%, transparent);
     }
+    100% {
+      background-color: transparent;
+    }
+  }
 </style>

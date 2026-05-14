@@ -1,15 +1,15 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Chat from "../components/Chat";
-import { marked } from "marked";
-import approachMd from "../../chatbot/APPROACH.md?raw";
-import { corpus } from "../lib/qa-loader";
+import Layout from '../layouts/Layout.astro';
+import Chat from '../components/Chat';
+import { marked } from 'marked';
+import approachMd from '../../chatbot/APPROACH.md?raw';
+import { corpus } from '../lib/qa-loader';
 
 const html = await marked.parse(approachMd);
 
 const byCategory = corpus.reduce<Record<string, number>>((acc, entry) => {
-    acc[entry.categoryTitle] = (acc[entry.categoryTitle] || 0) + 1;
-    return acc;
+  acc[entry.categoryTitle] = (acc[entry.categoryTitle] || 0) + 1;
+  return acc;
 }, {});
 
 const totalAnswered = corpus.length;
@@ -17,132 +17,134 @@ const categories = Object.entries(byCategory).sort((a, b) => b[1] - a[1]);
 ---
 
 <Layout
-    title="How the chatbot got its context — Andrew Sprouse"
-    description="The methodology behind the AI chatbot on this site — Q&A corpus, retrieval, persona prompt, and what it can and can't do."
+  title="How the chatbot got its context — Andrew Sprouse"
+  description="The methodology behind the AI chatbot on this site — Q&A corpus, retrieval, persona prompt, and what it can and can't do."
 >
-    <main class="max-w-page mx-auto px-6 pt-20 pb-28">
-        <p class="text-sm text-muted m-0 mb-2">
-            <a href="/" class="hover:text-accent">← Back to the resume</a>
-        </p>
+  <main class="max-w-page mx-auto px-6 pt-20 pb-28">
+    <p class="text-muted m-0 mb-2 text-sm">
+      <a href="/" class="hover:text-accent">← Back to the resume</a>
+    </p>
 
-        <article class="prose-content">
-            <div set:html={html} />
+    <article class="prose-content">
+      <div set:html={html} />
 
-            <hr class="my-10 border-rule" />
+      <hr class="border-rule my-10" />
 
-            <h2 class="section-label">Corpus stats</h2>
-            <p class="text-[14px] text-muted max-w-[62ch]">
-                As of this build, the chatbot draws on <strong class="text-ink">{totalAnswered}</strong> answered Q&As across <strong class="text-ink">{categories.length}</strong> categories. Unanswered questions are skipped at build time, so this number grows as the corpus fills in.
-            </p>
+      <h2 class="section-label">Corpus stats</h2>
+      <p class="text-muted max-w-[62ch] text-[14px]">
+        As of this build, the chatbot draws on <strong class="text-ink">{totalAnswered}</strong> answered
+        Q&As across <strong class="text-ink">{categories.length}</strong> categories. Unanswered questions
+        are skipped at build time, so this number grows as the corpus fills in.
+      </p>
 
-            <div class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 max-w-[62ch] text-[14px]">
-                {
-                    categories.map(([label, count]) => (
-                        <>
-                            <span class="text-muted whitespace-nowrap">{label}</span>
-                            <span class="font-medium tabular-nums">{count}</span>
-                        </>
-                    ))
-                }
-            </div>
-        </article>
+      <div class="mt-4 grid max-w-[62ch] grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-[14px]">
+        {
+          categories.map(([label, count]) => (
+            <>
+              <span class="text-muted whitespace-nowrap">{label}</span>
+              <span class="font-medium tabular-nums">{count}</span>
+            </>
+          ))
+        }
+      </div>
+    </article>
 
-        <Chat client:load transition:persist="chat" />
-    </main>
+    <Chat client:load transition:persist="chat" />
+  </main>
 </Layout>
 
 <style>
-    .prose-content :global(h1) {
-        font-size: clamp(1.75rem, 4vw, 2.25rem);
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        line-height: 1.1;
-        margin: 0 0 1rem;
-    }
+  .prose-content :global(h1) {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+  }
 
-    .prose-content :global(h2) {
-        font-size: 1.25rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
-        margin: 2.5rem 0 0.75rem;
-    }
+  .prose-content :global(h2) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 2.5rem 0 0.75rem;
+  }
 
-    .prose-content :global(h3) {
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 1.75rem 0 0.5rem;
-    }
+  .prose-content :global(h3) {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.5rem;
+  }
 
-    .prose-content :global(p) {
-        margin: 0.75rem 0;
-        max-width: 62ch;
-        line-height: 1.65;
-    }
+  .prose-content :global(p) {
+    margin: 0.75rem 0;
+    max-width: 62ch;
+    line-height: 1.65;
+  }
 
-    .prose-content :global(ul),
-    .prose-content :global(ol) {
-        margin: 0.75rem 0;
-        padding-left: 1.5rem;
-        max-width: 62ch;
-    }
+  .prose-content :global(ul),
+  .prose-content :global(ol) {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+    max-width: 62ch;
+  }
 
-    .prose-content :global(li) {
-        margin: 0.25rem 0;
-    }
+  .prose-content :global(li) {
+    margin: 0.25rem 0;
+  }
 
-    .prose-content :global(table) {
-        margin: 1.25rem 0;
-        border-collapse: collapse;
-        font-size: 0.9375rem;
-    }
+  .prose-content :global(table) {
+    margin: 1.25rem 0;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
 
-    .prose-content :global(th),
-    .prose-content :global(td) {
-        padding: 0.5rem 1rem;
-        border-bottom: 1px solid var(--color-rule);
-        text-align: left;
-    }
+  .prose-content :global(th),
+  .prose-content :global(td) {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--color-rule);
+    text-align: left;
+  }
 
-    .prose-content :global(th) {
-        font-weight: 600;
-        background: var(--color-chip);
-    }
+  .prose-content :global(th) {
+    font-weight: 600;
+    background: var(--color-chip);
+  }
 
-    .prose-content :global(code) {
-        font-family: var(--font-mono);
-        font-size: 0.875em;
-        background: var(--color-chip);
-        padding: 0.1em 0.35em;
-        border-radius: 4px;
-    }
+  .prose-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-chip);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
 
-    .prose-content :global(pre) {
-        margin: 1rem 0;
-        padding: 1rem;
-        background: var(--color-surface);
-        border: 1px solid var(--color-rule);
-        border-radius: 8px;
-        overflow-x: auto;
-        max-width: 62ch;
-        font-size: 0.875rem;
-        line-height: 1.55;
-    }
+  .prose-content :global(pre) {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    border-radius: 8px;
+    overflow-x: auto;
+    max-width: 62ch;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
 
-    .prose-content :global(pre code) {
-        background: transparent;
-        padding: 0;
-        font-size: inherit;
-    }
+  .prose-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
 
-    .prose-content :global(blockquote) {
-        margin: 1rem 0;
-        padding: 0 1rem;
-        border-left: 3px solid var(--color-accent);
-        color: var(--color-muted);
-    }
+  .prose-content :global(blockquote) {
+    margin: 1rem 0;
+    padding: 0 1rem;
+    border-left: 3px solid var(--color-accent);
+    color: var(--color-muted);
+  }
 
-    .section-label {
-        margin-top: 2.5rem;
-        margin-bottom: 0.75rem;
-    }
+  .section-label {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
 </style>
