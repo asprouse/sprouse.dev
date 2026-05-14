@@ -1,0 +1,406 @@
+---
+import "@fontsource-variable/inter";
+import "../styles/global.css";
+import { resume, formatDateRange } from "../lib/resume";
+
+const { person, summary, experience, education, openSource } = resume;
+const fullName = `${person.first} ${person.last}`;
+const currentRole = experience.find((r) => r.dateRange.to === null);
+const currentLine = currentRole
+    ? `${currentRole.title} · ${currentRole.company}`
+    : "";
+
+const RETROSPECTIVE_CUTOFF = "2015-01";
+const currentEra = experience.filter((r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF);
+const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_CUTOFF);
+
+// Curated current-era skills, grouped manually for print compactness
+const skillGroups = [
+    {
+        label: "Languages",
+        items: ["TypeScript", "GraphQL", "JavaScript", "HTML", "CSS", "Lua"],
+    },
+    {
+        label: "Frameworks",
+        items: ["React", "Next.js", "Tailwind CSS"],
+    },
+    {
+        label: "AI / LLM",
+        items: [
+            "Anthropic SDK", "OpenAI SDK", "Vercel AI SDK", "LangChain",
+            "Anthropic", "OpenAI", "Google AI", "AWS Bedrock", "Azure OpenAI", "Arize",
+        ],
+    },
+    {
+        label: "Platforms",
+        items: [
+            "AWS Lambda", "DynamoDB", "OpenSearch", "Redis", "S3",
+            "SQS / SNS", "KMS", "Athena", "Stripe", "Shopify", "Netlify",
+            "Node.js",
+        ],
+    },
+    {
+        label: "Infrastructure & Tooling",
+        items: [
+            "AWS CDK", "SST", "Pulumi", "Serverless Framework",
+            "OpenTelemetry", "AWS X-Ray", "Sentry",
+            "Zustand", "Monaco Editor",
+        ],
+    },
+    {
+        label: "Protocols & Concepts",
+        items: ["JSON Schema", "OpenAPI", "REST", "HTTP 402"],
+    },
+];
+
+const summaryText = currentRole
+    ? "Engineering leader and co-founder with two decades of experience shipping production software across media, agency, and SaaS. Currently CTO at TakeShape, where I designed the schema language, built the agent runtime, and shipped production agents for customers like Valvoline. Open to a new role — CTO at an AI-native company, Principal Engineer at a company whose product is a primary primitive, or technical co-founder of a new venture."
+    : summary;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{fullName} — CV</title>
+
+        <style>
+            @page {
+                size: letter;
+                margin: 0.55in 0.6in;
+            }
+
+            :root {
+                --cv-ink: #0c0a09;
+                --cv-muted: #57534e;
+                --cv-rule: #d6d3d1;
+                --cv-accent: #ea580c;
+            }
+
+            * { box-sizing: border-box; }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+                background: #f5f5f4;
+                color: var(--cv-ink);
+                font-family: "Inter Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+                font-feature-settings: "ss01", "cv11";
+                font-size: 10.5pt;
+                line-height: 1.4;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .page {
+                max-width: 8.5in;
+                margin: 0.5in auto;
+                background: #ffffff;
+                padding: 0.55in 0.6in;
+                box-shadow: 0 1px 3px rgba(12, 10, 9, 0.1), 0 4px 12px rgba(12, 10, 9, 0.06);
+            }
+
+            @media print {
+                html, body { background: #ffffff; }
+                .page {
+                    margin: 0;
+                    padding: 0;
+                    max-width: none;
+                    box-shadow: none;
+                }
+                .no-print { display: none !important; }
+            }
+
+            .toolbar {
+                max-width: 8.5in;
+                margin: 0.5in auto 0;
+                padding: 0 0.6in;
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                font-size: 13px;
+                color: var(--cv-muted);
+            }
+
+            .toolbar a, .toolbar button {
+                appearance: none;
+                background: none;
+                border: 1px solid var(--cv-rule);
+                color: var(--cv-ink);
+                padding: 6px 12px;
+                border-radius: 6px;
+                font: inherit;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .toolbar button.primary {
+                background: var(--cv-accent);
+                color: #ffffff;
+                border-color: var(--cv-accent);
+            }
+
+            header.cv-hero {
+                margin-bottom: 1.1em;
+            }
+
+            h1 {
+                margin: 0 0 0.15em;
+                font-size: 24pt;
+                font-weight: 700;
+                letter-spacing: -0.025em;
+                line-height: 1.05;
+            }
+
+            .role-line {
+                margin: 0 0 0.35em;
+                font-size: 11.5pt;
+                color: var(--cv-muted);
+            }
+
+            .contact {
+                margin: 0;
+                font-size: 10pt;
+                color: var(--cv-muted);
+            }
+            .contact a {
+                color: var(--cv-ink);
+                text-decoration: none;
+            }
+
+            .summary {
+                margin: 1em 0 0;
+                font-size: 10.5pt;
+                line-height: 1.5;
+            }
+
+            h2.section {
+                margin: 1.4em 0 0.4em;
+                padding-bottom: 0.2em;
+                font-size: 9pt;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--cv-muted);
+                border-bottom: 1px solid var(--cv-rule);
+            }
+
+            .role {
+                margin: 0.7em 0 1em;
+                page-break-inside: avoid;
+            }
+
+            .role-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 12px;
+                margin-bottom: 0.15em;
+            }
+            .role-name {
+                font-size: 11.5pt;
+                font-weight: 700;
+                letter-spacing: -0.005em;
+            }
+            .role-meta {
+                font-size: 9.5pt;
+                color: var(--cv-muted);
+                white-space: nowrap;
+            }
+
+            .role-title-line {
+                margin: 0 0 0.45em;
+                font-size: 10pt;
+                color: var(--cv-muted);
+                font-style: italic;
+            }
+
+            .role-summary {
+                margin: 0.35em 0 0.55em;
+                font-size: 10pt;
+            }
+            .role-summary a {
+                color: var(--cv-ink);
+                text-decoration: underline;
+                text-decoration-color: var(--cv-rule);
+            }
+
+            .project {
+                margin: 0.45em 0;
+                page-break-inside: avoid;
+            }
+            .project-title {
+                display: inline;
+                font-weight: 600;
+                font-size: 10pt;
+            }
+            .project-title::after {
+                content: " — ";
+                color: var(--cv-muted);
+                font-weight: 400;
+            }
+            .project-description {
+                display: inline;
+                font-size: 10pt;
+            }
+            .project-description a {
+                color: var(--cv-ink);
+                text-decoration: underline;
+                text-decoration-color: var(--cv-rule);
+            }
+            .project-tech {
+                display: block;
+                margin-top: 0.2em;
+                font-size: 8.5pt;
+                color: var(--cv-muted);
+                font-style: italic;
+            }
+
+            .retro-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                gap: 12px;
+                margin: 0.3em 0;
+                font-size: 9.5pt;
+            }
+            .retro-name { font-weight: 600; }
+            .retro-meta { color: var(--cv-muted); white-space: nowrap; }
+            .retro-title { color: var(--cv-muted); }
+
+            .skill-row {
+                margin: 0.25em 0;
+                font-size: 10pt;
+            }
+            .skill-label {
+                font-weight: 600;
+                color: var(--cv-muted);
+                display: inline-block;
+                min-width: 11em;
+            }
+
+            .edu-row,
+            .oss-row {
+                margin: 0.3em 0;
+                font-size: 10pt;
+            }
+            .edu-row strong, .oss-row strong { font-weight: 600; }
+            .oss-row a {
+                color: var(--cv-ink);
+                text-decoration: underline;
+                text-decoration-color: var(--cv-rule);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="toolbar no-print">
+            <button type="button" class="primary" onclick="window.print()">Print / save as PDF</button>
+            <a href="/">← Back to the site</a>
+            <span style="margin-left:auto;font-size:12px;">Cmd+P → "Save as PDF"</span>
+        </div>
+
+        <article class="page">
+            <header class="cv-hero">
+                <h1>{fullName}</h1>
+                <p class="role-line">{currentLine} · {person.location.city}, {person.location.state}</p>
+                <p class="contact">
+                    <a href={`mailto:${person.email}`}>{person.email}</a> ·{" "}
+                    <a href={person.links.github}>github.com/asprouse</a> ·{" "}
+                    <a href={person.links.linkedin}>linkedin.com/in/andrewsprouse</a> ·{" "}
+                    <a href={person.links.website}>sprouse.dev</a>
+                </p>
+                <p class="summary">{summaryText}</p>
+            </header>
+
+            <section>
+                <h2 class="section">Experience</h2>
+                {
+                    currentEra.map((role) => (
+                        <div class="role">
+                            <div class="role-header">
+                                <span class="role-name">{role.company}</span>
+                                <span class="role-meta">
+                                    {formatDateRange(role.dateRange.from, role.dateRange.to)} · {role.location.city}, {role.location.state}
+                                </span>
+                            </div>
+                            <p class="role-title-line">{role.title}</p>
+
+                            {role.description && (
+                                <p class="role-summary" set:html={role.description} />
+                            )}
+
+                            {role.projects.map((project) => (
+                                <div class="project">
+                                    {project.title && <span class="project-title">{project.title}</span>}
+                                    <span class="project-description" set:html={project.description} />
+                                </div>
+                            ))}
+                        </div>
+                    ))
+                }
+            </section>
+
+            {
+                retrospective.length > 0 && (
+                    <section>
+                        <h2 class="section">Career retrospective (2004–2014)</h2>
+                        {retrospective.map((role) => (
+                            <div class="retro-row">
+                                <span>
+                                    <span class="retro-name">{role.company}</span>{" "}
+                                    <span class="retro-title">— {role.title}</span>
+                                </span>
+                                <span class="retro-meta">
+                                    {formatDateRange(role.dateRange.from, role.dateRange.to)} · {role.location.city}, {role.location.state}
+                                </span>
+                            </div>
+                        ))}
+                    </section>
+                )
+            }
+
+            <section>
+                <h2 class="section">Skills</h2>
+                {
+                    skillGroups.map((g) => (
+                        <p class="skill-row">
+                            <span class="skill-label">{g.label}</span>
+                            {g.items.join(" · ")}
+                        </p>
+                    ))
+                }
+            </section>
+
+            <section>
+                <h2 class="section">Education</h2>
+                {
+                    education.map((e) => (
+                        <p class="edu-row">
+                            <strong>{e.degree}</strong>, {e.school}
+                            {e.honors && e.honors.length > 0 && <> — {e.honors.join(", ")}</>}
+                            {" · "}{e.date}
+                        </p>
+                    ))
+                }
+            </section>
+
+            {
+                openSource.length > 0 && (
+                    <section>
+                        <h2 class="section">Open Source</h2>
+                        {openSource.map((entry) => (
+                            <p class="oss-row">
+                                <strong>
+                                    <a href={entry.url}>{entry.name}</a>
+                                </strong>
+                                {" — "}
+                                {entry.description}
+                            </p>
+                        ))}
+                    </section>
+                )
+            }
+        </article>
+    </body>
+</html>
