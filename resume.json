@@ -2,7 +2,7 @@
     "person": {
         "first": "Andrew",
         "last": "Sprouse",
-        "email": "sprouse.a@gmail.com",
+        "email": "andrew@sprouse.dev",
         "location": {
             "city": "Brooklyn",
             "state": "NY"
