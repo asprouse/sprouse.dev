@@ -605,7 +605,22 @@
         {
             "name": "serverless-webpack-plugin",
             "url": "https://github.com/asprouse/serverless-webpack-plugin",
-            "description": "The first webpack plugin for the Serverless Framework, written to make TypeScript-everywhere TakeShape practical when no equivalent tooling existed."
+            "description": "The first webpack plugin for the Serverless Framework, written to make TypeScript-everywhere TakeShape practical when no equivalent tooling existed. 68★ / 29⑂; Austen Collins (Serverless Framework co-creator) is the second-largest contributor."
+        },
+        {
+            "name": "bytecodealliance/javy",
+            "url": "https://github.com/bytecodealliance/javy/pull/661",
+            "description": "Contributed the Node.js embedding example to Javy — the official JavaScript-to-WebAssembly compiler from the Bytecode Alliance, the consortium that stewards WebAssembly."
+        },
+        {
+            "name": "serverless/serverless",
+            "url": "https://github.com/serverless/serverless/pull/2736",
+            "description": "Added Access-Control-Allow-Credentials support to CORS responses in the Serverless Framework — the dominant serverless deployment tool of the mid-2010s."
+        },
+        {
+            "name": "mozilla/nunjucks",
+            "url": "https://github.com/mozilla/nunjucks/pull/1017",
+            "description": "Fixed Object.create(null) support in Mozilla's nunjucks — a JavaScript templating engine inspired by Jinja2, used widely for server-side rendering."
         }
     ],
     "technologies": {
