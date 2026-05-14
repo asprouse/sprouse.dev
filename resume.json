@@ -539,10 +539,7 @@
                 {
                     "description": "Wrote and executed test cases for the Bose Wave Music System to verify the system met the functional specification.",
                     "technologies": [
-                        "bugzilla",
-                        "blood",
-                        "sweat",
-                        "tears"
+                        "bugzilla"
                     ]
                 }
             ]
@@ -1192,24 +1189,6 @@
             "name": "Bugzilla",
             "url": "https://www.bugzilla.org/",
             "category": "tooling",
-            "description": ""
-        },
-        "blood": {
-            "name": "Blood",
-            "url": "https://en.wikipedia.org/wiki/Blood",
-            "category": "humor",
-            "description": ""
-        },
-        "sweat": {
-            "name": "Sweat",
-            "url": "https://en.wikipedia.org/wiki/Perspiration",
-            "category": "humor",
-            "description": ""
-        },
-        "tears": {
-            "name": "Tears",
-            "url": "https://en.wikipedia.org/wiki/Tears",
-            "category": "humor",
             "description": ""
         },
         "dhtml": {
