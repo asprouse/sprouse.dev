@@ -1,5 +1,11 @@
 import type { APIRoute } from 'astro';
-import { streamText, convertToModelMessages, tool, type UIMessage } from 'ai';
+import {
+  streamText,
+  convertToModelMessages,
+  safeValidateUIMessages,
+  tool,
+  type UIMessage
+} from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { z } from 'zod';
 import { corpus, profile } from '../../lib/qa-loader';
@@ -11,6 +17,12 @@ export const prerender = false;
 
 const index = buildIndex(corpus);
 const COMPANY_NAMES = resume.experience.map((r) => r.company);
+
+// Policy caps applied on top of the AI SDK's structural validation. The SDK
+// validates message shape; these caps enforce that nobody can shovel
+// megabytes of input into a paid Anthropic call.
+const MAX_MESSAGES = 30;
+const MAX_TOTAL_TEXT = 60_000;
 
 interface RateLimiter {
   limit: (input: { key: string }) => Promise<{ success: boolean }>;
@@ -62,9 +74,40 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
   }
 
-  const body = (await request.json()) as { messages?: UIMessage[] };
-  const messages = Array.isArray(body.messages) ? body.messages : [];
-  const query = extractQueryFromMessages(messages as any);
+  const rawBody = (await request.json().catch(() => null)) as { messages?: unknown } | null;
+
+  const validated = await safeValidateUIMessages({ messages: rawBody?.messages });
+  if (!validated.success) {
+    return new Response(JSON.stringify({ error: 'Invalid messages payload' }), {
+      status: 400,
+      headers: { 'content-type': 'application/json' }
+    });
+  }
+
+  const messages: UIMessage[] = validated.data;
+  if (messages.length === 0 || messages.length > MAX_MESSAGES) {
+    return new Response(
+      JSON.stringify({ error: `Message count out of range (1–${MAX_MESSAGES})` }),
+      {
+        status: 400,
+        headers: { 'content-type': 'application/json' }
+      }
+    );
+  }
+
+  const totalText = messages.reduce((sum, m) => {
+    const parts = (m as { parts?: Array<{ type: string; text?: string }> }).parts;
+    if (!Array.isArray(parts)) return sum;
+    return parts.reduce((s, p) => s + (typeof p.text === 'string' ? p.text.length : 0), sum);
+  }, 0);
+  if (totalText > MAX_TOTAL_TEXT) {
+    return new Response(JSON.stringify({ error: 'Conversation too large' }), {
+      status: 413,
+      headers: { 'content-type': 'application/json' }
+    });
+  }
+
+  const query = extractQueryFromMessages(messages);
   const retrieved = query ? retrieve(index, query, 5) : [];
 
   const system = buildSystemPrompt({

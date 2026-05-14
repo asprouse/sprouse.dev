@@ -1,8 +1,13 @@
+// Dev-only diagnostic. Dumps corpus stats and BM25 results for a set of sample
+// queries to help tune retrieval. Returns 404 in production builds so the
+// endpoint doesn't exist on the public internet.
 import type { APIRoute } from 'astro';
 import { corpus } from '../../lib/qa-loader';
 import { buildIndex, retrieve } from '../../lib/retrieval';
 
 export const prerender = false;
+
+const notFound = () => new Response('Not found', { status: 404 });
 
 const SAMPLE_QUERIES = [
   "What is TakeShape's agent architecture?",
@@ -20,6 +25,8 @@ const SAMPLE_QUERIES = [
 const index = buildIndex(corpus);
 
 export const GET: APIRoute = () => {
+  if (!import.meta.env.DEV) return notFound();
+
   const results = SAMPLE_QUERIES.map((query) => ({
     query,
     results: retrieve(index, query, 5).map((r) => ({
