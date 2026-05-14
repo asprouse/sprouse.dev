@@ -47,6 +47,9 @@
                         "zustand",
                         "monaco",
                         "vercel-ai-sdk",
+                        "anthropic-sdk",
+                        "openai-sdk",
+                        "langchain",
                         "anthropic",
                         "openai",
                         "google-ai",
@@ -765,6 +768,24 @@
         "arize": {
             "name": "Arize",
             "url": "https://arize.com/",
+            "category": "ai",
+            "description": ""
+        },
+        "anthropic-sdk": {
+            "name": "Anthropic SDK",
+            "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+            "category": "ai",
+            "description": ""
+        },
+        "openai-sdk": {
+            "name": "OpenAI SDK",
+            "url": "https://github.com/openai/openai-node",
+            "category": "ai",
+            "description": ""
+        },
+        "langchain": {
+            "name": "LangChain",
+            "url": "https://js.langchain.com/",
             "category": "ai",
             "description": ""
         },
