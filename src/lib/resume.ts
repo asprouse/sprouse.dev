@@ -1,7 +1,10 @@
 import resumeJson from '../../resume.json';
 import type { Resume, TechCategory, TechEntry } from '../types/resume';
 
-export const resume = resumeJson as unknown as Resume;
+// resume.json is validated against schemas/resume.schema.json at build time
+// (via `npm run check`), so this cast is safe — runtime validation would just
+// repeat the build-time check on every cold start.
+export const resume = resumeJson as Resume;
 
 export function slugifyCompany(name: string): string {
   return name

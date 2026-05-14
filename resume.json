@@ -1,4 +1,5 @@
 {
+  "$schema": "./schemas/resume.schema.json",
   "person": {
     "first": "Andrew",
     "last": "Sprouse",
