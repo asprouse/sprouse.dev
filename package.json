@@ -1,35 +1,52 @@
 {
-    "name": "andrew-sprouse-resume",
-    "version": "0.1.0",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "astro dev",
-        "start": "astro dev",
-        "build": "astro build",
-        "preview": "astro preview",
-        "astro": "astro"
-    },
-    "dependencies": {
-        "@ai-sdk/anthropic": "^3.0.76",
-        "@ai-sdk/react": "^3.0.177",
-        "@astrojs/cloudflare": "^12.0.0",
-        "@astrojs/react": "^4.0.0",
-        "@astrojs/sitemap": "^3.7.2",
-        "@fontsource-variable/inter": "^5.2.8",
-        "@tailwindcss/vite": "^4.2.4",
-        "ai": "6.0.175",
-        "astro": "^5.0.0",
-        "marked": "^18.0.3",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0",
-        "streamdown": "^2.5.0",
-        "tailwindcss": "^4.2.4",
-        "zod": "^3.25.76"
-    },
-    "devDependencies": {
-        "@types/react": "^19.0.0",
-        "@types/react-dom": "^19.0.0",
-        "typescript": "^5.6.0"
-    }
+  "name": "andrew-sprouse-resume",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "astro check",
+    "check": "npm run format:check && npm run lint && npm run typecheck"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.76",
+    "@ai-sdk/react": "^3.0.177",
+    "@astrojs/cloudflare": "^12.0.0",
+    "@astrojs/react": "^4.0.0",
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@tailwindcss/vite": "^4.2.4",
+    "ai": "6.0.175",
+    "astro": "^5.0.0",
+    "marked": "^18.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "streamdown": "^2.5.0",
+    "tailwindcss": "^4.2.4",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.59.3"
+  }
 }

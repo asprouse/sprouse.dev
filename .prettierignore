@@ -1,0 +1,9 @@
+dist
+.astro
+.wrangler
+.playwright-mcp
+node_modules
+package-lock.json
+public/llms.txt
+public/robots.txt
+chatbot/qa
