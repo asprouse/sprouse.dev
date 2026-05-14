@@ -3,7 +3,7 @@ import "@fontsource-variable/inter";
 import "../styles/global.css";
 import { resume, formatDateRange } from "../lib/resume";
 
-const { person, summary, experience, education, openSource } = resume;
+const { person, summary, experience, education } = resume;
 const fullName = `${person.first} ${person.last}`;
 const currentRole = experience.find((r) => r.dateRange.to === null);
 const currentLine = currentRole
@@ -385,22 +385,6 @@ const summaryText = currentRole
                 }
             </section>
 
-            {
-                openSource.length > 0 && (
-                    <section>
-                        <h2 class="section">Open Source</h2>
-                        {openSource.map((entry) => (
-                            <p class="oss-row">
-                                <strong>
-                                    <a href={entry.url}>{entry.name}</a>
-                                </strong>
-                                {" — "}
-                                {entry.description}
-                            </p>
-                        ))}
-                    </section>
-                )
-            }
         </article>
     </body>
 </html>
