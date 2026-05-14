@@ -141,7 +141,6 @@
             "description": "Returned to Ronik after Fair Tread to incubate the API-first headless CMS concept that would become TakeShape, using client work as the proving ground. The thesis: a content platform should be defined by a schema that auto-generates a GraphQL API. The technology built during this period spun out as TakeShape in October 2018.",
             "projects": [
                 {
-                    "title": "Client portfolio: DiCaprio Fund, Massive Science",
                     "description": "Led technology across a portfolio of environmentally and editorially focused client projects, including work for the Leonardo DiCaprio Fund and <a href=\"https://massivesci.com\">Massive Science</a>, an independent science journalism publication. These projects shipped on the early TakeShape codebase and validated the headless-CMS-with-GraphQL approach against real-world editorial and content workflows before the broader JAMstack ecosystem standardized on the pattern.",
                     "technologies": [
                         "react",
