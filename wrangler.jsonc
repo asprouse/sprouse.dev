@@ -30,6 +30,15 @@
                     "limit": 60,
                     "period": 60
                 }
+            },
+            {
+                "name": "TAILOR_RATE_LIMITER",
+                "type": "ratelimit",
+                "namespace_id": "3",
+                "simple": {
+                    "limit": 5,
+                    "period": 60
+                }
             }
         ]
     }

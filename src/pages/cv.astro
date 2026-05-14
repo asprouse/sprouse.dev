@@ -1,7 +1,8 @@
 ---
 import "@fontsource-variable/inter";
 import "../styles/global.css";
-import { resume, formatDateRange } from "../lib/resume";
+import { resume, formatDateRange, slugifyCompany } from "../lib/resume";
+import TailorPanel from "../components/TailorPanel";
 
 const { person, summary, experience, education } = resume;
 const fullName = `${person.first} ${person.last}`;
@@ -139,6 +140,10 @@ const summaryText = currentRole
                 background: var(--cv-accent);
                 color: #ffffff;
                 border-color: var(--cv-accent);
+            }
+            .toolbar-hint {
+                margin-left: auto;
+                font-size: 12px;
             }
 
             header.cv-hero {
@@ -294,13 +299,123 @@ const summaryText = currentRole
                 text-decoration: underline;
                 text-decoration-color: var(--cv-rule);
             }
+
+            /* Project list uses flex so client-side reordering can use CSS order */
+            .project-list {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Tailor visual diff — screen only, never affects print output */
+            .tailor-badge {
+                margin: 0.5em 0 0;
+                font-size: 9.5pt;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--cv-muted);
+            }
+            .tailor-badge-variant {
+                background: color-mix(in oklab, var(--cv-accent) 14%, transparent);
+                color: var(--cv-accent);
+                padding: 2px 8px;
+                border-radius: 999px;
+                font-weight: 600;
+                font-size: 9pt;
+                text-transform: capitalize;
+            }
+            .tailor-badge-why,
+            .tailor-badge-clear {
+                appearance: none;
+                background: none;
+                border: 1px solid var(--cv-rule);
+                color: var(--cv-muted);
+                padding: 2px 8px;
+                font-size: 9pt;
+                border-radius: 4px;
+                cursor: pointer;
+                font-family: inherit;
+            }
+            .tailor-rationale {
+                margin: 0.6em 0 0;
+                padding: 0.7em 0.9em;
+                background: color-mix(in oklab, var(--cv-accent) 6%, transparent);
+                border-left: 2px solid var(--cv-accent);
+                font-size: 9.5pt;
+                line-height: 1.5;
+                color: var(--cv-ink);
+            }
+
+            .project.tailor-hidden {
+                opacity: 0.32;
+                position: relative;
+            }
+            .project.tailor-hidden .project-title,
+            .project.tailor-hidden .project-description {
+                text-decoration: line-through;
+                text-decoration-color: var(--cv-muted);
+            }
+            .project.tailor-promoted::before {
+                content: "↑ promoted";
+                display: inline-block;
+                margin-right: 6px;
+                padding: 1px 6px;
+                background: color-mix(in oklab, var(--cv-accent) 14%, transparent);
+                color: var(--cv-accent);
+                font-size: 7.5pt;
+                font-weight: 600;
+                border-radius: 3px;
+                vertical-align: 2px;
+            }
+            .skill-item.tailor-emphasis {
+                color: var(--cv-accent);
+                font-weight: 600;
+            }
+            .summary.tailor-replaced {
+                position: relative;
+            }
+            .summary.tailor-replaced::after {
+                content: "tailored";
+                position: absolute;
+                top: -0.2em;
+                right: 0;
+                font-size: 7.5pt;
+                color: var(--cv-accent);
+                background: color-mix(in oklab, var(--cv-accent) 12%, transparent);
+                padding: 1px 6px;
+                border-radius: 3px;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            @media print {
+                .tailor-badge,
+                .tailor-rationale {
+                    display: none !important;
+                }
+                .project.tailor-hidden {
+                    display: none !important;
+                }
+                .project.tailor-promoted::before {
+                    display: none !important;
+                }
+                .skill-item.tailor-emphasis {
+                    color: var(--cv-ink);
+                    font-weight: 600;
+                }
+                .summary.tailor-replaced::after {
+                    display: none !important;
+                }
+            }
         </style>
     </head>
     <body>
         <div class="toolbar no-print">
             <button type="button" class="primary" onclick="window.print()">Print / save as PDF</button>
             <a href="/">← Back to the site</a>
-            <span style="margin-left:auto;font-size:12px;">Cmd+P → "Save as PDF"</span>
+            <TailorPanel client:load />
+            <span class="toolbar-hint">Cmd+P → "Save as PDF"</span>
         </div>
 
         <article class="page">
@@ -313,14 +428,21 @@ const summaryText = currentRole
                     <a href={person.links.linkedin}>linkedin.com/in/andrewsprouse</a> ·{" "}
                     <a href={person.links.website}>sprouse.dev</a>
                 </p>
-                <p class="summary">{summaryText}</p>
+                <p class="summary" data-original-summary={summaryText}>{summaryText}</p>
+                <div class="tailor-badge no-print" hidden>
+                    <span class="tailor-badge-label">Tailored to:</span>
+                    <span class="tailor-badge-variant" data-tailor-variant></span>
+                    <button type="button" class="tailor-badge-why" data-tailor-why-toggle>Why?</button>
+                    <button type="button" class="tailor-badge-clear" data-tailor-clear>Clear</button>
+                </div>
+                <p class="tailor-rationale no-print" data-tailor-rationale hidden></p>
             </header>
 
             <section>
                 <h2 class="section">Experience</h2>
                 {
                     currentEra.map((role) => (
-                        <div class="role">
+                        <div class="role" data-role-slug={slugifyCompany(role.company)}>
                             <div class="role-header">
                                 <span class="role-name">{role.company}</span>
                                 <span class="role-meta">
@@ -333,12 +455,14 @@ const summaryText = currentRole
                                 <p class="role-summary" set:html={role.description} />
                             )}
 
-                            {role.projects.map((project) => (
-                                <div class="project">
-                                    {project.title && <span class="project-title">{project.title}</span>}
-                                    <span class="project-description" set:html={project.description} />
-                                </div>
-                            ))}
+                            <div class="project-list">
+                                {role.projects.map((project, idx) => (
+                                    <div class="project" data-project-index={idx} style={`order: ${idx};`}>
+                                        {project.title && <span class="project-title">{project.title}</span>}
+                                        <span class="project-description" set:html={project.description} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))
                 }
@@ -369,7 +493,12 @@ const summaryText = currentRole
                     skillGroups.map((g) => (
                         <p class="skill-row">
                             <span class="skill-label">{g.label}</span>
-                            {g.items.join(" · ")}
+                            {g.items.map((item, idx) => (
+                                <>
+                                    <span class="skill-item" data-skill={item}>{item}</span>
+                                    {idx < g.items.length - 1 && <span class="skill-sep"> · </span>}
+                                </>
+                            ))}
                         </p>
                     ))
                 }
