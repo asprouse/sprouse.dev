@@ -42,6 +42,10 @@
                     "technologies": [
                         "typescript",
                         "graphql",
+                        "react",
+                        "tailwindcss",
+                        "zustand",
+                        "monaco",
                         "vercel-ai-sdk",
                         "anthropic",
                         "openai",
@@ -71,14 +75,22 @@
                     ]
                 },
                 {
-                    "description": "Architected TakeShape's serverless-everywhere infrastructure. From day one the goal was to run fully on AWS Lambda with TypeScript end-to-end, sharing code across frontend and backend. Wrote and open-sourced the first Serverless Framework webpack plugin (<a href=\"https://github.com/asprouse/serverless-webpack-plugin\">serverless-webpack-plugin</a>) to make this practical when no equivalent tooling existed.",
+                    "description": "Architected TakeShape's serverless-everywhere infrastructure. From day one the goal was to run fully on AWS Lambda with TypeScript end-to-end, sharing code across frontend and backend. Wrote and open-sourced the first Serverless Framework webpack plugin (<a href=\"https://github.com/asprouse/serverless-webpack-plugin\">serverless-webpack-plugin</a>) to make this practical when no equivalent tooling existed. Observability is OpenTelemetry into AWS X-Ray with Sentry for errors and Arize for agent traces; billing runs through Stripe.",
                     "technologies": [
                         "typescript",
                         "aws-lambda",
                         "serverless-framework",
                         "aws-cdk",
                         "sst",
-                        "pulumi"
+                        "pulumi",
+                        "opentelemetry",
+                        "aws-xray",
+                        "sentry",
+                        "aws-kms",
+                        "aws-sqs",
+                        "aws-sns",
+                        "aws-athena",
+                        "stripe"
                     ]
                 },
                 {
@@ -754,6 +766,72 @@
             "name": "Arize",
             "url": "https://arize.com/",
             "category": "ai",
+            "description": ""
+        },
+        "opentelemetry": {
+            "name": "OpenTelemetry",
+            "url": "https://opentelemetry.io/",
+            "category": "tooling",
+            "description": ""
+        },
+        "aws-xray": {
+            "name": "AWS X-Ray",
+            "url": "https://aws.amazon.com/xray/",
+            "category": "tooling",
+            "description": ""
+        },
+        "sentry": {
+            "name": "Sentry",
+            "url": "https://sentry.io/",
+            "category": "tooling",
+            "description": ""
+        },
+        "aws-kms": {
+            "name": "AWS KMS",
+            "url": "https://aws.amazon.com/kms/",
+            "category": "platform",
+            "description": ""
+        },
+        "aws-sqs": {
+            "name": "AWS SQS",
+            "url": "https://aws.amazon.com/sqs/",
+            "category": "platform",
+            "description": ""
+        },
+        "aws-sns": {
+            "name": "AWS SNS",
+            "url": "https://aws.amazon.com/sns/",
+            "category": "platform",
+            "description": ""
+        },
+        "aws-athena": {
+            "name": "AWS Athena",
+            "url": "https://aws.amazon.com/athena/",
+            "category": "platform",
+            "description": ""
+        },
+        "tailwindcss": {
+            "name": "Tailwind CSS",
+            "url": "https://tailwindcss.com/",
+            "category": "framework",
+            "description": ""
+        },
+        "zustand": {
+            "name": "Zustand",
+            "url": "https://zustand.docs.pmnd.rs/",
+            "category": "library",
+            "description": ""
+        },
+        "monaco": {
+            "name": "Monaco Editor",
+            "url": "https://microsoft.github.io/monaco-editor/",
+            "category": "library",
+            "description": ""
+        },
+        "stripe": {
+            "name": "Stripe",
+            "url": "https://stripe.com/",
+            "category": "platform",
             "description": ""
         },
         "shopify": {

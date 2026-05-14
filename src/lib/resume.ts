@@ -30,10 +30,18 @@ export interface SkillUsage {
     isCurrent: boolean;
 }
 
+// Same cutoff used by Resume.astro to split current-era experience from
+// the compressed career retrospective. The Skills section only derives
+// from current-era roles so the rendered matrix reflects what Andrew
+// actually works with — older tech stays in resume.json (source of truth)
+// but no longer adds visual noise to the page.
+const SKILLS_CURRENT_ERA_FROM = "2015-01";
+
 export function deriveSkills(): Record<TechCategory, SkillUsage[]> {
     const usage = new Map<string, { count: number; companies: Set<string>; current: boolean }>();
 
     for (const role of resume.experience) {
+        if (role.dateRange.from < SKILLS_CURRENT_ERA_FROM) continue;
         const isCurrent = role.dateRange.to === null;
         for (const project of role.projects) {
             for (const slug of project.technologies) {
