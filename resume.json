@@ -29,6 +29,7 @@
             "description": "Co-founded TakeShape (Techstars 2019) and have served as CTO and lead engineer through the company's evolution from a GraphQL-based headless CMS, to a GraphQL API mesh, to a hosted AI agent platform. Operate as a player-coach across individual contribution, architecture, hiring, and product direction. Believe the schema is the missing piece for AI applications — controlling an agent's access to a business's data is paramount, and a single artifact that defines data model, API, and agents is how you get there.",
             "projects": [
                 {
+                    "title": "TakeShape schema language",
                     "description": "Designed the TakeShape schema language — a JSON-based DSL with a JSON Schema-derived type system, borrowing concepts from OpenAPI and GraphQL. The schema defines a customer's data model, REST and GraphQL APIs, and AI agents in a single artifact. Customers model their domain once and get an indexed, searchable GraphQL mesh and hosted agent endpoints out of the box. The schema is the throughline that ties every product generation together.",
                     "technologies": [
                         "typescript",
@@ -38,6 +39,7 @@
                     ]
                 },
                 {
+                    "title": "Agent framework & runtime",
                     "description": "Hands-on designed and built TakeShape's agent framework and runtime — a fully hosted, stateful agent platform with sessions, threads, conversation history, a chat preview UI, and hosted agent endpoints exposed as both GraphQL and REST. Tools are authored as GraphQL queries against the customer's mesh and attached directly to agents, eliminating the bespoke glue most agent frameworks require and ensuring tools never drift from the schema that defines them.",
                     "technologies": [
                         "typescript",
@@ -61,6 +63,7 @@
                     ]
                 },
                 {
+                    "title": "Valvoline production agent",
                     "description": "Partnered with Valvoline to build a production agent that verifies vehicle fitment data before suggesting parts — combining product, inventory, and vehicle data from multiple sources into a single grounded reasoning step. Also delivered B2B workflow automation for a leading e-commerce platform, automating purchase ordering and related multi-step flows.",
                     "technologies": [
                         "graphql",
@@ -70,6 +73,7 @@
                     ]
                 },
                 {
+                    "title": "GraphQL API mesh",
                     "description": "Led TakeShape's 2019 pivot from a GraphQL-driven static site generator to a GraphQL API mesh. The mesh combines third-party REST and GraphQL APIs with the customer's own data into a single queryable graph, with built-in indexing and search across the full mesh. This primitive became the foundation for everything that followed, including the agent platform's tool layer.",
                     "technologies": [
                         "graphql",
@@ -80,6 +84,7 @@
                     ]
                 },
                 {
+                    "title": "Serverless-everywhere infrastructure",
                     "description": "Architected TakeShape's serverless-everywhere infrastructure. From day one the goal was to run fully on AWS Lambda with TypeScript end-to-end, sharing code across frontend and backend. Wrote and open-sourced the first Serverless Framework webpack plugin (<a href=\"https://github.com/asprouse/serverless-webpack-plugin\">serverless-webpack-plugin</a>) to make this practical when no equivalent tooling existed. Observability is OpenTelemetry into AWS X-Ray with Sentry for errors and Arize for agent traces; billing runs through Stripe.",
                     "technologies": [
                         "typescript",
@@ -99,6 +104,7 @@
                     ]
                 },
                 {
+                    "title": "Penny — Next.js e-commerce starter",
                     "description": "Released Penny in 2022 — a Next.js-based e-commerce starter kit that combined Shopify with half a dozen other services through the TakeShape mesh. Penny showcased the developer-experience win of consolidating disparate APIs behind a single GraphQL endpoint, with TakeShape handling the cross-cutting concerns server-side — API indexing for performance, authentication, and the integration glue that typically lives scattered across an e-commerce codebase.",
                     "technologies": [
                         "next-js",
@@ -109,6 +115,7 @@
                     ]
                 },
                 {
+                    "title": "Headless CMS & GraphQL SSG",
                     "description": "Started life as a headless CMS and GraphQL-driven static site generator after spinning out of Ronik in 2018, debuting at the inaugural JAMstack Conf in San Francisco. The TakeShape schema would auto-generate a GraphQL API from a visual model; templates and queries would compile to a static site deployable to Netlify or S3 — a first-of-its-kind GraphQL-driven SSG.",
                     "technologies": [
                         "graphql",
@@ -134,6 +141,7 @@
             "description": "Returned to Ronik after Fair Tread to incubate the API-first headless CMS concept that would become TakeShape, using client work as the proving ground. The thesis: a content platform should be defined by a schema that auto-generates a GraphQL API. The technology built during this period spun out as TakeShape in October 2018.",
             "projects": [
                 {
+                    "title": "Client portfolio: DiCaprio Fund, Massive Science",
                     "description": "Led technology across a portfolio of environmentally and editorially focused client projects, including work for the Leonardo DiCaprio Fund and <a href=\"https://massivesci.com\">Massive Science</a>, an independent science journalism publication. These projects shipped on the early TakeShape codebase and validated the headless-CMS-with-GraphQL approach against real-world editorial and content workflows before the broader JAMstack ecosystem standardized on the pattern.",
                     "technologies": [
                         "react",
@@ -145,6 +153,7 @@
                     ]
                 },
                 {
+                    "title": "TakeShape prototype",
                     "description": "Architected the prototype of what became TakeShape: a JSON-Schema-based content modeling tool, an automatically generated GraphQL API, and a static site generator that produced sites from GraphQL queries and templates. The agency's client work doubled as the validation harness — every project either confirmed an assumption or surfaced a gap that drove the next iteration of the platform.",
                     "technologies": [
                         "graphql",
@@ -171,6 +180,7 @@
             "description": "Co-founded Fair Tread with CEO Matt Mankins (former CTO of Fast Company; web mail pioneer) to build an HTTP 402-based content monetization standard — nearly a decade before agentic micropayments and the x402 spec made the category a mainstream conversation. Three-person team: CEO, CTO, and business development. This is also where I learned AWS Lambda and serverless infrastructure, foundations that carried directly into Ronik and TakeShape.",
             "projects": [
                 {
+                    "title": "HTTP-402 payment gateway",
                     "description": "Designed and built Fair Tread's payment gateway: a standardized HTTP 402-based payment protocol paired with anti-adblock JavaScript that hooked into a custom Nginx and OpenResty proxy. The system blocked adblockers at the HTTP level — robust, but pre-Lambda@Edge it required publisher infrastructure changes that proved a hard sell. Began a less-invasive Fastly VCL integration before the company wound down.",
                     "technologies": [
                         "nginx",
@@ -182,6 +192,7 @@
                     ]
                 },
                 {
+                    "title": "Atri.me browser extension",
                     "description": "Built <a href=\"https://web.archive.org/web/20160323002156/https://www.atri.me/\">Atri.me</a> (<a href=\"https://news.ycombinator.com/item?id=11211752\">Hacker News</a>) to drive consumer-side demand for the Fair Tread protocol. A browser extension tracked users' web browsing and let them split a monthly budget across the sites they actually used; identifying request headers let participating sites detect Atri users and respond — for example, by disabling ads for paying readers. The 90-day experiment was structured to leave a pool of unclaimed funds that would incentivize publishers to integrate Fair Tread directly.",
                     "technologies": [
                         "javascript",
@@ -206,6 +217,7 @@
             "description": "First stint at Ronik. This is where the API-first and static-site-generation opinions that later defined Fair Tread and TakeShape started forming.",
             "projects": [
                 {
+                    "title": "walkforclimate.com",
                     "description": "Led the development of <a href=\"http://www.walkforclimate.com\">walkforclimate.com</a>, a social campaign to raise awareness for climate change. The site features a randomized map of user-submitted videos that can be shared via social networks. To handle the problem of playing many videos without crashing or terrible performance, frame-rate-based throttling was implemented; videos waiting to be played were prioritized by visual impact to enhance the effect. Due to the large amount of DOM manipulation required by the grid, ReactJS was a natural choice.",
                     "technologies": [
                         "html5-video-api",
@@ -219,6 +231,7 @@
                     ]
                 },
                 {
+                    "title": "luxesource.org",
                     "description": "Led the development of <a href=\"http://www.luxesource.com/\">luxesource.org</a>, a single-page app-like experience for viewing architecture and design images. The foundation of the site is a robust RESTful API implemented with Django REST Framework. Django served minimal SEO-optimized HTML while all of the UI was rendered using Marionette and Dust.",
                     "technologies": [
                         "django",
@@ -243,6 +256,7 @@
                     ]
                 },
                 {
+                    "title": "unlockiran.org",
                     "description": "Led the development of <a href=\"http://www.unlockiran.org/\">unlockiran.org</a>, a rich multimedia campaign to bring public awareness to political prisoners in Iran.",
                     "technologies": [
                         "html",
@@ -306,6 +320,7 @@
             "description": "Joined as a Software Engineer and progressed through Senior Developer to Lead Developer over three years, owning increasingly large portions of the publishing platform.",
             "projects": [
                 {
+                    "title": "Newsweek Global relaunch",
                     "description": "Led the \"Newsweek Global\" project, an effort to relaunch Newsweek magazine as a purpose-built online magazine. The project was developed on an accelerated schedule without sacrificing features or quality, made possible by leveraging the in-house View API and Dust.js templating module described below.",
                     "technologies": [
                         "html",
@@ -323,6 +338,7 @@
                     ]
                 },
                 {
+                    "title": "thedailybeast.com mobile site",
                     "description": "Led thedailybeast.com mobile site implementation.",
                     "technologies": [
                         "java",
@@ -335,6 +351,7 @@
                     ]
                 },
                 {
+                    "title": "Gallery redesign",
                     "description": "Led the thedailybeast.com gallery redesign. The <a href=\"http://www.thedailybeast.com/galleries/2014/01/02/photo-of-the-day.html\">new gallery design</a> placed an emphasis on large high-quality images, with snappy client-side rendering and intelligent recirculation. Isomorphic Dust.js templating replaced traditional JSP to increase responsiveness and ease development. To optimize load times, images were loaded dynamically based on screen size. Each gallery was indexed in Solr; this index powered each gallery's recirculation components.",
                     "technologies": [
                         "java",
@@ -351,6 +368,7 @@
                     ]
                 },
                 {
+                    "title": "View API",
                     "description": "Developed the Newsweek/Daily Beast View API. This API allowed all page content to be serialized to JSON for use with the server-side Dust.js rendering module or client side via AJAX. Here is an example of a <a href=\"http://www.thedailybeast.com/galleries/2012/06/28/lanvin-givenchy-resort-2013-the-10-most-expensive-sweatpants-photos.view.json\">gallery</a>.",
                     "technologies": [
                         "java",
@@ -360,6 +378,7 @@
                     ]
                 },
                 {
+                    "title": "Isomorphic Dust.js Module",
                     "description": "Developed the Newsweek/Daily Beast Dust.js Module, allowing isomorphic JavaScript templating — the same template could be used on both the server and client. A custom Rhino-powered service was written to compile and render Dust.js templates on the server. The compiled templates were then minified and served to the client for client-side rendering.",
                     "technologies": [
                         "java",
@@ -370,6 +389,7 @@
                     ]
                 },
                 {
+                    "title": "Image processing servlet",
                     "description": "Improved the Newsweek/Daily Beast image processing servlet. Added advanced features such as dynamic sizing and custom cropping.",
                     "technologies": [
                         "sling",
@@ -379,6 +399,7 @@
                     ]
                 },
                 {
+                    "title": "Content API",
                     "description": "thedailybeast.com content API.",
                     "technologies": [
                         "java",
@@ -388,6 +409,7 @@
                     ]
                 },
                 {
+                    "title": "Page List Service",
                     "description": "Newsweek/The Daily Beast Page List Service.",
                     "technologies": [
                         "java",
@@ -399,6 +421,7 @@
                     ]
                 },
                 {
+                    "title": "Indexing Module",
                     "description": "Developed the Newsweek/Daily Beast Indexing Module, responsible for listening for content changes in the CMS and then normalizing and indexing that content into a separate Solr index.",
                     "technologies": [
                         "java",
@@ -410,6 +433,7 @@
                     ]
                 },
                 {
+                    "title": "Migration to CQ 5.4",
                     "description": "Was part of the small team that converted thedailybeast.com from a custom Ruby-based CMS to a ground-up CQ 5.4 implementation.",
                     "technologies": [
                         "java",
@@ -421,6 +445,7 @@
                     ]
                 },
                 {
+                    "title": "Syndication Module",
                     "description": "Developed the Newsweek/Daily Beast Syndication Module, which powered all of the RSS, ATOM, and custom vendor feeds.",
                     "technologies": [
                         "rss",
@@ -447,6 +472,7 @@
             "description": "",
             "projects": [
                 {
+                    "title": "Video search engine & player UI",
                     "description": "Implemented a complete frontend reimplementation of a video search engine and metadata-rich video player used for open-source intelligence gathering. The interface allowed search and playback of semi-realtime data captured from broadcast news and was the research version of Autonomy's <a href=\"http://www.autonomy.com/content/Solutions/video-broadcast-monitoring/index.en.html\">Broadcast Monitoring</a> software. The video player provided synchronized transcript and keyframe highlighting, plus the ability to download screencaps and export video clips based on user-selected time ranges. RESTful JSON and XML APIs were built to feed the highly dynamic UI via AJAX.",
                     "technologies": [
                         "html",
@@ -461,6 +487,7 @@
                     ]
                 },
                 {
+                    "title": "MT/ASR data normalization plugins",
                     "description": "Implemented plugins for the project's custom multi-threaded message queue based workflow engine to normalize messy MT (Machine Translation) and ASR (Automated Speech Recognition) data before indexing.",
                     "technologies": [
                         "java",
@@ -469,6 +496,7 @@
                     ]
                 },
                 {
+                    "title": "Collaborative video annotation workspace",
                     "description": "Designed and implemented the frontend and backend of a new collaborative \"Workspace\" to allow users to comment on and annotate video and other documents. This user content was indexed (Autonomy IDOL) and then could be leveraged for searching.",
                     "technologies": [
                         "html",
@@ -483,6 +511,7 @@
                     ]
                 },
                 {
+                    "title": "i18n framework (Unicode + RTL)",
                     "description": "Completely internationalized the Video Search/Player product. This involved the design and implementation of a custom i18n framework that supported Unicode and right-to-left layouts (Arabic, Hebrew, etc.). Once the framework was built, all strings were refactored out of the code into resource bundles and sent out for Arabic translation.",
                     "technologies": [
                         "java",
@@ -492,6 +521,7 @@
                     ]
                 },
                 {
+                    "title": "Production server stack",
                     "description": "Responsible for maintaining a server rack of 10+ machines running the complete stack for the video search/player product. These machines captured, encoded, stored, and streamed satellite video; performed ASR and MT on the streaming video; stored the structured data in a relational database; indexed it for search; and provided a web server to host the web-based interface.",
                     "technologies": [
                         "windows-server-2003",
@@ -504,6 +534,7 @@
                     ]
                 },
                 {
+                    "title": "Persian web crawler",
                     "description": "Designed and implemented a web crawler to scrape large amounts (>1GB) of data for Persian language model training. The crawler could be configured with domain-specific scraping/normalization rules to deal with the variation in document structure and broken markup.",
                     "technologies": [
                         "perl",

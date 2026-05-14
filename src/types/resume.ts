@@ -9,6 +9,7 @@ export interface DateRange {
 }
 
 export interface Project {
+    title?: string;
     description: string;
     technologies: string[];
 }

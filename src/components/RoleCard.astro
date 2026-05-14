@@ -31,6 +31,11 @@ const slug = slugifyCompany(role.company);
     {
         role.projects.map((project) => (
             <div class="mt-4">
+                {project.title && (
+                    <h4 class="text-[15px] font-semibold tracking-tight m-0 mb-1">
+                        {project.title}
+                    </h4>
+                )}
                 <p class="m-0" set:html={project.description} />
                 {project.technologies.length > 0 && (
                     <div class="flex flex-wrap gap-1.5 mt-2.5">
