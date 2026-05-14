@@ -2,6 +2,7 @@
   "name": "andrew-sprouse-resume",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -13,7 +14,9 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "typecheck": "astro check",
-    "check": "npm run format:check && npm run lint && npm run typecheck"
+    "validate:resume": "node scripts/validate-resume.mjs",
+    "gen:types": "node scripts/generate-resume-types.mjs",
+    "check": "npm run validate:resume && npm run format:check && npm run lint && npm run typecheck"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.76",
@@ -37,12 +40,15 @@
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.7.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.6.0",
+    "json-schema-to-typescript": "^15.0.4",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
