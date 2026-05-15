@@ -89,7 +89,7 @@ const summaryText = currentRole
 
       .page {
         max-width: 8.5in;
-        margin: 0.5in auto;
+        margin: 0.25in auto 0.5in;
         background: #ffffff;
         padding: 0.55in 0.6in;
         box-shadow:
@@ -115,7 +115,7 @@ const summaryText = currentRole
 
       .toolbar {
         max-width: 8.5in;
-        margin: 0.5in auto 0;
+        margin: 0.25in auto 0;
         padding: 0 0.6in;
         display: flex;
         gap: 12px;
@@ -140,6 +140,12 @@ const summaryText = currentRole
         background: var(--cv-accent);
         color: #ffffff;
         border-color: var(--cv-accent);
+      }
+      .toolbar-right {
+        margin-left: auto;
+        display: flex;
+        gap: 12px;
+        align-items: center;
       }
       header.cv-hero {
         margin-bottom: 1.1em;
@@ -417,9 +423,13 @@ const summaryText = currentRole
   </head>
   <body>
     <div class="toolbar no-print">
-      <button type="button" class="primary" onclick="window.print()">Print / save as PDF</button>
       <a href="/">← Back to the site</a>
-      <TailorPanel client:load />
+      <div class="toolbar-right">
+        <TailorPanel client:load />
+        <button type="button" class="primary" onclick="window.print()">
+          Print / save as PDF
+        </button>
+      </div>
     </div>
 
     <article class="page">
