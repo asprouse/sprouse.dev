@@ -1,17 +1,18 @@
 ---
-import '@fontsource-variable/inter';
+// Inter Variable (latin subsets) is declared in global.css
 import '../styles/global.css';
-import { resume, formatDateRange, slugifyCompany } from '../lib/resume';
+import { CURRENT_ERA_FROM, formatDateRange, resume, slugifyCompany } from '../lib/resume';
 import TailorPanel from '../components/TailorPanel';
+
+export const prerender = true;
 
 const { person, summary, experience, education } = resume;
 const fullName = `${person.first} ${person.last}`;
 const currentRole = experience.find((r) => r.dateRange.to === null);
 const currentLine = currentRole ? `${currentRole.title} · ${currentRole.company}` : '';
 
-const RETROSPECTIVE_CUTOFF = '2015-01';
-const currentEra = experience.filter((r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF);
-const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_CUTOFF);
+const currentEra = experience.filter((r) => r.dateRange.from >= CURRENT_ERA_FROM);
+const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FROM);
 
 // Curated current-era skills, grouped manually for print compactness
 const skillGroups = [

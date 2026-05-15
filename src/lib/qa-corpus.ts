@@ -12,21 +12,23 @@ const METADATA_RE = /<!--\s*id:\s*([\w-]+)\s*\|\s*tags:\s*\[([^\]]*)\]\s*-->/g;
 
 function extractField(frontmatter: string, key: string): string {
   const m = frontmatter.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'));
-  return m ? m[1].trim() : '';
+  return m?.[1]?.trim() ?? '';
 }
 
 export function parseQACorpus(files: Record<string, string>): QAEntry[] {
   const all: QAEntry[] = [];
   const sortedPaths = Object.keys(files).sort();
   for (const path of sortedPaths) {
-    all.push(...parseFile(files[path]));
+    const content = files[path];
+    if (content === undefined) continue;
+    all.push(...parseFile(content));
   }
   return all;
 }
 
 function parseFile(content: string): QAEntry[] {
   const fmMatch = content.match(FRONTMATTER_RE);
-  if (!fmMatch) return [];
+  if (!fmMatch?.[1]) return [];
   const fm = fmMatch[1];
   const category = extractField(fm, 'category');
   const categoryTitle = extractField(fm, 'title');
@@ -38,15 +40,20 @@ function parseFile(content: string): QAEntry[] {
 
   for (let i = 0; i < matches.length; i++) {
     const m = matches[i];
+    if (!m || m.index === undefined) continue;
+    const id = m[1];
+    const tagsRaw = m[2];
+    if (!id || tagsRaw === undefined) continue;
+
     const next = matches[i + 1];
-    const blockStart = m.index! + m[0].length;
-    const blockEnd = next ? next.index! : body.length;
+    const blockStart = m.index + m[0].length;
+    const blockEnd = next?.index ?? body.length;
     const block = body.slice(blockStart, blockEnd);
 
     // First non-empty line should be the heading: `## N. Question text?`
     const headingMatch = block.match(/^[ \t]*##\s+(?:\d+\.\s+)?(.+?)[ \t]*$/m);
-    if (!headingMatch) continue;
-    const question = headingMatch[1].trim();
+    const question = headingMatch?.[1]?.trim();
+    if (!headingMatch || !question) continue;
 
     // Answer is everything after the heading line, trimmed
     const headingIdx = block.indexOf(headingMatch[0]);
@@ -54,8 +61,7 @@ function parseFile(content: string): QAEntry[] {
     const answer = afterHeading.trim();
     if (!answer) continue; // skip unanswered
 
-    const id = m[1];
-    const tags = m[2]
+    const tags = tagsRaw
       .split(',')
       .map((t) => t.trim())
       .filter(Boolean);

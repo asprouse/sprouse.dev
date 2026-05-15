@@ -2,7 +2,17 @@ import type { APIRoute } from 'astro';
 import { generateObject } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { tailorPatchSchema } from '../../lib/tailor-schema';
-import { buildTailorSystemPrompt } from '../../lib/tailor-prompt';
+import { SKILL_VOCABULARY, buildTailorSystemPrompt } from '../../lib/tailor-prompt';
+
+// Lowercased lookup so server-side validation tolerates minor capitalization
+// drift from the model output.
+const SKILL_ALLOWLIST = new Map(SKILL_VOCABULARY.map((s) => [s.toLowerCase(), s]));
+
+// Closing tag stripped from JD input so a malicious paste can't end the
+// untrusted block and inject instructions visible to the model.
+function neutralizeJd(input: string): string {
+  return input.replace(/<\/?untrusted_job_description>/gi, '[redacted-tag]');
+}
 
 export const prerender = false;
 
@@ -68,13 +78,25 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { object } = await generateObject({
       model: anthropic('claude-sonnet-4-6'),
       system: buildTailorSystemPrompt(),
-      prompt: `Job description:\n\n${jd}`,
+      prompt: `<untrusted_job_description>\n${neutralizeJd(jd)}\n</untrusted_job_description>`,
       schema: tailorPatchSchema,
       temperature: 0.4,
       maxOutputTokens: 2000
     });
 
-    return new Response(JSON.stringify(object), {
+    // Belt-and-suspenders: even though the schema constrains the response,
+    // strip any emphasizedSkills the model invented that aren't in the
+    // canonical vocabulary. Casing is normalized to match SKILL_VOCABULARY.
+    const filteredSkills: string[] = [];
+    for (const raw of object.emphasizedSkills) {
+      const canonical = SKILL_ALLOWLIST.get(raw.toLowerCase().trim());
+      if (canonical && !filteredSkills.includes(canonical)) {
+        filteredSkills.push(canonical);
+      }
+    }
+    const filteredObject = { ...object, emphasizedSkills: filteredSkills };
+
+    return new Response(JSON.stringify(filteredObject), {
       headers: { 'content-type': 'application/json' }
     });
   } catch (err) {

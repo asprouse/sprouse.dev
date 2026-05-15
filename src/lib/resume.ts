@@ -1,17 +1,13 @@
 import resumeJson from '../../resume.json';
 import type { Resume, TechCategory, TechEntry } from '../types/resume';
+import { CURRENT_ERA_FROM, slugifyCompany } from './slug';
 
 // resume.json is validated against schemas/resume.schema.json at build time
 // (via `npm run check`), so this cast is safe — runtime validation would just
 // repeat the build-time check on every cold start.
 export const resume = resumeJson as Resume;
 
-export function slugifyCompany(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
+export { slugifyCompany, CURRENT_ERA_FROM } from './slug';
 
 export const COMPANY_SLUGS: Record<string, string> = Object.fromEntries(
   resume.experience.map((role) => [slugifyCompany(role.company), role.company])
@@ -23,6 +19,7 @@ export function formatDateRange(from: string, to: string | null): string {
 
 function formatYearMonth(ym: string): string {
   const [year, month] = ym.split('-');
+  if (!year) return ym;
   if (!month) return year;
   const date = new Date(Number(year), Number(month) - 1);
   return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
@@ -36,18 +33,11 @@ export interface SkillUsage {
   isCurrent: boolean;
 }
 
-// Same cutoff used by Resume.astro to split current-era experience from
-// the compressed career retrospective. The Skills section only derives
-// from current-era roles so the rendered matrix reflects what Andrew
-// actually works with — older tech stays in resume.json (source of truth)
-// but no longer adds visual noise to the page.
-const SKILLS_CURRENT_ERA_FROM = '2015-01';
-
 export function deriveSkills(): Record<TechCategory, SkillUsage[]> {
   const usage = new Map<string, { count: number; companies: Set<string>; current: boolean }>();
 
   for (const role of resume.experience) {
-    if (role.dateRange.from < SKILLS_CURRENT_ERA_FROM) continue;
+    if (role.dateRange.from < CURRENT_ERA_FROM) continue;
     const isCurrent = role.dateRange.to === null;
     for (const project of role.projects) {
       for (const slug of project.technologies) {

@@ -125,6 +125,7 @@ export function applyPatch(patch: TailorPatch): void {
     const explicitSet = new Set(explicit);
     for (let position = 0; position < finalOrder.length; position++) {
       const originalIndex = finalOrder[position];
+      if (originalIndex === undefined) continue;
       const project = projects[originalIndex];
       if (!project) continue;
       project.style.order = String(position);

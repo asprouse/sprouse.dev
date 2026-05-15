@@ -73,7 +73,7 @@ export function extractQueryFromMessages(
   // Find the last user message and extract its text
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
-    if (m.role !== 'user') continue;
+    if (!m || m.role !== 'user') continue;
     if (Array.isArray(m.parts)) {
       return m.parts
         .filter((p) => p.type === 'text' && typeof p.text === 'string')

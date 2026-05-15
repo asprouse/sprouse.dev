@@ -7,7 +7,7 @@ import Portrait from './Portrait.astro';
 import RoleCard from './RoleCard.astro';
 import SkillsMatrix from './SkillsMatrix.astro';
 import VariantSwitcher from './VariantSwitcher.astro';
-import { resume } from '../lib/resume';
+import { CURRENT_ERA_FROM, resume } from '../lib/resume';
 import type { Variant } from '../lib/variants';
 
 interface Props {
@@ -20,9 +20,8 @@ const fullName = `${person.first} ${person.last}`;
 const currentRole = experience.find((r) => r.dateRange.to === null);
 const currentLine = currentRole ? `Currently ${currentRole.title} at ${currentRole.company}` : '';
 
-const RETROSPECTIVE_CUTOFF = '2015-01';
-const currentEra = experience.filter((r) => r.dateRange.from >= RETROSPECTIVE_CUTOFF);
-const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_CUTOFF);
+const currentEra = experience.filter((r) => r.dateRange.from >= CURRENT_ERA_FROM);
+const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FROM);
 ---
 
 <Layout title={variant.metaTitle} description={variant.metaDescription}>
@@ -109,6 +108,6 @@ const retrospective = experience.filter((r) => r.dateRange.from < RETROSPECTIVE_
       )
     }
 
-    <Chat client:load transition:persist="chat" />
+    <Chat client:idle transition:persist="chat" />
   </main>
 </Layout>
