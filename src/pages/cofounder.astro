@@ -1,6 +1,8 @@
 ---
 import Resume from '../components/Resume.astro';
 import { VARIANTS } from '../lib/variants';
+
+export const prerender = true;
 ---
 
 <Resume variant={VARIANTS.cofounder} />

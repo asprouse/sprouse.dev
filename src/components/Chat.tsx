@@ -2,6 +2,7 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, type UIMessage } from 'ai';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Streamdown } from 'streamdown';
+import { slugifyCompany } from '../lib/slug';
 
 const PROMPTS = [
   "What's TakeShape's agent architecture?",
@@ -31,11 +32,10 @@ function messageText(message: UIMessage): string {
     .join('');
 }
 
-function slugifyCompany(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 }
 
 function flashRole(el: HTMLElement) {
@@ -50,7 +50,7 @@ function scrollToRole(company: string) {
   if (el instanceof HTMLDetailsElement) {
     el.open = true;
   }
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
   flashRole(el);
 }
 
@@ -121,6 +121,9 @@ function useToolCallDispatcher(messages: UIMessage[]) {
   }, [messages]);
 }
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export default function Chat() {
   const transport = useMemo(() => new DefaultChatTransport({ api: '/api/chat' }), []);
   const { messages, sendMessage, status, error, stop, setMessages } = useChat({
@@ -130,26 +133,55 @@ export default function Chat() {
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useToolCallDispatcher(messages);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
-      behavior: 'smooth'
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth'
     });
   }, [messages.length, open]);
 
+  // Focus management for the chat dialog:
+  // - On open: focus the input
+  // - On Escape: close
+  // - On Tab/Shift+Tab: trap focus within the dialog
+  // - On close: return focus to the toggle button (a11y norm)
   useEffect(() => {
     if (!open) return;
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusables = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      ).filter((el) => !el.hasAttribute('inert'));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (!first || !last) return;
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener('keydown', onKey);
     const t = window.setTimeout(() => inputRef.current?.focus(), 50);
     return () => {
       window.removeEventListener('keydown', onKey);
       window.clearTimeout(t);
+      toggleRef.current?.focus();
     };
   }, [open]);
 
@@ -169,6 +201,7 @@ export default function Chat() {
   return (
     <>
       <button
+        ref={toggleRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Close chat with Andrew' : 'Open chat with Andrew'}
@@ -221,10 +254,13 @@ export default function Chat() {
       )}
 
       <aside
+        ref={dialogRef}
         className={`bg-surface border-rule fixed z-40 flex flex-col border shadow-2xl transition-transform duration-200 ease-out max-md:inset-x-0 max-md:bottom-0 max-md:max-h-[80vh] max-md:rounded-t-[18px] md:right-5 md:bottom-24 md:max-h-[calc(100vh-7.5rem)] md:w-[400px] md:rounded-[14px] ${open ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'}`}
         role="dialog"
         aria-label="Chat with Andrew"
+        aria-modal="true"
         aria-hidden={!open}
+        inert={!open}
       >
         <header className="border-rule flex items-center justify-between border-b px-4 py-3">
           <div>
@@ -385,6 +421,12 @@ function Message({ message }: { message: UIMessage }) {
   }
   return (
     <div className="max-w-[95%] self-start">
+      {/*
+        Streamdown ships a 620 KB @streamdown/mermaid chunk in dist/_astro/, but it's
+        dynamic-imported by Streamdown internals on demand. For a prose-mostly resume
+        chatbot the chunk never downloads unless a response contains a code block, so
+        we accept the build-time footprint.
+      */}
       <Streamdown className="chat-markdown text-[14px] leading-relaxed">{text}</Streamdown>
     </div>
   );

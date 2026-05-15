@@ -5,6 +5,8 @@ import { marked } from 'marked';
 import approachMd from '../../chatbot/APPROACH.md?raw';
 import { corpus } from '../lib/qa-loader';
 
+export const prerender = true;
+
 const html = await marked.parse(approachMd);
 
 const byCategory = corpus.reduce<Record<string, number>>((acc, entry) => {
@@ -49,7 +51,7 @@ const categories = Object.entries(byCategory).sort((a, b) => b[1] - a[1]);
       </div>
     </article>
 
-    <Chat client:load transition:persist="chat" />
+    <Chat client:idle transition:persist="chat" />
   </main>
 </Layout>
 
