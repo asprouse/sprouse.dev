@@ -8,8 +8,8 @@ const PROMPTS = [
   "What's TakeShape's agent architecture?",
   'How do you hire?',
   'Hot take on TypeScript?',
-  'How did Fair Tread end?',
-  'Why are you leaving TakeShape?'
+  "What's the HTTP-402 story?",
+  'What role are you looking for next?'
 ];
 
 interface UIPart {

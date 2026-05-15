@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { generateObject } from 'ai';
+import { generateText, Output } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { env } from 'cloudflare:workers';
 import { tailorPatchSchema } from '../../lib/tailor-schema';
@@ -62,11 +62,11 @@ export const POST: APIRoute = async ({ request }) => {
   const anthropic = createAnthropic({ apiKey });
 
   try {
-    const { object } = await generateObject({
+    const { output: object } = await generateText({
       model: anthropic('claude-sonnet-4-6'),
       system: buildTailorSystemPrompt(),
       prompt: `<untrusted_job_description>\n${neutralizeJd(jd)}\n</untrusted_job_description>`,
-      schema: tailorPatchSchema,
+      output: Output.object({ schema: tailorPatchSchema }),
       temperature: 0.4,
       maxOutputTokens: 2000
     });

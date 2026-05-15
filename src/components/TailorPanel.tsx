@@ -32,7 +32,7 @@ export default function TailorPanel() {
     return () => window.removeEventListener('tailor:cleared', onCleared);
   }, []);
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const value = jd.trim();
     if (value.length < 40) {

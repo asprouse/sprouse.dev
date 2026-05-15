@@ -22,7 +22,7 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
     proofBullets: [
       "Designed TakeShape's schema language and AI agent runtime",
       'Shipped production agents to enterprise customers including Valvoline',
-      'Led TakeShape through three pivots: CMS → API mesh → agent platform'
+      'Led TakeShape through two pivots: CMS → API mesh → agent platform'
     ],
     openTo:
       'Open to CTO at AI-native companies building primary AI products — applied AI, agent platforms, model-adjacent infrastructure.',
