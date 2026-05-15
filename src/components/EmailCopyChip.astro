@@ -1,0 +1,80 @@
+---
+// Email address rendered as a contact chip with a small click-to-copy
+// button. The mailto: link still works; the button is a convenience for
+// people on web-mail clients who'd otherwise have to select-and-copy.
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+---
+
+<span class="contact-chip group">
+  <a href={`mailto:${email}`} class="text-inherit no-underline">{email}</a>
+  <button
+    type="button"
+    data-copy-email={email}
+    class="text-muted-2 hover:text-accent ml-1 rounded p-0.5 opacity-60 transition-opacity group-hover:opacity-100"
+    aria-label={`Copy ${email} to clipboard`}
+    title="Copy"
+  >
+    <svg
+      class="copy-icon"
+      width="13"
+      height="13"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="5.5" y="5.5" width="8" height="8" rx="1.5"></rect>
+      <path d="M3 10.5V3.5a1 1 0 0 1 1-1h7"></path>
+    </svg>
+    <svg
+      class="check-icon hidden"
+      width="13"
+      height="13"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 8.5l3 3 7-7"></path>
+    </svg>
+  </button>
+</span>
+
+<script>
+  // Toggles the icon to a check for ~1.5s on success so the click feels
+  // acknowledged without needing a toast. Astro hoists and deduplicates
+  // this script across multiple EmailCopyChip instances on a page.
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = btn.dataset.copyEmail;
+      if (!email) return;
+      try {
+        await navigator.clipboard.writeText(email);
+      } catch {
+        return;
+      }
+      const copy = btn.querySelector<SVGElement>('.copy-icon');
+      const check = btn.querySelector<SVGElement>('.check-icon');
+      if (!copy || !check) return;
+      copy.classList.add('hidden');
+      check.classList.remove('hidden');
+      btn.setAttribute('aria-label', 'Copied');
+      window.setTimeout(() => {
+        copy.classList.remove('hidden');
+        check.classList.add('hidden');
+        btn.setAttribute('aria-label', `Copy ${email} to clipboard`);
+      }, 1500);
+    });
+  });
+</script>
