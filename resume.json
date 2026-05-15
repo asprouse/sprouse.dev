@@ -32,13 +32,14 @@
         {
           "title": "TakeShape schema language",
           "description": "Designed the TakeShape schema language — a JSON-based DSL with a JSON Schema-derived type system, borrowing concepts from OpenAPI and GraphQL. The schema defines a customer's data model, REST and GraphQL APIs, and AI agents in a single artifact. Customers model their domain once and get an indexed, searchable GraphQL mesh and hosted agent endpoints out of the box. The schema is the throughline that ties every product generation together.",
-          "technologies": ["typescript", "graphql", "json-schema", "openapi"]
+          "technologies": ["typescript", "graphql", "json-schema", "openapi", "rest"]
         },
         {
           "title": "Agent framework & runtime",
           "description": "Hands-on designed and built TakeShape's agent framework and runtime — a fully hosted, stateful agent platform with sessions, threads, conversation history, a chat preview UI, and hosted agent endpoints exposed as both GraphQL and REST. Tools are authored as GraphQL queries against the customer's mesh and attached directly to agents, eliminating the bespoke glue most agent frameworks require and ensuring tools never drift from the schema that defines them.",
           "technologies": [
             "typescript",
+            "javascript",
             "graphql",
             "html",
             "css",
@@ -73,6 +74,7 @@
           "description": "Architected TakeShape's serverless-everywhere infrastructure. From day one the goal was to run fully on AWS Lambda with TypeScript end-to-end, sharing code across frontend and backend. Wrote and open-sourced the first Serverless Framework webpack plugin (<a href=\"https://github.com/asprouse/serverless-webpack-plugin\">serverless-webpack-plugin</a>) to make this practical when no equivalent tooling existed. Observability is OpenTelemetry into AWS X-Ray with Sentry for errors and Arize for agent traces; billing runs through Stripe.",
           "technologies": [
             "typescript",
+            "node-js",
             "aws-lambda",
             "serverless-framework",
             "aws-cdk",
@@ -621,13 +623,13 @@
       "description": ""
     },
     "elasticsearch": {
-      "name": "Elasticsearch / OpenSearch",
+      "name": "OpenSearch",
       "url": "https://opensearch.org/",
       "category": "platform",
       "description": ""
     },
     "s3": {
-      "name": "Amazon S3",
+      "name": "S3",
       "url": "https://aws.amazon.com/s3/",
       "category": "platform",
       "description": ""
@@ -711,25 +713,25 @@
       "description": ""
     },
     "aws-kms": {
-      "name": "AWS KMS",
+      "name": "KMS",
       "url": "https://aws.amazon.com/kms/",
       "category": "platform",
       "description": ""
     },
     "aws-sqs": {
-      "name": "AWS SQS",
+      "name": "SQS",
       "url": "https://aws.amazon.com/sqs/",
       "category": "platform",
       "description": ""
     },
     "aws-sns": {
-      "name": "AWS SNS",
+      "name": "SNS",
       "url": "https://aws.amazon.com/sns/",
       "category": "platform",
       "description": ""
     },
     "aws-athena": {
-      "name": "AWS Athena",
+      "name": "Athena",
       "url": "https://aws.amazon.com/athena/",
       "category": "platform",
       "description": ""

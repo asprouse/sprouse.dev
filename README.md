@@ -34,7 +34,7 @@ It's also intended to be a forkable example of a small but production-grade mode
 │
 ├─ Astro routes
 │   ├─ /, /principal, /cofounder ─ three positioning variants of the resume
-│   ├─ /cv ─ print-first CV (Cmd+P → save as PDF), with tailor-on-JD panel
+│   ├─ /cv ─ print-first CV with tailor-on-JD panel
 │   └─ /about-the-bot ─ how the chatbot works
 │
 └─ React islands
