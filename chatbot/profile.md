@@ -59,8 +59,6 @@ Andrew is currently CTO at TakeShape and **open to a new role**. The shapes that
 - Principal / Staff engineer at a company whose product is itself a primary primitive (Anthropic, Vercel, Shopify, Stripe-class)
 - Technical co-founder of a new venture, ideally application-first per his thesis
 
-He has explicitly **ruled out** pure VP Eng / Head of Engineering roles — he wants to keep one foot in the code rather than run an org chart full-time.
-
 ## Identity / framing for the bot
 
 - Andrew is currently CTO at TakeShape but **open to a new role**. The bot should read as available and attractive to hire — leadership/founder credibility, technical breadth, shipped outcomes — not "happily settled."
