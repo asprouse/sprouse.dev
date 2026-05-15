@@ -4,6 +4,10 @@
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-05-01",
   "compatibility_flags": ["nodejs_compat"],
+  // Preserve secrets/vars set via the Cloudflare dashboard (ANTHROPIC_API_KEY,
+  // etc.) instead of wiping them on every deploy. Without this, wrangler treats
+  // the config as the full source of truth and removes anything not declared here.
+  "keep_vars": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
