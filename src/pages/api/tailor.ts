@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { generateObject } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { env } from 'cloudflare:workers';
 import { tailorPatchSchema } from '../../lib/tailor-schema';
 import { SKILL_VOCABULARY, buildTailorSystemPrompt } from '../../lib/tailor-prompt';
 
@@ -16,16 +17,6 @@ function neutralizeJd(input: string): string {
 
 export const prerender = false;
 
-interface RateLimiter {
-  limit: (input: { key: string }) => Promise<{ success: boolean }>;
-}
-
-interface RuntimeEnv {
-  ANTHROPIC_API_KEY?: string;
-  TAILOR_RATE_LIMITER?: RateLimiter;
-  GLOBAL_RATE_LIMITER?: RateLimiter;
-}
-
 function jsonError(status: number, message: string) {
   return new Response(JSON.stringify({ error: message }), {
     status,
@@ -35,12 +26,8 @@ function jsonError(status: number, message: string) {
 
 const MAX_JD_LENGTH = 12000;
 
-export const POST: APIRoute = async ({ request, locals }) => {
-  const env: RuntimeEnv = (locals as { runtime?: { env?: RuntimeEnv } }).runtime?.env ?? {};
-
-  const apiKey =
-    env.ANTHROPIC_API_KEY ??
-    (typeof process !== 'undefined' ? process.env.ANTHROPIC_API_KEY : undefined);
+export const POST: APIRoute = async ({ request }) => {
+  const apiKey = env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
     return jsonError(500, 'ANTHROPIC_API_KEY not configured');

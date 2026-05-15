@@ -15,7 +15,8 @@ export default [
       '.playwright-mcp/**',
       'node_modules/**',
       'public/**',
-      'src/env.d.ts'
+      'src/env.d.ts',
+      'worker-configuration.d.ts'
     ]
   },
   js.configs.recommended,

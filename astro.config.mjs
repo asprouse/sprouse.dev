@@ -12,9 +12,7 @@ const isBuild = process.env.npm_lifecycle_event === 'build';
 
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare({
-    platformProxy: { enabled: true }
-  }),
+  adapter: cloudflare(),
   integrations: [
     react(),
     sitemap({

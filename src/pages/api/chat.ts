@@ -7,6 +7,7 @@ import {
   type UIMessage
 } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { env } from 'cloudflare:workers';
 import { z } from 'zod';
 import { corpus, profile } from '../../lib/qa-loader';
 import { resume } from '../../lib/resume';
@@ -24,16 +25,6 @@ const COMPANY_NAMES = resume.experience.map((r) => r.company);
 const MAX_MESSAGES = 30;
 const MAX_TOTAL_TEXT = 60_000;
 
-interface RateLimiter {
-  limit: (input: { key: string }) => Promise<{ success: boolean }>;
-}
-
-interface RuntimeEnv {
-  ANTHROPIC_API_KEY?: string;
-  CHAT_RATE_LIMITER?: RateLimiter;
-  GLOBAL_RATE_LIMITER?: RateLimiter;
-}
-
 function rateLimitResponse(message: string) {
   return new Response(JSON.stringify({ error: message }), {
     status: 429,
@@ -44,12 +35,8 @@ function rateLimitResponse(message: string) {
   });
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
-  const env: RuntimeEnv = (locals as { runtime?: { env?: RuntimeEnv } }).runtime?.env ?? {};
-
-  const apiKey =
-    env.ANTHROPIC_API_KEY ??
-    (typeof process !== 'undefined' ? process.env.ANTHROPIC_API_KEY : undefined);
+export const POST: APIRoute = async ({ request }) => {
+  const apiKey = env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }), {

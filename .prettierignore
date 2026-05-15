@@ -7,3 +7,4 @@ package-lock.json
 public/llms.txt
 public/robots.txt
 chatbot/qa
+worker-configuration.d.ts
