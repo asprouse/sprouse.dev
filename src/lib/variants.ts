@@ -4,7 +4,10 @@ export interface Variant {
   slug: VariantSlug;
   path: string;
   label: string;
-  headline: string;
+  /** Elevator-pitch sentence. Sits directly under the H1 — must be readable in 2 seconds. */
+  tagline: string;
+  /** Three scannable proof points, ~10 words each. The 5-second-visitor scan layer. */
+  proofBullets: [string, string, string];
   openTo: string;
   metaTitle: string;
   metaDescription: string;
@@ -15,8 +18,12 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
     slug: 'cto',
     path: '/',
     label: 'CTO',
-    headline:
-      "Seven years as TakeShape's CTO and lead engineer building agent infrastructure — schema language, runtime, multi-provider LLM integration, production agents for Valvoline. The lesson I'm taking forward: the best dev tools come out of trying to ship a real product. Looking to be a CTO who builds the product first and the platform out of what the product teaches us.",
+    tagline: 'Twenty years shipping production software. Currently CTO. Looking next.',
+    proofBullets: [
+      "Designed TakeShape's schema language and AI agent runtime",
+      'Shipped production agents to enterprise customers including Valvoline',
+      'Led TakeShape through three pivots: CMS → API mesh → agent platform'
+    ],
     openTo:
       'Open to CTO at AI-native companies building primary AI products — applied AI, agent platforms, model-adjacent infrastructure.',
     metaTitle: 'Andrew Sprouse — CTO, builder of AI agent infrastructure',
@@ -27,8 +34,12 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
     slug: 'principal',
     path: '/principal',
     label: 'Principal Engineer',
-    headline:
-      "Twenty years of designing systems and writing the hard code — from Fair Tread's HTTP-402 paywall in 2015, nine years before Coinbase's x402 made agentic micropayments a mainstream category, to TakeShape's schema-driven agent runtime today. What I want next: Principal Engineer work at a company whose product is itself a primary primitive — an LLM, a runtime, a commerce backbone, a payments rail.",
+    tagline: 'Twenty years designing primary primitives. IC-first, schema-shaped.',
+    proofBullets: [
+      'Built a JSON Schema-derived agent runtime end-to-end at TakeShape',
+      'Shipped an HTTP-402 paywall in 2015, nine years before x402',
+      'Open-source: Mozilla Nunjucks (12k★), Serverless Framework webpack plugin'
+    ],
     openTo:
       'Open to Principal / Staff Engineer roles at companies whose product is itself a primary primitive — LLM, runtime, commerce, payments.',
     metaTitle: 'Andrew Sprouse — Principal Engineer, twenty years of primary primitives',
@@ -39,8 +50,12 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
     slug: 'cofounder',
     path: '/cofounder',
     label: 'Co-founder',
-    headline:
-      "Two co-founder gigs (TakeShape + Fair Tread), Techstars, a seed round, three product pivots — I'm coming out of seven years of dev-tools work knowing the sharper play is to ship an end-user product first and build the platform out of what shipping taught us. I know exactly what kind of technical co-founder I am and what I need from the business side of the table.",
+    tagline: 'Two co-founder gigs in. Going application-first next time.',
+    proofBullets: [
+      'TakeShape + Fair Tread — two co-founder gigs through Techstars',
+      'Raised a seed round, navigated three product pivots in seven years',
+      'Application-first thesis: ship the product, let the platform fall out'
+    ],
     openTo:
       'Open to technical co-founder roles, application-first — pick a real user problem AI now makes solvable, ship it, and let the dev-tools fall out of the work.',
     metaTitle: 'Andrew Sprouse — Technical co-founder, application-first',
