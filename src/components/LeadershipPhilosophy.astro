@@ -1,58 +1,57 @@
 ---
 // Distilled from chatbot/qa/04-leadership.md.
-// Each paragraph is a synthesis of multiple Q&As in Andrew's voice — the
+// Each theme is a synthesis of multiple Q&As in Andrew's voice — the
 // chatbot can elaborate on any individual point.
+
+interface Theme {
+  title: string;
+  body: string;
+}
+
+const themes: Theme[] = [
+  {
+    title: 'Hiring',
+    body: 'I hire the person, not the resume. Curiosity matters more than individual experiences on a CV — we\'re always working with unknowns, and the candidate needs to be comfortable not knowing everything while having a solid framework for finding their way through. The red flag I trust most is over-confidence: superlatives like "X is the best LLM for Y," inability to discuss trade-offs, or pure terseness in the conversation itself.'
+  },
+  {
+    title: 'Decision-making',
+    body: "I lead with evidence. Agentic coding has made research spikes and benchmarks cheap enough that I'd rather burn an afternoon on data than a meeting on opinions. When the team is split and the data doesn't decide, I run a 5-whys to surface the actual disagreement. Most of the time, defer to the person closest to the domain — unless there's a smell I recognize from past experience. The decision pattern I still get wrong: I'm eager to release. Knowing when the turkey needs more time is a muscle I'm still working on."
+  },
+  {
+    title: 'Communication',
+    body: "Clarity is the cardinal virtue. In tickets, I make it explicit what's already decided versus what needs research — and when research is the task, that's part of the work, not friction blocking it. Proactive beats reactive: earlier is better, overcommunicating beats undercommunicating. The habit I wish more engineers had is making it clear when they're venting versus asking a real question. Teams treat ambiguous venting as a real problem, and the cost adds up."
+  },
+  {
+    title: 'Conflict & feedback',
+    body: 'When tensions are high, I start with personal respect — we only critique the work, not the person. If a line has been crossed, I apologize first. Once emotions are down, we listen, learn, share, and most of the time we can fall back to an objective problem-solving framework and move on. Hard feedback gets prepared in advance: positive, then constructive, then action items, then next steps. Unclear feedback is the worst thing a manager can do.'
+  },
+  {
+    title: 'Leading through AI',
+    body: 'The basics still apply, but each engineer now has agents to delegate to. Our PR review is two-step — agent first (Claude or Copilot), human second — so the human reviewer is reading second-pass code, not first-pass. The new failure mode is "AI slop": novel-length PR comments, code that explains the obvious, implementations that miss the mark. The leadership skill that matters more now than three years ago is delegating the process of figuring out *what* to do, not just how. Agents belong in preparation, not just execution.'
+  }
+];
 ---
 
 <section id="leadership-philosophy" class="scroll-mt-24">
-  <h2 class="section-label mt-12 mb-2">How I run things</h2>
+  <h2 class="section-heading mt-14 mb-2">How I run things</h2>
   <p class="text-muted mt-0 mb-6 max-w-[62ch] text-[14px]">
     Five themes across hiring, decisions, communication, conflict, and AI-augmented engineering. Ask
     the chatbot to dig deeper into any of them.
   </p>
 
-  <div class="max-w-[62ch] space-y-5">
-    <p>
-      <strong>Hiring.</strong> I hire the person, not the resume. Curiosity matters more than individual
-      experiences on a CV — we're always working with unknowns, and the candidate needs to be comfortable
-      not knowing everything while having a solid framework for finding their way through. The red flag
-      I trust most is over-confidence: superlatives like "X is the best LLM for Y," inability to discuss
-      trade-offs, or pure terseness in the conversation itself.
-    </p>
-
-    <p>
-      <strong>Decision-making.</strong> I lead with evidence. Agentic coding has made research spikes
-      and benchmarks cheap enough that I'd rather burn an afternoon on data than a meeting on opinions.
-      When the team is split and the data doesn't decide, I run a 5-whys to surface the actual disagreement.
-      Most of the time, defer to the person closest to the domain — unless there's a smell I recognize
-      from past experience. The decision pattern I still get wrong: I'm eager to release. Knowing when
-      the turkey needs more time is a muscle I'm still working on.
-    </p>
-
-    <p>
-      <strong>Communication.</strong> Clarity is the cardinal virtue. In tickets, I make it explicit what's
-      already decided versus what needs research — and when research is the task, that's part of the work,
-      not friction blocking it. Proactive beats reactive: earlier is better, overcommunicating beats undercommunicating.
-      The habit I wish more engineers had is making it clear when they're venting versus asking a real
-      question. Teams treat ambiguous venting as a real problem, and the cost adds up.
-    </p>
-
-    <p>
-      <strong>Conflict &amp; feedback.</strong> When tensions are high, I start with personal respect
-      — we only critique the work, not the person. If a line has been crossed, I apologize first. Once
-      emotions are down, we listen, learn, share, and most of the time we can fall back to an objective
-      problem-solving framework and move on. Hard feedback gets prepared in advance: positive, then constructive,
-      then action items, then next steps. Unclear feedback is the worst thing a manager can do.
-    </p>
-
-    <p>
-      <strong>Leading through AI.</strong> The basics still apply, but each engineer now has agents to
-      delegate to. Our PR review is two-step — agent first (Claude or Copilot), human second — so the
-      human reviewer is reading second-pass code, not first-pass. The new failure mode is "AI slop": novel-length
-      PR comments, code that explains the obvious, implementations that miss the mark. The leadership
-      skill that matters more now than three years ago is delegating the process of figuring out <em
-        >what</em
-      > to do, not just how. Agents belong in preparation, not just execution.
-    </p>
-  </div>
+  <ul class="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-5 p-0 md:grid-cols-2">
+    {
+      themes.map((theme) => (
+        <li class="m-0">
+          <h3 class="text-ink mt-0 mb-1.5 text-[15px] font-semibold tracking-tight">
+            {theme.title}
+          </h3>
+          <p
+            class="text-ink m-0 text-[14px] leading-[1.55]"
+            set:html={theme.body.replace(/\*(.+?)\*/g, '<em>$1</em>')}
+          />
+        </li>
+      ))
+    }
+  </ul>
 </section>

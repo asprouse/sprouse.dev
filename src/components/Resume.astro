@@ -42,12 +42,53 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
             </p>
           )
         }
-        <p class="text-muted m-0 text-sm">
-          <a href={`mailto:${person.email}`}>{person.email}</a> ·{' '}
-          <a href={person.links.github} rel="noopener">GitHub</a> ·{' '}
-          <a href={person.links.linkedin} rel="noopener">LinkedIn</a> ·{' '}
-          <a href="/cv">CV</a>
-        </p>
+        <div class="mt-1 -ml-3 flex flex-wrap items-center gap-1">
+          <span class="contact-chip group">
+            <a href={`mailto:${person.email}`} class="text-inherit no-underline">
+              {person.email}
+            </a>
+            <button
+              type="button"
+              data-copy-email={person.email}
+              class="text-muted-2 hover:text-accent ml-1 rounded p-0.5 opacity-60 transition-opacity group-hover:opacity-100"
+              aria-label={`Copy ${person.email} to clipboard`}
+              title="Copy"
+            >
+              <svg
+                class="copy-icon"
+                width="13"
+                height="13"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="5.5" y="5.5" width="8" height="8" rx="1.5"></rect>
+                <path d="M3 10.5V3.5a1 1 0 0 1 1-1h7"></path>
+              </svg>
+              <svg
+                class="check-icon hidden"
+                width="13"
+                height="13"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 8.5l3 3 7-7"></path>
+              </svg>
+            </button>
+          </span>
+          <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
+          <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
+          <a class="contact-chip-primary ml-1" href="/cv">CV →</a>
+        </div>
 
         <p class="text-ink mt-6 max-w-[62ch] text-[17px] leading-relaxed">
           {variant.headline}
@@ -68,7 +109,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
       </div>
     </header>
 
-    <h2 class="section-label mt-12 mb-5">Experience</h2>
+    <h2 class="section-heading mt-14 mb-6">Experience</h2>
     {currentEra.map((role) => <RoleCard role={role} />)}
 
     {
@@ -111,3 +152,31 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
     <Chat client:idle transition:persist="chat" />
   </main>
 </Layout>
+
+<script>
+  // Email copy-to-clipboard. Toggles the icon to a check for ~1.5s on success
+  // so the click feels acknowledged without needing a toast.
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = btn.dataset.copyEmail;
+      if (!email) return;
+      try {
+        await navigator.clipboard.writeText(email);
+      } catch {
+        return;
+      }
+      const copy = btn.querySelector<SVGElement>('.copy-icon');
+      const check = btn.querySelector<SVGElement>('.check-icon');
+      if (!copy || !check) return;
+      copy.classList.add('hidden');
+      check.classList.remove('hidden');
+      btn.setAttribute('aria-label', 'Copied');
+      window.setTimeout(() => {
+        copy.classList.remove('hidden');
+        check.classList.add('hidden');
+        btn.setAttribute('aria-label', `Copy ${email} to clipboard`);
+      }, 1500);
+    });
+  });
+</script>

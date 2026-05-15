@@ -131,6 +131,23 @@
   @apply text-muted text-xs font-semibold tracking-[0.12em] uppercase;
 }
 
+/* Primary section heading — used for the load-bearing sections (Experience,
+   How I run things). Secondary sections (Skills, Open Source, Career
+   retrospective) stay on `section-label` to establish a visual rhythm. */
+@utility section-heading {
+  @apply text-ink text-2xl font-bold tracking-[-0.02em];
+}
+
+/* Contact links — pills, not body-text links. The primary CTA (CV) uses
+   contact-chip-primary to read as an action. */
+@utility contact-chip {
+  @apply text-muted hover:text-ink hover:border-rule inline-flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-[13px] transition-colors;
+}
+
+@utility contact-chip-primary {
+  @apply bg-accent text-accent-ink hover:bg-accent hover:text-accent-ink border-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[13px] font-medium transition-transform hover:-translate-y-px;
+}
+
 .chat-markdown > :first-child {
   margin-top: 0;
 }

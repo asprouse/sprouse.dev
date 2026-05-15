@@ -8,30 +8,35 @@ interface Props {
 const { current } = Astro.props;
 ---
 
-<div class="text-muted text-[13px]">
-  <span class="mr-2">Read this site as:</span>
-  <span class="inline-flex flex-wrap gap-1">
+<div class="text-muted flex flex-wrap items-center gap-2 text-[13px]">
+  <span>Read this site as</span>
+  <span
+    class="border-rule inline-flex flex-wrap rounded-full border p-0.5"
+    role="tablist"
+    aria-label="Positioning variants"
+  >
     {
-      VARIANT_ORDER.map((slug, i) => {
+      VARIANT_ORDER.map((slug) => {
         const variant = VARIANTS[slug];
         const isCurrent = slug === current;
-        return (
-          <>
-            {i > 0 && (
-              <span class="text-muted-2 mx-0.5" aria-hidden="true">
-                ·
-              </span>
-            )}
-            {isCurrent ? (
-              <span class="text-ink font-medium" aria-current="page">
-                {variant.label}
-              </span>
-            ) : (
-              <a href={variant.path} class="hover:text-accent">
-                {variant.label}
-              </a>
-            )}
-          </>
+        return isCurrent ? (
+          <span
+            class="bg-accent text-accent-ink rounded-full px-3 py-1 text-[12px] font-semibold"
+            role="tab"
+            aria-selected="true"
+            aria-current="page"
+          >
+            {variant.label}
+          </span>
+        ) : (
+          <a
+            href={variant.path}
+            class="text-muted hover:bg-chip hover:text-ink rounded-full px-3 py-1 text-[12px] transition-colors"
+            role="tab"
+            aria-selected="false"
+          >
+            {variant.label}
+          </a>
         );
       })
     }
