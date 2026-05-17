@@ -5,7 +5,7 @@ import promptText from '../../illustration/prompt.txt?raw';
 <div class="portrait group relative inline-block w-[180px] max-md:w-[140px]">
   <button
     type="button"
-    class="font-inherit portrait-trigger m-0 block w-full cursor-pointer appearance-none border-none bg-transparent p-0 text-center"
+    class="font-inherit portrait-trigger relative m-0 block w-full cursor-pointer appearance-none border-none bg-transparent p-0 text-center"
     aria-label="Show the source photo and AI prompt used to create this illustration"
     aria-expanded="false"
   >
@@ -17,10 +17,10 @@ import promptText from '../../illustration/prompt.txt?raw';
       class="bg-surface block h-auto w-full rounded-lg shadow-sm transition-all duration-200 ease-out group-focus-within:-translate-y-0.5 group-focus-within:shadow-lg group-hover:-translate-y-0.5 group-hover:shadow-lg"
     />
     <span
-      class="text-muted mt-2 hidden items-center gap-1.5 text-[11px] font-medium tracking-wider uppercase md:inline-flex"
+      class="bg-accent text-accent-ink dot-pulse absolute right-2 bottom-2 flex h-7 w-7 items-center justify-center rounded-full text-[14px] font-bold shadow-md transition-transform group-hover:scale-110"
+      aria-hidden="true"
     >
-      <span class="dot-pulse bg-accent h-1.5 w-1.5 rounded-full"></span>
-      How this was made
+      ?
     </span>
   </button>
 
