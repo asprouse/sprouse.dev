@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Chat from '../components/Chat';
 import EmailCopyChip from '../components/EmailCopyChip.astro';
 import Portrait from '../components/Portrait.astro';
+import SocialChip from '../components/SocialChip.astro';
 import { resume } from '../lib/resume';
 
 export const prerender = true;
@@ -43,8 +44,8 @@ const tagline = 'Twenty years building production software. Currently CTO. Open 
 
     <div class="-ml-3 flex flex-wrap items-center gap-1">
       <EmailCopyChip email={person.email} />
-      <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
-      <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
+      <SocialChip network="github" href={person.links.github} />
+      <SocialChip network="linkedin" href={person.links.linkedin} />
       <a class="contact-chip" href="/cv/print">Print CV ↗</a>
     </div>
 

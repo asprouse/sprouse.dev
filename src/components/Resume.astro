@@ -7,6 +7,7 @@ import LeadershipPhilosophy from './LeadershipPhilosophy.astro';
 import Portrait from './Portrait.astro';
 import RoleCard from './RoleCard.astro';
 import SkillsMatrix from './SkillsMatrix.astro';
+import SocialChip from './SocialChip.astro';
 import VariantSwitcher from './VariantSwitcher.astro';
 import { CURRENT_ERA_FROM, resume } from '../lib/resume';
 import type { Variant } from '../lib/variants';
@@ -42,8 +43,8 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
         <div class="mt-4 -ml-3 flex flex-wrap items-center gap-1">
           <a class="contact-chip-primary" href={`/cv/print?lens=${variant.slug}`}>Print CV ↗</a>
           <EmailCopyChip email={person.email} />
-          <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
-          <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
+          <SocialChip network="github" href={person.links.github} />
+          <SocialChip network="linkedin" href={person.links.linkedin} />
         </div>
 
         <ul class="mt-7 max-w-[62ch] list-none space-y-2 p-0">
