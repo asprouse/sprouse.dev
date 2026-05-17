@@ -26,9 +26,9 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
 <Layout title={variant.metaTitle} description={variant.metaDescription}>
   <main class="max-w-page mx-auto px-6 pt-20 pb-28">
     <header
-      class="mb-10 grid grid-cols-[1fr_auto] items-start gap-8 max-[600px]:grid-cols-1 max-[600px]:gap-5"
+      class="mb-10 grid grid-cols-[1fr_auto] items-start gap-8 max-[600px]:grid-cols-1 max-[600px]:gap-4"
     >
-      <div class="min-w-0 max-[600px]:order-1">
+      <div class="min-w-0 max-[600px]:order-2">
         <h1
           class="m-0 mb-3 text-[clamp(2rem,5vw,2.75rem)] leading-[1.05] font-bold tracking-[-0.035em]"
         >
@@ -40,10 +40,10 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
           {variant.tagline}
         </p>
         <div class="mt-4 -ml-3 flex flex-wrap items-center gap-1">
+          <a class="contact-chip-primary" href="/cv">CV →</a>
           <EmailCopyChip email={person.email} />
           <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
           <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
-          <a class="contact-chip-primary ml-1" href="/cv">CV →</a>
         </div>
 
         <ul class="mt-7 max-w-[62ch] list-none space-y-2 p-0">
@@ -70,7 +70,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
           <VariantSwitcher current={variant.slug} />
         </div>
       </div>
-      <div class="justify-self-end max-[600px]:order-2 max-[600px]:justify-self-start">
+      <div class="justify-self-end max-[600px]:order-1 max-[600px]:justify-self-start">
         <Portrait />
       </div>
     </header>
