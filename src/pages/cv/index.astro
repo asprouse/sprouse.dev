@@ -1,0 +1,14 @@
+---
+// Interactive CV. The ?lens query param chooses the positioning variant
+// (cto, principal, cofounder). SSR so meta + visible content match the URL
+// — important for shareable lens-specific links and for SEO.
+import Resume from '../../components/Resume.astro';
+import { VARIANTS, VARIANT_ORDER, type VariantSlug } from '../../lib/variants';
+
+const lensParam = Astro.url.searchParams.get('lens');
+const lens: VariantSlug = VARIANT_ORDER.includes(lensParam as VariantSlug)
+  ? (lensParam as VariantSlug)
+  : 'cto';
+---
+
+<Resume variant={VARIANTS[lens]} />

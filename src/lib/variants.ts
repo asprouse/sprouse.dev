@@ -16,7 +16,7 @@ export interface Variant {
 export const VARIANTS: Record<VariantSlug, Variant> = {
   cto: {
     slug: 'cto',
-    path: '/',
+    path: '/cv?lens=cto',
     label: 'CTO',
     tagline: 'Twenty years shipping production software. Currently CTO. Looking next.',
     proofBullets: [
@@ -32,7 +32,7 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
   },
   principal: {
     slug: 'principal',
-    path: '/principal',
+    path: '/cv?lens=principal',
     label: 'Principal Engineer',
     tagline: 'Twenty years designing primary primitives. IC-first, schema-shaped.',
     proofBullets: [
@@ -48,7 +48,7 @@ export const VARIANTS: Record<VariantSlug, Variant> = {
   },
   cofounder: {
     slug: 'cofounder',
-    path: '/cofounder',
+    path: '/cv?lens=cofounder',
     label: 'Co-founder',
     tagline: 'Two co-founder gigs in. Going application-first next time.',
     proofBullets: [

@@ -1,17 +1,23 @@
 ---
 // Inter Variable (latin subsets) is declared in global.css
-import '../styles/global.css';
+import '../../styles/global.css';
 import {
   CURRENT_ERA_FROM,
   deriveSkills,
   formatDateRange,
   resume,
   slugifyCompany
-} from '../lib/resume';
-import type { TechCategory } from '../types/resume';
-import TailorPanel from '../components/TailorPanel';
+} from '../../lib/resume';
+import type { TechCategory } from '../../types/resume';
+import TailorPanel from '../../components/TailorPanel';
+import { VARIANTS, type VariantSlug, VARIANT_ORDER } from '../../lib/variants';
 
-export const prerender = true;
+// SSR: the ?lens query param picks the variant. Default is cto.
+const lensParam = Astro.url.searchParams.get('lens');
+const lens: VariantSlug = VARIANT_ORDER.includes(lensParam as VariantSlug)
+  ? (lensParam as VariantSlug)
+  : 'cto';
+const variant = VARIANTS[lens];
 
 const { person, summary, experience, education } = resume;
 const fullName = `${person.first} ${person.last}`;
@@ -38,9 +44,9 @@ const skillGroups = PRINT_GROUPS.map((g) => ({
   items: g.categories.flatMap((c) => derivedSkills[c].map((s) => s.tech.name))
 })).filter((g) => g.items.length > 0);
 
-const summaryText = currentRole
-  ? 'Engineering leader and co-founder with two decades of experience shipping production software across media, agency, and SaaS. Currently CTO at TakeShape, where I designed the schema language, built the agent runtime, and shipped production agents for customers like Valvoline. Open to a new role — CTO at an AI-native company, Principal Engineer at a company whose product is a primary primitive, or technical co-founder of a new venture.'
-  : summary;
+// Summary lead = the variant's tagline. Closer = its openTo. Falls back to
+// resume.json summary if the resume has no current role (forked clones).
+const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summary;
 ---
 
 <!doctype html>
@@ -50,7 +56,8 @@ const summaryText = currentRole
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullName} — CV</title>
+    <title>{`${fullName} — CV (${variant.label})`}</title>
+    <meta name="description" content={variant.metaDescription} />
 
     <style>
       @page {
@@ -423,7 +430,7 @@ const summaryText = currentRole
   </head>
   <body>
     <div class="toolbar no-print">
-      <a href="/">← Back to the site</a>
+      <a href={`/cv?lens=${variant.slug}`}>← Back to CV</a>
       <div class="toolbar-right">
         <TailorPanel client:load />
         <button type="button" class="primary" onclick="window.print()">

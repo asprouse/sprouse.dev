@@ -65,13 +65,16 @@ function expandRole(company: string) {
 }
 
 const VARIANT_PATHS: Record<string, string> = {
-  cto: '/',
-  principal: '/principal',
-  cofounder: '/cofounder'
+  cto: '/cv?lens=cto',
+  principal: '/cv?lens=principal',
+  cofounder: '/cv?lens=cofounder'
 };
 
 async function navigateClient(path: string) {
-  if (window.location.pathname === path) return;
+  // Compare pathname + search since two variant URLs share the same pathname
+  // (/cv?lens=cto vs /cv?lens=principal) — bailing on pathname alone would
+  // suppress legitimate lens switches.
+  if (window.location.pathname + window.location.search === path) return;
   try {
     const { navigate } = await import('astro:transitions/client');
     navigate(path);

@@ -1,8 +1,67 @@
 ---
-import Resume from '../components/Resume.astro';
-import { VARIANTS } from '../lib/variants';
+import Layout from '../layouts/Layout.astro';
+import Chat from '../components/Chat';
+import EmailCopyChip from '../components/EmailCopyChip.astro';
+import Portrait from '../components/Portrait.astro';
+import { resume } from '../lib/resume';
+import { VARIANTS, VARIANT_ORDER } from '../lib/variants';
 
 export const prerender = true;
+
+const { person } = resume;
+const fullName = `${person.first} ${person.last}`;
+const tagline = 'Twenty years building production software. Currently CTO. Open to what’s next.';
 ---
 
-<Resume variant={VARIANTS.cto} />
+<Layout
+  title={`${fullName} — CTO, principal engineer, technical co-founder`}
+  description="Andrew Sprouse — co-founder and CTO at TakeShape. Pick a lens (CTO, Principal Engineer, or Co-founder) to read the resume, or print the one-page CV."
+>
+  <main class="mx-auto flex min-h-screen max-w-[640px] flex-col items-start px-6 pt-16 pb-28">
+    <div class="mb-8">
+      <Portrait />
+    </div>
+
+    <h1
+      class="m-0 mb-3 text-[clamp(2.25rem,6vw,3.25rem)] leading-[1.02] font-bold tracking-[-0.035em]"
+    >
+      {fullName}
+    </h1>
+
+    <p
+      class="text-ink m-0 mb-8 max-w-[42ch] text-[20px] leading-snug font-medium tracking-[-0.01em]"
+    >
+      {tagline}
+    </p>
+
+    <p class="section-label m-0 mb-3">Read the resume as</p>
+    <div class="mb-7 flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap">
+      {
+        VARIANT_ORDER.map((slug) => {
+          const v = VARIANTS[slug];
+          return (
+            <a
+              href={v.path}
+              class="border-rule hover:border-accent hover:text-accent group flex items-center justify-between rounded-lg border px-4 py-3 text-[15px] transition-colors sm:flex-1"
+            >
+              <span class="font-semibold">{v.label}</span>
+              <span class="text-muted-2 group-hover:text-accent ml-2 transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <p class="section-label m-0 mb-3">Other ways in</p>
+    <div class="-ml-3 flex flex-wrap items-center gap-1">
+      <EmailCopyChip email={person.email} />
+      <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
+      <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
+      <a class="contact-chip" href="/cv/print">Print CV ↗</a>
+    </div>
+
+    <Chat client:idle transition:persist="chat" />
+  </main>
+</Layout>

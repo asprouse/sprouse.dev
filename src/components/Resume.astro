@@ -40,7 +40,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
           {variant.tagline}
         </p>
         <div class="mt-4 -ml-3 flex flex-wrap items-center gap-1">
-          <a class="contact-chip-primary" href="/cv">CV →</a>
+          <a class="contact-chip-primary" href={`/cv/print?lens=${variant.slug}`}>Print CV ↗</a>
           <EmailCopyChip email={person.email} />
           <a class="contact-chip" href={person.links.github} rel="noopener">GitHub</a>
           <a class="contact-chip" href={person.links.linkedin} rel="noopener">LinkedIn</a>
