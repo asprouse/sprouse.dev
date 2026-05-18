@@ -69,7 +69,6 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         --cv-ink: #0c0a09;
         --cv-muted: #57534e;
         --cv-rule: #d6d3d1;
-        --cv-accent: #ea580c;
       }
 
       * {
@@ -144,9 +143,9 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         text-decoration: none;
       }
       .toolbar button.primary {
-        background: var(--cv-accent);
+        background: var(--color-brand);
         color: #ffffff;
-        border-color: var(--cv-accent);
+        border-color: var(--color-brand);
       }
       .toolbar-right {
         margin-left: auto;
@@ -334,8 +333,8 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         color: var(--cv-muted);
       }
       .tailor-badge-variant {
-        background: color-mix(in oklab, var(--cv-accent) 14%, transparent);
-        color: var(--cv-accent);
+        background: color-mix(in oklab, var(--color-brand) 14%, transparent);
+        color: var(--color-brand);
         padding: 2px 8px;
         border-radius: 999px;
         font-weight: 600;
@@ -357,8 +356,8 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
       .tailor-rationale {
         margin: 0.6em 0 0;
         padding: 0.7em 0.9em;
-        background: color-mix(in oklab, var(--cv-accent) 6%, transparent);
-        border-left: 2px solid var(--cv-accent);
+        background: color-mix(in oklab, var(--color-brand) 6%, transparent);
+        border-left: 2px solid var(--color-brand);
         font-size: 9.5pt;
         line-height: 1.5;
         color: var(--cv-ink);
@@ -378,15 +377,15 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         display: inline-block;
         margin-right: 6px;
         padding: 1px 6px;
-        background: color-mix(in oklab, var(--cv-accent) 14%, transparent);
-        color: var(--cv-accent);
+        background: color-mix(in oklab, var(--color-brand) 14%, transparent);
+        color: var(--color-brand);
         font-size: 7.5pt;
         font-weight: 600;
         border-radius: 3px;
         vertical-align: 2px;
       }
       .skill-item.tailor-emphasis {
-        color: var(--cv-accent);
+        color: var(--color-brand);
         font-weight: 600;
       }
       .summary.tailor-replaced {
@@ -398,8 +397,8 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         top: -0.2em;
         right: 0;
         font-size: 7.5pt;
-        color: var(--cv-accent);
-        background: color-mix(in oklab, var(--cv-accent) 12%, transparent);
+        color: var(--color-brand);
+        background: color-mix(in oklab, var(--color-brand) 12%, transparent);
         padding: 1px 6px;
         border-radius: 3px;
         font-weight: 600;

@@ -32,13 +32,19 @@
 }
 
 @theme {
+  /* Brand color — edit these two lines to change the site's accent everywhere
+     (screen UI, print sheet, OG image). --color-brand is the canonical value;
+     --color-brand-soft is the lighter variant used on dark surfaces. */
+  --color-brand: #3d8e4d;
+  --color-brand-soft: #8cc998;
+
   --color-canvas: #fafaf9;
   --color-surface: #ffffff;
   --color-ink: #0c0a09;
   --color-muted: #57534e;
   --color-muted-2: #78716c;
   --color-rule: #e7e5e4;
-  --color-accent: #ea580c;
+  --color-accent: var(--color-brand);
   --color-accent-ink: #ffffff;
   --color-chip: #f5f5f4;
   --color-chip-ink: #292524;
@@ -58,7 +64,7 @@
     --color-muted: #a8a29e;
     --color-muted-2: #78716c;
     --color-rule: #292524;
-    --color-accent: #fb923c;
+    --color-accent: var(--color-brand-soft);
     --color-accent-ink: #1c1917;
     --color-chip: #1c1917;
     --color-chip-ink: #d6d3d1;

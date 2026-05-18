@@ -121,9 +121,9 @@ export default function TailorPanel() {
                     display: none;
                 }
                 details[open] > .tailor-panel-summary {
-                    background: color-mix(in oklab, var(--cv-accent, #ea580c) 8%, transparent);
-                    border-color: var(--cv-accent, #ea580c);
-                    color: var(--cv-accent, #ea580c);
+                    background: color-mix(in oklab, var(--color-brand) 8%, transparent);
+                    border-color: var(--color-brand);
+                    color: var(--color-brand);
                 }
                 .tailor-panel-body {
                     position: absolute;
@@ -153,9 +153,9 @@ export default function TailorPanel() {
                     color: var(--cv-ink, #0c0a09);
                 }
                 .tailor-textarea:focus {
-                    outline: 2px solid color-mix(in oklab, var(--cv-accent, #ea580c) 60%, transparent);
+                    outline: 2px solid color-mix(in oklab, var(--color-brand) 60%, transparent);
                     outline-offset: 1px;
-                    border-color: var(--cv-accent, #ea580c);
+                    border-color: var(--color-brand);
                 }
                 .tailor-actions {
                     display: flex;
@@ -165,9 +165,9 @@ export default function TailorPanel() {
                 }
                 .tailor-submit {
                     appearance: none;
-                    background: var(--cv-accent, #ea580c);
+                    background: var(--color-brand);
                     color: #ffffff;
-                    border: 1px solid var(--cv-accent, #ea580c);
+                    border: 1px solid var(--color-brand);
                     padding: 6px 14px;
                     border-radius: 6px;
                     font: inherit;
