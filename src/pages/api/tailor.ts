@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
       prompt: `<untrusted_job_description>\n${neutralizeJd(jd)}\n</untrusted_job_description>`,
       output: Output.object({ schema: tailorPatchSchema }),
       temperature: 0.4,
-      maxOutputTokens: 2000
+      maxOutputTokens: 4000
     });
 
     // Belt-and-suspenders: even though the schema constrains the response,

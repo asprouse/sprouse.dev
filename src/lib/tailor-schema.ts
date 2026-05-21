@@ -8,9 +8,9 @@ export const tailorPatchSchema = z.object({
     ),
   summary: z
     .string()
-    .max(800)
+    .max(1200)
     .describe(
-      "A rewritten 3–5 sentence summary tailored to this JD (roughly 80–600 chars). Must not fabricate experience — only re-emphasize what's already in the resume. Keep first-person omitted (third-person resume tone)."
+      "A rewritten 3–6 sentence summary tailored to this JD (roughly 200–900 chars). Must not fabricate experience — only re-emphasize what's already in the resume. Keep first-person omitted (third-person resume tone)."
     ),
   roles: z
     .array(

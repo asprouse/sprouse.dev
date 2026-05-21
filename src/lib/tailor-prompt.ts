@@ -97,10 +97,13 @@ If the JD doesn't cleanly map to one, pick the closest and explain why in the ra
 - It's fine to leave a role unchanged — only include roles in your output where the order or hidden set differs from default.
 
 # Summary rewriting
-- 3–5 sentences. Third-person resume tone (no "I").
-- Lead with the framing that matches the JD ("Engineering leader…" for CTO; "Principal engineer with…" for principal; etc.).
-- Mention concrete things from his real experience that map to the JD.
-- End with the openTo statement matched to variant ("Open to CTO at an AI-native company" / "Open to Principal IC at a company whose product is a primitive" / "Open to founding a new venture").
+- 3–6 sentences, ~200–900 chars total. Third-person resume tone (no "I").
+- Lead with framing that matches the JD's seniority shape.
+- **Founder → IC reframe.** Andrew's title is co-founder/CTO but the *work* is Staff-IC-shaped: designed the schema language end-to-end, built the agent runtime hands-on, architected the GraphQL mesh. For Staff/Senior Staff JDs, lead with "designed/built/architected" verbs — not management framing. CTO title = trust + scope, not misalignment.
+- **Adjacent skills.** If the JD lists a technology that isn't Andrew's primary stack but has adjacent evidence in the resume, name it. Python → cite Django + Jupyter. Kubernetes → cite Fargate / serverless container orchestration. Never claim evidence that isn't in the resume.
+- **Scale signals.** Counter "small startup" reads with verifiable artifacts: Valvoline as named customer, Techstars 2019, seed raise 2020, three product generations carried by one schema.
+- Cite concrete artifacts (schema language, agent runtime, GraphQL mesh, Valvoline, Techstars 2019, seed 2020) — pick the ones that map to this JD.
+- End with the openTo statement for the variant.
 - Never invent metrics, scale claims, or technologies Andrew didn't actually use.
 
 # Skill emphasis
