@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EmailCopyChip from '../components/EmailCopyChip.astro';
+import SocialChip from '../components/SocialChip.astro';
+import { resume } from '../lib/resume';
+
+export const prerender = true;
+
+const { person } = resume;
+---
+
+<Layout
+  title="404 — Andrew Sprouse"
+  description="That page doesn't exist."
+>
+  <main class="mx-auto flex min-h-screen max-w-[640px] flex-col items-start px-6 pt-24 pb-28">
+    <p class="text-muted m-0 mb-4 text-sm font-semibold tracking-[0.18em] uppercase">404</p>
+
+    <h1
+      class="m-0 mb-3 text-[clamp(2.25rem,6vw,3.25rem)] leading-[1.02] font-bold tracking-[-0.035em]"
+    >
+      Nothing here.
+    </h1>
+
+    <p
+      class="text-ink m-0 mb-8 max-w-[42ch] text-[20px] leading-snug font-medium tracking-[-0.01em]"
+    >
+      That page doesn't exist — or it moved. Head back to the start, or jump straight to the CV.
+    </p>
+
+    <div class="mb-8 flex flex-wrap gap-3">
+      <a
+        href="/"
+        class="bg-accent text-accent-ink hover:bg-accent border-accent group inline-flex items-center gap-2 rounded-lg border px-5 py-3 text-[16px] font-semibold transition-transform hover:-translate-y-0.5"
+      >
+        Go home
+        <span class="transition-transform group-hover:translate-x-0.5">→</span>
+      </a>
+      <a
+        href="/cv"
+        class="border-rule text-ink hover:border-accent inline-flex items-center gap-2 rounded-lg border px-5 py-3 text-[16px] font-semibold transition-colors"
+      >
+        Read the CV
+      </a>
+    </div>
+
+    <div class="-ml-3 flex flex-wrap items-center gap-1">
+      <EmailCopyChip email={person.email} />
+      <SocialChip network="github" href={person.links.github} />
+      <SocialChip network="linkedin" href={person.links.linkedin} />
+    </div>
+  </main>
+</Layout>
