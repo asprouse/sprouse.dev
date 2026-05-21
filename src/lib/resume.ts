@@ -37,10 +37,16 @@ export function deriveSkills(): Record<TechCategory, SkillUsage[]> {
   const usage = new Map<string, { count: number; companies: Set<string>; current: boolean }>();
 
   for (const role of resume.experience) {
-    if (role.dateRange.from < CURRENT_ERA_FROM) continue;
+    const isRetro = role.dateRange.from < CURRENT_ERA_FROM;
     const isCurrent = role.dateRange.to === null;
     for (const project of role.projects) {
       for (const slug of project.technologies) {
+        const tech = resume.technologies[slug];
+        if (!tech) continue;
+        // Retrospective roles only carry forward languages — frameworks,
+        // libraries, and platforms age out, but knowing a language is a
+        // permanent fact about a person.
+        if (isRetro && tech.category !== 'language') continue;
         const entry = usage.get(slug) ?? { count: 0, companies: new Set(), current: false };
         entry.count += 1;
         entry.companies.add(role.company);

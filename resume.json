@@ -40,6 +40,8 @@
           "technologies": [
             "typescript",
             "javascript",
+            "python",
+            "jupyter",
             "graphql",
             "html",
             "css",
@@ -190,7 +192,9 @@
           "title": "luxesource.org",
           "description": "Led the development of <a href=\"http://www.luxesource.com/\">luxesource.org</a>, a single-page app-like experience for viewing architecture and design images. The foundation of the site is a robust RESTful API implemented with Django REST Framework. Django served minimal SEO-optimized HTML while all of the UI was rendered using Marionette and Dust.",
           "technologies": [
+            "python",
             "django",
+            "django-rest",
             "postgresql",
             "south",
             "haystack",
@@ -813,6 +817,18 @@
       "name": "JSX",
       "url": "https://react.dev/learn/writing-markup-with-jsx",
       "category": "concept",
+      "description": ""
+    },
+    "python": {
+      "name": "Python",
+      "url": "https://www.python.org/",
+      "category": "language",
+      "description": ""
+    },
+    "jupyter": {
+      "name": "Jupyter",
+      "url": "https://jupyter.org/",
+      "category": "tooling",
       "description": ""
     },
     "django": {
