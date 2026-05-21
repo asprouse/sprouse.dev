@@ -2,12 +2,12 @@
 
 ## Headline (220 chars max)
 
-Co-founder & CTO at TakeShape — twenty years shipping production software, currently building AI agent infrastructure. Looking next.
+Co-founder & CTO at TakeShape (Techstars 2019) — twenty years shipping production software, currently building AI agent infrastructure.
 [131 / 220 chars]
 
 ## About (2,600 chars max)
 
-Twenty years shipping production software. Currently CTO. Looking next.
+Twenty years shipping production software.
 
 I co-founded TakeShape in 2018 and have been CTO through three product generations — headless CMS, GraphQL API mesh, and now a hosted AI agent platform. The throughline is the schema: I designed a JSON Schema-derived DSL that defines a customer's data model, their REST and GraphQL APIs, and their agents in a single artifact. Model your domain once, get an indexed GraphQL mesh and hosted agent endpoints out of the box.
 
