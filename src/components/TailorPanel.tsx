@@ -6,7 +6,7 @@ import {
   readPatchFromHash,
   writePatchToHash,
   type TailorPatch
-} from '../lib/tailor-client';
+} from '../lib/tailor/client';
 
 type State = 'idle' | 'loading' | 'applied' | 'error';
 

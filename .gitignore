@@ -34,3 +34,6 @@ yarn-error.log*
 
 # Eval artifacts (per-run outputs; the scripts themselves are tracked)
 evals/runs/
+
+# Composed tailor prompt dump from `npm run inspect:tailor-prompt`
+tailor-prompt.dump.txt

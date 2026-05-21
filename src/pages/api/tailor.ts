@@ -2,12 +2,12 @@ import type { APIRoute } from 'astro';
 import { generateText, Output } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { env } from 'cloudflare:workers';
-import { tailorPatchSchema } from '../../lib/tailor-schema';
-import { SKILL_VOCABULARY, buildTailorSystemPrompt } from '../../lib/tailor-prompt';
+import { tailorPatchSchema } from '../../lib/tailor/schema';
+import { composeSystemPrompt, skillVocabulary } from '../../lib/tailor/prompt';
 
 // Lowercased lookup so server-side validation tolerates minor capitalization
 // drift from the model output.
-const SKILL_ALLOWLIST = new Map(SKILL_VOCABULARY.map((s) => [s.toLowerCase(), s]));
+const SKILL_ALLOWLIST = new Map(skillVocabulary.map((s) => [s.toLowerCase(), s]));
 
 // Closing tag stripped from JD input so a malicious paste can't end the
 // untrusted block and inject instructions visible to the model.
@@ -64,11 +64,11 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const { output: object } = await generateText({
       model: anthropic('claude-sonnet-4-6'),
-      system: buildTailorSystemPrompt(),
+      system: composeSystemPrompt(),
       prompt: `<untrusted_job_description>\n${neutralizeJd(jd)}\n</untrusted_job_description>`,
       output: Output.object({ schema: tailorPatchSchema }),
       temperature: 0.4,
-      maxOutputTokens: 4000
+      maxOutputTokens: 8000
     });
 
     // Belt-and-suspenders: even though the schema constrains the response,

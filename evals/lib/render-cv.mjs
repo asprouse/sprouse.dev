@@ -3,7 +3,7 @@
 // see on the print sheet. Used by the eval harness to feed before/after
 // versions of the CV to the evaluator.
 //
-// Mirrors the apply-patch logic in src/lib/tailor-client.ts (project
+// Mirrors the apply-patch logic in src/lib/tailor/client.ts (project
 // re-ranking, hiding, summary replacement) and the skills-derivation logic
 // in src/lib/resume.ts (languages carry forward from retrospective era).
 import { readFile } from 'node:fs/promises';
