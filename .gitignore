@@ -31,3 +31,6 @@ worker-configuration.d.ts
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Eval artifacts (per-run outputs; the scripts themselves are tracked)
+evals/runs/

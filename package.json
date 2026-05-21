@@ -20,6 +20,7 @@
     "gen:types": "node scripts/generate-resume-types.mjs",
     "gen:leadership": "node scripts/generate-leadership.mjs",
     "gen:linkedin": "node scripts/generate-linkedin.mjs && prettier --write linkedin.md",
+    "eval:tailor": "node evals/tailor-eval.mjs",
     "check": "npm run validate:resume && npm run format:check && npm run lint && npm run typecheck"
   },
   "dependencies": {
