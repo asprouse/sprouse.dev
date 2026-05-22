@@ -9,8 +9,14 @@ import {
   slugifyCompany
 } from '../../lib/resume';
 import type { TechCategory } from '../../types/resume';
-import TailorPanel from '../../components/TailorPanel';
+import Positioning from '../../components/Positioning';
 import { VARIANTS, type VariantSlug, VARIANT_ORDER } from '../../lib/variants';
+
+const positioningOptions = VARIANT_ORDER.map((slug) => ({
+  slug,
+  label: VARIANTS[slug].label,
+  path: `/cv/print?lens=${slug}`
+}));
 
 // SSR: the ?lens query param picks the variant. Default is cto.
 const lensParam = Astro.url.searchParams.get('lens');
@@ -217,7 +223,10 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         align-items: center;
       }
 
-      .toolbar-lens {
+      /* Unified Positioning control (3 lens presets + Custom). Renders as
+         a pill row on desktop and a native <select> on mobile — toggled by
+         the media query at the bottom of this style block. */
+      .toolbar :global(.positioning-pills) {
         display: inline-flex;
         align-items: center;
         gap: 4px;
@@ -226,68 +235,129 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         padding: 2px;
         font-size: 12px;
       }
-      .toolbar-lens-label {
+      .toolbar :global(.positioning-label) {
         padding: 0 8px;
         color: var(--cv-muted);
       }
-      .toolbar-lens a,
-      .toolbar-lens .current {
+      .toolbar :global(.positioning-pill) {
+        appearance: none;
+        background: none;
+        border: none;
         padding: 4px 10px;
         border-radius: 999px;
         text-decoration: none;
         white-space: nowrap;
-        border: none;
+        font: inherit;
         font-size: 12px;
         font-weight: 500;
-      }
-      .toolbar-lens a {
         color: var(--cv-muted);
+        cursor: pointer;
       }
-      .toolbar-lens a:hover {
+      .toolbar :global(.positioning-pill:hover) {
         background: #f5f5f4;
         color: var(--cv-ink);
       }
-      .toolbar-lens .current {
+      .toolbar :global(.positioning-pill.current) {
         background: var(--color-brand);
         color: #ffffff;
       }
-      /* Tailor button — conceptually the "custom from a JD" sibling of the
-         lens presets, styled as its own pill (rather than inside the lens
-         container) so each control wraps independently on narrow viewports
-         instead of wrapping inside one shared border. */
-      .toolbar :global(.tailor-panel) {
-        display: inline-flex;
-        position: relative;
+      .toolbar :global(.positioning-pill.current:hover) {
+        background: var(--color-brand);
+        color: #ffffff;
       }
-      .toolbar :global(.tailor-panel-summary) {
+      .toolbar :global(.positioning-select) {
+        display: none;
+      }
+
+      /* Modal dialog for the JD paste / edit flow. Uses the native <dialog>
+         element so it inherits ESC-to-close and focus management. */
+      .toolbar :global(.positioning-dialog) {
+        max-width: min(640px, 92vw);
+        width: 100%;
+        border: 1px solid var(--cv-rule);
+        border-radius: 12px;
+        padding: 20px;
+        font-family: inherit;
+        background: #ffffff;
+        color: var(--cv-ink);
+      }
+      .toolbar :global(.positioning-dialog::backdrop) {
+        background: rgba(12, 10, 9, 0.45);
+      }
+      .toolbar :global(.positioning-dialog-head h2) {
+        margin: 0 0 6px;
+        font-size: 16pt;
+        font-weight: 700;
+      }
+      .toolbar :global(.positioning-dialog-head p) {
+        margin: 0 0 14px;
+        font-size: 11pt;
+        color: var(--cv-muted);
+        line-height: 1.45;
+      }
+      .toolbar :global(.positioning-dialog-textarea) {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--cv-rule);
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 11pt;
+        line-height: 1.45;
+        resize: vertical;
+        min-height: 180px;
+        color: var(--cv-ink);
+      }
+      .toolbar :global(.positioning-dialog-textarea:focus) {
+        outline: 2px solid color-mix(in oklab, var(--color-brand) 60%, transparent);
+        outline-offset: 1px;
+        border-color: var(--color-brand);
+      }
+      .toolbar :global(.positioning-dialog-error) {
+        margin: 10px 0 0;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: #fef2f2;
+        color: #991b1b;
+        font-size: 10.5pt;
+      }
+      .toolbar :global(.positioning-dialog-actions) {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .toolbar :global(.dialog-btn) {
         appearance: none;
         background: none;
         border: 1px solid var(--cv-rule);
-        padding: 6px 12px;
-        border-radius: 999px;
-        font: inherit;
-        font-size: 13px;
         color: var(--cv-ink);
+        padding: 8px 14px;
+        border-radius: 6px;
+        font: inherit;
+        font-size: 11pt;
         cursor: pointer;
-        list-style: none;
-        user-select: none;
-        white-space: nowrap;
       }
-      .toolbar :global(.tailor-panel-summary::-webkit-details-marker) {
-        display: none;
-      }
-      .toolbar :global(.tailor-panel-summary:hover) {
+      .toolbar :global(.dialog-btn:hover) {
         background: #f5f5f4;
       }
-      .toolbar :global(details[open] > .tailor-panel-summary) {
-        background: color-mix(in oklab, var(--color-brand) 8%, transparent);
-        border-color: var(--color-brand);
-        color: var(--color-brand);
+      .toolbar :global(.dialog-reset) {
+        color: var(--cv-muted);
       }
-      .toolbar :global(.tailor-panel-summary[data-applied='true']) {
+      .toolbar :global(.dialog-submit) {
         background: var(--color-brand);
         border-color: var(--color-brand);
         color: #ffffff;
+        font-weight: 600;
+      }
+      .toolbar :global(.dialog-submit:hover) {
+        background: var(--color-brand);
+        opacity: 0.92;
+      }
+      .toolbar :global(.dialog-submit:disabled) {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .toolbar-print {
@@ -307,6 +377,26 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         }
         .label-short {
           display: inline;
+        }
+        /* On phones: swap the pill row for a native <select>, smaller and
+           OS-native. */
+        .toolbar :global(.positioning-pills) {
+          display: none;
+        }
+        .toolbar :global(.positioning-select) {
+          display: inline-block;
+          appearance: none;
+          background: #ffffff;
+          border: 1px solid var(--cv-rule);
+          border-radius: 8px;
+          padding: 7px 30px 7px 12px;
+          font: inherit;
+          font-size: 13px;
+          color: var(--cv-ink);
+          cursor: pointer;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2357534e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 10px center;
         }
       }
       header.cv-hero {
@@ -585,28 +675,11 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
   </head>
   <body>
     <div class="toolbar no-print">
-      <a href={`/cv?lens=${variant.slug}`}>
+      <a href={`/cv?lens=${variant.slug}`} class="toolbar-back">
         <span class="label-long">← Back to CV</span>
         <span class="label-short">← Back</span>
       </a>
-      <div class="toolbar-lens" role="tablist" aria-label="Positioning">
-        <span class="toolbar-lens-label">Lens</span>
-        {
-          VARIANT_ORDER.map((slug) => {
-            const v = VARIANTS[slug];
-            return slug === variant.slug ? (
-              <span class="current" role="tab" aria-selected="true" aria-current="page">
-                {v.label}
-              </span>
-            ) : (
-              <a href={`/cv/print?lens=${slug}`} role="tab" aria-selected="false">
-                {v.label}
-              </a>
-            );
-          })
-        }
-      </div>
-      <TailorPanel client:load />
+      <Positioning client:load options={positioningOptions} currentSlug={variant.slug} />
       <button type="button" class="primary toolbar-print" onclick="window.print()">
         <span class="label-long">Print / save as PDF</span>
         <span class="label-short">Print</span>

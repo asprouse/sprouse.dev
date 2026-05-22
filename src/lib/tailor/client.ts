@@ -1,5 +1,5 @@
 // Client-side tailor state: URL hash storage + DOM patch application.
-// Loaded by /cv.astro and consumed by TailorPanel.tsx.
+// Loaded by /cv.astro and consumed by Positioning.tsx.
 
 export interface TailorPatch {
   variant: 'cto' | 'principal' | 'cofounder';
@@ -13,47 +13,60 @@ export interface TailorPatch {
   rationale: string;
 }
 
+/** Persisted in the URL hash. The JD is kept alongside the patch so the user
+ *  can re-open the tailor dialog and edit a previous JD instead of re-pasting
+ *  from scratch. */
+export interface TailorState {
+  jd: string;
+  patch: TailorPatch;
+}
+
 const HASH_KEY = 'tailor';
 
-export function encodePatch(patch: TailorPatch): string {
-  const json = JSON.stringify(patch);
+function encode(value: unknown): string {
+  const json = JSON.stringify(value);
   const bytes = new TextEncoder().encode(json);
   let bin = '';
   for (const b of bytes) bin += String.fromCharCode(b);
   return btoa(bin).replace(/=+$/, '');
 }
 
-export function decodePatch(encoded: string): TailorPatch | null {
+function decode<T>(encoded: string): T | null {
   try {
     const padded = encoded + '==='.slice(0, (4 - (encoded.length % 4)) % 4);
     const bin = atob(padded);
     const bytes = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
     const json = new TextDecoder().decode(bytes);
-    return JSON.parse(json) as TailorPatch;
+    return JSON.parse(json) as T;
   } catch {
     return null;
   }
 }
 
-export function readPatchFromHash(): TailorPatch | null {
+export function readStateFromHash(): TailorState | null {
   if (typeof window === 'undefined') return null;
   const hash = window.location.hash.replace(/^#/, '');
   if (!hash) return null;
   const params = new URLSearchParams(hash);
   const encoded = params.get(HASH_KEY);
   if (!encoded) return null;
-  return decodePatch(encoded);
+  const decoded = decode<TailorState | TailorPatch>(encoded);
+  if (!decoded) return null;
+  // Back-compat: older hashes stored just the patch. Treat as a state with
+  // an empty JD so callers don't need to special-case.
+  if ('patch' in decoded) return decoded;
+  return { jd: '', patch: decoded };
 }
 
-export function writePatchToHash(patch: TailorPatch | null): void {
+export function writeStateToHash(state: TailorState | null): void {
   if (typeof window === 'undefined') return;
-  if (!patch) {
+  if (!state) {
     history.replaceState(null, '', window.location.pathname + window.location.search);
     return;
   }
   const params = new URLSearchParams();
-  params.set(HASH_KEY, encodePatch(patch));
+  params.set(HASH_KEY, encode(state));
   history.replaceState(
     null,
     '',
@@ -166,7 +179,7 @@ export function applyPatch(patch: TailorPatch): void {
 
 export function clearPatch(): void {
   clearTailorDom();
-  writePatchToHash(null);
+  writeStateToHash(null);
   window.dispatchEvent(new CustomEvent('tailor:cleared'));
 }
 
@@ -194,6 +207,6 @@ function wireBadgeControls(): void {
 }
 
 export function initTailorFromHash(): void {
-  const patch = readPatchFromHash();
-  if (patch) applyPatch(patch);
+  const state = readStateFromHash();
+  if (state) applyPatch(state.patch);
 }
