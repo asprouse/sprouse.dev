@@ -132,28 +132,8 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     }
     lines.push('');
 
-    const hideSet = new Set(override?.hideProjectIndices || []);
-    const explicit = (override?.projectIndices || []).filter(
-      (i) => i >= 0 && i < role.projects.length && !hideSet.has(i)
-    );
-    const remaining = [];
-    for (let i = 0; i < role.projects.length; i++) {
-      if (hideSet.has(i)) continue;
-      if (!explicit.includes(i)) remaining.push(i);
-    }
-    const order = [...explicit, ...remaining];
-
-    // Match the print sheet's compact projects-as-breadcrumb rendering:
-    // a single line of project titles per role. The impact bullets above
-    // already carry the story; this row exists so tailor re-ranking has
-    // something visible to score against.
-    const visibleTitles = order
-      .map((idx) => role.projects[idx]?.title || 'Project')
-      .filter(Boolean);
-    if (visibleTitles.length > 0) {
-      lines.push(`  Projects: ${visibleTitles.join(' · ')}`);
-      lines.push('');
-    }
+    // Projects are not rendered on the print sheet — bullets carry the
+    // story; project-level detail lives on /cv. Eval renderer mirrors print.
   }
 
   if (retrospective.length > 0) {

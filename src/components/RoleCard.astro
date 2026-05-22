@@ -48,6 +48,14 @@ const slug = slugifyCompany(role.company);
     )
   }
 
+  {
+    role.projects.length > 0 && (
+      <p class="section-label text-muted mt-6 mb-2 text-xs font-semibold tracking-[0.12em] uppercase">
+        Projects
+      </p>
+    )
+  }
+
   <div class="project-list flex flex-col">
     {
       role.projects.map((project, idx) => (

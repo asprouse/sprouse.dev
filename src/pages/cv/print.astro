@@ -375,39 +375,10 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         padding: 1px 4px;
       }
 
-      /* Projects on the print sheet render as a single inline breadcrumb
-         row per role (Projects: A · B · C). The impact bullets above
-         already carry the story; this row exists for breadth + so the
-         tailor's project re-ranking has something visible to act on. */
-      .project-list {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 4px 6px;
-        margin: 0.4em 0 0;
-        font-size: 9.5pt;
-        color: var(--cv-muted);
-        page-break-inside: avoid;
-      }
-      .project-list-label {
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: 8.5pt;
-        margin-right: 4px;
-      }
-      .project {
-        color: var(--cv-ink);
-        font-size: 9.5pt;
-      }
-      .project::after {
-        content: ' ·';
-        color: var(--cv-muted);
-        margin-left: 2px;
-      }
-      .project:last-of-type::after {
-        content: '';
-      }
+      /* Projects are not rendered on the print sheet — impact bullets carry
+         the story; project-level detail lives on /cv where the reader can
+         expand collapsed entries. The tailor's project re-ranking still
+         affects /cv, just not print. */
 
       .retro-row {
         display: flex;
@@ -500,11 +471,6 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         color: var(--cv-ink);
       }
 
-      .project.tailor-hidden {
-        opacity: 0.32;
-        text-decoration: line-through;
-        text-decoration-color: var(--cv-muted);
-      }
       .project.tailor-promoted::before {
         content: '↑ promoted';
         display: inline-block;
@@ -621,15 +587,6 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
                   ))}
                 </ul>
               )}
-
-              <div class="project-list">
-                <span class="project-list-label">Projects</span>
-                {role.projects.map((project, idx) => (
-                  <span class="project" data-project-index={idx} style={`order: ${idx};`}>
-                    {project.title || 'Project'}
-                  </span>
-                ))}
-              </div>
             </div>
           ))
         }
