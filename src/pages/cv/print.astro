@@ -251,47 +251,42 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         background: var(--color-brand);
         color: #ffffff;
       }
-      .toolbar-lens-divider {
-        width: 1px;
-        height: 16px;
-        background: var(--cv-rule);
-        margin: 0 2px;
-      }
-
-      /* Tailor button styled as the 4th lens-pill item (Lens is a pre-canned
-         tailoring; this is the custom-from-JD version of the same control). */
-      .toolbar-lens .tailor-panel {
+      /* Tailor button — conceptually the "custom from a JD" sibling of the
+         lens presets, styled as its own pill (rather than inside the lens
+         container) so each control wraps independently on narrow viewports
+         instead of wrapping inside one shared border. */
+      .toolbar :global(.tailor-panel) {
         display: inline-flex;
         position: relative;
       }
-      .toolbar-lens .tailor-panel-summary {
+      .toolbar :global(.tailor-panel-summary) {
         appearance: none;
         background: none;
-        border: none;
-        padding: 4px 10px;
+        border: 1px solid var(--cv-rule);
+        padding: 6px 12px;
         border-radius: 999px;
         font: inherit;
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--cv-muted);
+        font-size: 13px;
+        color: var(--cv-ink);
         cursor: pointer;
         list-style: none;
         user-select: none;
         white-space: nowrap;
       }
-      .toolbar-lens .tailor-panel-summary::-webkit-details-marker {
+      .toolbar :global(.tailor-panel-summary::-webkit-details-marker) {
         display: none;
       }
-      .toolbar-lens .tailor-panel-summary:hover {
+      .toolbar :global(.tailor-panel-summary:hover) {
         background: #f5f5f4;
-        color: var(--cv-ink);
       }
-      .toolbar-lens details[open] > .tailor-panel-summary {
-        background: #f5f5f4;
-        color: var(--cv-ink);
+      .toolbar :global(details[open] > .tailor-panel-summary) {
+        background: color-mix(in oklab, var(--color-brand) 8%, transparent);
+        border-color: var(--color-brand);
+        color: var(--color-brand);
       }
-      .toolbar-lens .tailor-panel-summary[data-applied='true'] {
+      .toolbar :global(.tailor-panel-summary[data-applied='true']) {
         background: var(--color-brand);
+        border-color: var(--color-brand);
         color: #ffffff;
       }
 
@@ -610,9 +605,8 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
             );
           })
         }
-        <span class="toolbar-lens-divider" aria-hidden="true"></span>
-        <TailorPanel client:load />
       </div>
+      <TailorPanel client:load />
       <button type="button" class="primary toolbar-print" onclick="window.print()">
         <span class="label-long">Print / save as PDF</span>
         <span class="label-short">Print</span>
