@@ -41,9 +41,9 @@ export const tailorPatchSchema = z.object({
     ),
   rationale: z
     .string()
-    .max(800)
+    .max(1500)
     .describe(
-      "One paragraph (2–4 sentences) explaining what you tailored and why. Shown to the user as a 'why' note. Plain prose, no markdown."
+      "One short paragraph (2–4 sentences) explaining what you tailored and why. Shown to the user as a 'why' note. Plain prose, no markdown."
     )
 });
 

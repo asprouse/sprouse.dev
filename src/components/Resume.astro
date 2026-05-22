@@ -5,12 +5,18 @@ import CompressedRoleCard from './CompressedRoleCard.astro';
 import EmailCopyChip from './EmailCopyChip.astro';
 import LeadershipPhilosophy from './LeadershipPhilosophy.astro';
 import Portrait from './Portrait.astro';
+import Positioning from './Positioning';
 import RoleCard from './RoleCard.astro';
 import SkillsMatrix from './SkillsMatrix.astro';
 import SocialChip from './SocialChip.astro';
-import VariantSwitcher from './VariantSwitcher.astro';
 import { CURRENT_ERA_FROM, resume } from '../lib/resume';
-import type { Variant } from '../lib/variants';
+import { VARIANTS, VARIANT_ORDER, type Variant } from '../lib/variants';
+
+const positioningOptions = VARIANT_ORDER.map((slug) => ({
+  slug,
+  label: VARIANTS[slug].label,
+  path: `/cv?lens=${slug}`
+}));
 
 interface Props {
   variant: Variant;
@@ -68,7 +74,7 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
         </div>
 
         <div class="mt-5">
-          <VariantSwitcher current={variant.slug} />
+          <Positioning client:load options={positioningOptions} currentSlug={variant.slug} />
         </div>
       </div>
       <div class="justify-self-end max-[600px]:hidden">

@@ -30,7 +30,8 @@ const groups = VISIBLE.map((g) => ({ ...g, items: skills[g.key] })).filter(
         <div class="flex flex-wrap gap-1.5">
           {group.items.map((s) => (
             <span
-              class:list={['chip', s.isCurrent && 'chip-current']}
+              class:list={['chip skill-item', s.isCurrent && 'chip-current']}
+              data-skill={s.tech.name}
               title={`${s.companies.join(', ')} · ${s.projectCount} project${s.projectCount === 1 ? '' : 's'}${s.isCurrent ? ' · currently using' : ''}`}
             >
               {s.tech.name}

@@ -28,41 +28,48 @@ const slug = slugifyCompany(role.company);
 
   {role.description && <p class="m-0" set:html={role.description} />}
 
-  {
-    role.projects.map((project) => (
-      <details open class="project group/project mt-5">
-        <summary class="hover:[&_.project-title]:text-accent -ml-1 flex cursor-pointer list-none items-center gap-2 select-none">
-          <svg
-            class="text-muted-2 h-3 w-3 shrink-0 transition-transform duration-150 group-open/project:rotate-90"
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M4.5 2.5L8 6l-3.5 3.5" />
-          </svg>
-          {project.title && (
-            <h4 class="project-title m-0 text-[15px] font-semibold tracking-tight transition-colors">
-              {project.title}
-            </h4>
-          )}
-        </summary>
-        <div class="border-rule mt-1.5 ml-1.5 border-l pl-4">
-          <p class="m-0" set:html={project.description} />
-          {project.technologies.length > 0 && (
-            <div class="mt-2.5 flex flex-wrap gap-1.5">
-              {project.technologies.map((slug) => (
-                <TechChip slug={slug} />
-              ))}
-            </div>
-          )}
-        </div>
-      </details>
-    ))
-  }
+  <div class="project-list flex flex-col">
+    {
+      role.projects.map((project, idx) => (
+        <details
+          open
+          class="project group/project mt-5"
+          data-project-index={idx}
+          style={`order: ${idx};`}
+        >
+          <summary class="hover:[&_.project-title]:text-accent -ml-1 flex cursor-pointer list-none items-center gap-2 select-none">
+            <svg
+              class="text-muted-2 h-3 w-3 shrink-0 transition-transform duration-150 group-open/project:rotate-90"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4.5 2.5L8 6l-3.5 3.5" />
+            </svg>
+            {project.title && (
+              <h4 class="project-title m-0 text-[15px] font-semibold tracking-tight transition-colors">
+                {project.title}
+              </h4>
+            )}
+          </summary>
+          <div class="border-rule mt-1.5 ml-1.5 border-l pl-4">
+            <p class="m-0" set:html={project.description} />
+            {project.technologies.length > 0 && (
+              <div class="mt-2.5 flex flex-wrap gap-1.5">
+                {project.technologies.map((slug) => (
+                  <TechChip slug={slug} />
+                ))}
+              </div>
+            )}
+          </div>
+        </details>
+      ))
+    }
+  </div>
 </article>
 
 <style>
