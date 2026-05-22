@@ -112,6 +112,13 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     const loc = `${role.location.city}, ${role.location.state}`;
     lines.push(`${role.company} — ${role.title} (${dates}, ${loc})`);
     if (role.description) lines.push(stripHtml(role.description));
+    if (role.impactBullets && role.impactBullets.length > 0) {
+      lines.push('');
+      lines.push('Impact:');
+      for (const b of role.impactBullets) {
+        lines.push(`  • ${stripHtml(b)}`);
+      }
+    }
     lines.push('');
 
     const override = roleOverrides.get(slug);

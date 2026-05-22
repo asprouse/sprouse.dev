@@ -35,6 +35,29 @@ experience:
       designed that defines a customer's data model, REST and GraphQL APIs, and AI agents in a
       single artifact. Ships production agents today to enterprise customers including Valvoline.
       Operate as a player-coach across IC, architecture, hiring, and product direction."
+    impactBullets:
+      - >-
+        Drove the design of a JSON Schema-derived DSL that defines a customer's data model, REST
+        and GraphQL APIs, and AI agents in a single artifact — the throughline that carried
+        customers through two product pivots without forcing schema rewrites between generations.
+      - >-
+        Architected the agent runtime end-to-end (sessions, threads, conversation history, hosted
+        GraphQL/REST endpoints with multi-provider routing across Anthropic, OpenAI, Google AI,
+        AWS Bedrock, and Azure OpenAI) — running production agents today.
+      - >-
+        Shipped production agents to enterprise customers including Valvoline, combining product,
+        inventory, and vehicle data into single grounded reasoning steps.
+      - >-
+        Led the 2019 pivot to a GraphQL API mesh that unified third-party REST and GraphQL services
+        with customer data into one queryable, indexed graph — the primitive that made the agent
+        platform possible.
+      - >-
+        Wrote and open-sourced the first Serverless Framework webpack plugin to make
+        TypeScript-everywhere on AWS Lambda practical — adopted broadly enough that the Serverless
+        Framework co-creator landed as the second-largest contributor.
+      - >-
+        Took the company through Techstars 2019 and a 2020 seed raise; operates as a player-coach
+        across IC, architecture, hiring, and product direction.
     projects:
       - title: TakeShape schema language
         description:
@@ -169,6 +192,21 @@ experience:
       it. Used client work as the proving ground; every project either confirmed an assumption or
       surfaced a gap that drove the next iteration. The technology I built during this two-year
       incubation spun out as TakeShape in October 2018, with Ronik as a founding partner."
+    impactBullets:
+      - >-
+        Drove a two-year incubation of the schema-first content platform thesis — each client
+        engagement doubled as a validation harness for the architectural bets that became TakeShape.
+      - >-
+        Architected the prototype that became TakeShape: a JSON-Schema-based content modeling tool,
+        an auto-generated GraphQL API, and a static site generator producing sites from GraphQL
+        queries and templates — first-of-its-kind GraphQL-driven SSG.
+      - >-
+        Shipped to named clients including the Leonardo DiCaprio Fund and Massive Science on the
+        early TakeShape codebase, proving the headless-CMS-with-GraphQL pattern before the broader
+        JAMstack ecosystem standardized on it.
+      - >-
+        Spun the technology out as TakeShape in October 2018 with Ronik as a founding partner;
+        debuted at the inaugural JAMstack Conf in San Francisco.
     projects:
       - title: Client work
         description:
@@ -214,6 +252,19 @@ experience:
       proxies, payment gateways) became the foundation for everything I shipped at Ronik and
       TakeShape after. Atri.me, the consumer-side browser extension, hit the front page of Hacker
       News.
+    impactBullets:
+      - >-
+        Co-designed an HTTP 402-based content monetization protocol with Matt Mankins (former CTO
+        of Fast Company) — nearly a decade before agentic micropayments and the x402 spec brought
+        the category to a mainstream conversation.
+      - >-
+        Built the entire serverless infrastructure underneath (AWS Lambda, edge proxies, custom
+        Nginx/OpenResty payment gateway) — the foundation for everything I shipped at Ronik and
+        TakeShape after.
+      - >-
+        Shipped Atri.me, the consumer-side browser extension, which hit the front page of Hacker
+        News — demonstrated user-side demand for the protocol before publisher integration costs
+        wound the company down.
     projects:
       - title: HTTP-402 payment gateway
         description:

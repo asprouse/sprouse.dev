@@ -35,7 +35,10 @@ function formatRoles(resume) {
         .join('\n');
       const desc = role.description.replace(/<[^>]+>/g, '');
       const dateLine = `${role.dateRange.from} → ${role.dateRange.to ?? 'present'}`;
-      return `${role.company} (slug: ${slug}, era: ${era}) — ${role.title}\n  ${dateLine}\n  Summary: ${desc}\n  Projects:\n${projects}`;
+      const impact = role.impactBullets?.length
+        ? `\n  Impact:\n${role.impactBullets.map((b) => `    • ${b.replace(/<[^>]+>/g, '')}`).join('\n')}`
+        : '';
+      return `${role.company} (slug: ${slug}, era: ${era}) — ${role.title}\n  ${dateLine}\n  Summary: ${desc}${impact}\n  Projects:\n${projects}`;
     })
     .join('\n\n');
 }

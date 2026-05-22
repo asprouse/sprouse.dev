@@ -351,6 +351,18 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         text-decoration: underline;
         text-decoration-color: var(--cv-rule);
       }
+      .impact-bullets {
+        margin: 0.4em 0 0.7em;
+        padding-left: 1.1em;
+        font-size: 10pt;
+        line-height: 1.4;
+      }
+      .impact-bullets li {
+        margin: 0.25em 0;
+      }
+      .impact-bullets li::marker {
+        color: var(--color-brand);
+      }
 
       .project {
         margin: 0.45em 0;
@@ -586,6 +598,14 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
               <p class="role-title-line">{role.title}</p>
 
               {role.description && <p class="role-summary" set:html={role.description} />}
+
+              {role.impactBullets && role.impactBullets.length > 0 && (
+                <ul class="impact-bullets">
+                  {role.impactBullets.map((bullet) => (
+                    <li set:html={bullet} />
+                  ))}
+                </ul>
+              )}
 
               <div class="project-list">
                 {role.projects.map((project, idx) => (
