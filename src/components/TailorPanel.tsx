@@ -69,8 +69,11 @@ export default function TailorPanel() {
 
   return (
     <details ref={detailsRef} className="tailor-panel" suppressHydrationWarning>
-      <summary className="tailor-panel-summary">
-        {state === 'applied' ? 'Tailor: edit JD' : 'Tailor for a job'}
+      <summary
+        className="tailor-panel-summary"
+        data-applied={state === 'applied' ? 'true' : undefined}
+      >
+        {state === 'applied' ? 'Tailored ✓' : 'Tailor…'}
       </summary>
       <form onSubmit={submit} className="tailor-panel-body">
         <textarea
