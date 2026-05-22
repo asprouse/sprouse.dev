@@ -37,3 +37,6 @@ evals/runs/
 
 # Composed tailor prompt dump from `npm run inspect:tailor-prompt`
 tailor-prompt.dump.txt
+
+# Cover letter drafts from `npm run gen:cover-letter`
+cover-letters/
