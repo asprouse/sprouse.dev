@@ -119,12 +119,56 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         }
       }
 
+      /* Screen-only mobile adjustments — print sizing is preserved because
+         this block is dropped by the print media query above. */
+      @media (max-width: 720px) {
+        html,
+        body {
+          font-size: 12pt;
+        }
+        .page {
+          margin: 0.1in auto 0.5in;
+          padding: 24px 20px;
+          max-width: 100%;
+        }
+        h1 {
+          font-size: 22pt;
+        }
+        h2.section {
+          font-size: 9.5pt;
+          margin-top: 1.6em;
+        }
+        .role {
+          margin: 1em 0 1.4em;
+        }
+        .role-header {
+          flex-wrap: wrap;
+        }
+        .role-meta {
+          font-size: 9pt;
+        }
+        .role-summary,
+        .project-title,
+        .project-description {
+          font-size: 11pt;
+        }
+        .skill-row {
+          font-size: 11pt;
+        }
+        .skill-label {
+          display: block;
+          min-width: 0;
+          margin-bottom: 0.1em;
+        }
+      }
+
       .toolbar {
         max-width: 8.5in;
         margin: 0.25in auto 0;
         padding: 0 0.6in;
         display: flex;
-        gap: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
         align-items: center;
         font-size: 13px;
         color: var(--cv-muted);
@@ -141,6 +185,7 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         font: inherit;
         cursor: pointer;
         text-decoration: none;
+        white-space: nowrap;
       }
       .toolbar button.primary {
         background: var(--color-brand);
@@ -150,8 +195,60 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
       .toolbar-right {
         margin-left: auto;
         display: flex;
-        gap: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
         align-items: center;
+      }
+
+      .toolbar-lens {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        border: 1px solid var(--cv-rule);
+        border-radius: 999px;
+        padding: 2px;
+        font-size: 12px;
+      }
+      .toolbar-lens-label {
+        padding: 0 8px;
+        color: var(--cv-muted);
+      }
+      .toolbar-lens a,
+      .toolbar-lens .current {
+        padding: 4px 10px;
+        border-radius: 999px;
+        text-decoration: none;
+        white-space: nowrap;
+        border: none;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .toolbar-lens a {
+        color: var(--cv-muted);
+      }
+      .toolbar-lens a:hover {
+        background: #f5f5f4;
+        color: var(--cv-ink);
+      }
+      .toolbar-lens .current {
+        background: var(--color-brand);
+        color: #ffffff;
+      }
+
+      .label-short {
+        display: none;
+      }
+
+      @media (max-width: 720px) {
+        .toolbar {
+          padding: 0 16px;
+        }
+        .label-long {
+          display: none;
+        }
+        .label-short {
+          display: inline;
+        }
       }
       header.cv-hero {
         margin-bottom: 1.1em;
@@ -429,11 +526,32 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
   </head>
   <body>
     <div class="toolbar no-print">
-      <a href={`/cv?lens=${variant.slug}`}>← Back to CV</a>
+      <a href={`/cv?lens=${variant.slug}`}>
+        <span class="label-long">← Back to CV</span>
+        <span class="label-short">← Back</span>
+      </a>
+      <div class="toolbar-lens" role="tablist" aria-label="Positioning variants">
+        <span class="toolbar-lens-label">Lens</span>
+        {
+          VARIANT_ORDER.map((slug) => {
+            const v = VARIANTS[slug];
+            return slug === variant.slug ? (
+              <span class="current" role="tab" aria-selected="true" aria-current="page">
+                {v.label}
+              </span>
+            ) : (
+              <a href={`/cv/print?lens=${slug}`} role="tab" aria-selected="false">
+                {v.label}
+              </a>
+            );
+          })
+        }
+      </div>
       <div class="toolbar-right">
         <TailorPanel client:load />
         <button type="button" class="primary" onclick="window.print()">
-          Print / save as PDF
+          <span class="label-long">Print / save as PDF</span>
+          <span class="label-short">Print</span>
         </button>
       </div>
     </div>
