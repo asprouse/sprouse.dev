@@ -8,6 +8,9 @@ export interface TailorPatch {
     companySlug: string;
     projectIndices: number[];
     hideProjectIndices: number[];
+    /** Optional: new order of impactBullets (by index). Items not listed
+     *  keep their natural relative order. Bullets are never hidden. */
+    impactBulletIndices?: number[];
   }>;
   emphasizedSkills: string[];
   rationale: string;
@@ -88,6 +91,12 @@ function clearTailorDom(): void {
     if (originalIndex) el.style.order = originalIndex;
   });
 
+  document.querySelectorAll<HTMLElement>('.impact-bullet').forEach((el) => {
+    el.classList.remove('tailor-promoted');
+    const originalIndex = el.getAttribute('data-bullet-index');
+    if (originalIndex) el.style.order = originalIndex;
+  });
+
   document.querySelectorAll<HTMLElement>('.skill-item').forEach((el) => {
     el.classList.remove('tailor-emphasis');
   });
@@ -153,6 +162,33 @@ export function applyPatch(patch: TailorPatch): void {
     for (const hideIndex of hideSet) {
       const project = projects[hideIndex];
       if (project) project.classList.add('tailor-hidden');
+    }
+
+    // Same algorithm as project re-ranking, applied to impact bullets.
+    // Bullets are never hidden — they're already a curated short list.
+    const bullets = Array.from(
+      role.querySelectorAll<HTMLElement>('.impact-bullet[data-bullet-index]')
+    );
+    if (bullets.length > 0 && roleDirective.impactBulletIndices) {
+      const bExplicit = roleDirective.impactBulletIndices.filter(
+        (i) => i >= 0 && i < bullets.length
+      );
+      const bRemaining: number[] = [];
+      for (let i = 0; i < bullets.length; i++) {
+        if (!bExplicit.includes(i)) bRemaining.push(i);
+      }
+      const bFinalOrder = [...bExplicit, ...bRemaining];
+      const bExplicitSet = new Set(bExplicit);
+      for (let position = 0; position < bFinalOrder.length; position++) {
+        const originalIndex = bFinalOrder[position];
+        if (originalIndex === undefined) continue;
+        const bullet = bullets[originalIndex];
+        if (!bullet) continue;
+        bullet.style.order = String(position);
+        if (bExplicitSet.has(originalIndex) && position < originalIndex) {
+          bullet.classList.add('tailor-promoted');
+        }
+      }
     }
   }
 

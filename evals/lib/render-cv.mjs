@@ -112,16 +112,26 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     const loc = `${role.location.city}, ${role.location.state}`;
     lines.push(`${role.company} — ${role.title} (${dates}, ${loc})`);
     if (role.description) lines.push(stripHtml(role.description));
+
+    const override = roleOverrides.get(slug);
+
     if (role.impactBullets && role.impactBullets.length > 0) {
+      const bExplicit = (override?.impactBulletIndices || []).filter(
+        (i) => i >= 0 && i < role.impactBullets.length
+      );
+      const bRemaining = [];
+      for (let i = 0; i < role.impactBullets.length; i++) {
+        if (!bExplicit.includes(i)) bRemaining.push(i);
+      }
+      const bOrder = [...bExplicit, ...bRemaining];
       lines.push('');
       lines.push('Impact:');
-      for (const b of role.impactBullets) {
-        lines.push(`  • ${stripHtml(b)}`);
+      for (const idx of bOrder) {
+        lines.push(`  • ${stripHtml(role.impactBullets[idx])}`);
       }
     }
     lines.push('');
 
-    const override = roleOverrides.get(slug);
     const hideSet = new Set(override?.hideProjectIndices || []);
     const explicit = (override?.projectIndices || []).filter(
       (i) => i >= 0 && i < role.projects.length && !hideSet.has(i)

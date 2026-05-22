@@ -27,11 +27,17 @@ export const tailorPatchSchema = z.object({
           .array(z.number().int().nonnegative())
           .describe(
             'Project indices to hide entirely. Use sparingly — only when a project is genuinely irrelevant to the JD. Default to keeping projects visible.'
+          ),
+        impactBulletIndices: z
+          .array(z.number().int().nonnegative())
+          .describe(
+            'New order of impactBullets indices (0-based) for this role. Promote 1–3 bullets that most directly match the JD by listing them first; indices not listed keep their natural relative order. Never hide bullets — they are already a curated 3–6 per role.'
           )
+          .optional()
       })
     )
     .describe(
-      'Per-role re-ranking. Only include roles where the order should change from the default; omit roles that should render as-is. Focus on the current-era roles (TakeShape, Ronik 2nd, Fair Tread) since those have multiple projects.'
+      'Per-role re-ranking. Only include roles where the order should change from the default; omit roles that should render as-is. Focus on the current-era roles (TakeShape, Ronik 2nd, Fair Tread) since those have multiple projects and impact bullets.'
     ),
   emphasizedSkills: z
     .array(z.string())

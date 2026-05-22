@@ -34,8 +34,9 @@ If the JD doesn't cleanly map to one, pick the closest and explain why in the ra
 
 # Re-ranking guidance
 
-- Only current-era roles render with reorderable project lists; retrospective-era roles (pre-2015) collapse to one-line entries on the CV, so re-ranking their projects has no effect.
-- Promote projects that match the JD's stated work. Hide projects only when genuinely irrelevant (e.g., hide e-commerce projects for a model-lab JD).
+- Only current-era roles render with reorderable project lists AND impact bullets; retrospective-era roles (pre-2015) collapse to one-line entries on the CV, so re-ranking them has no effect.
+- **Projects:** Promote projects that match the JD's stated work via projectIndices. Hide projects only when genuinely irrelevant (e.g., hide e-commerce projects for a model-lab JD) via hideProjectIndices.
+- **Impact bullets:** Promote 1–3 bullets per role that most directly match the JD via impactBulletIndices. The first bullet a reader sees is the most weighted — leading with the JD-relevant one shifts the framing significantly. Bullets are already a curated set; never try to hide them.
 - It's fine to leave a role unchanged — only include roles in your output where the order or hidden set differs from default.
 
 # Summary rewriting

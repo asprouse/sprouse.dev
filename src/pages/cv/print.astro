@@ -353,8 +353,11 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
       }
       .impact-bullets {
         /* Tailwind's preflight (from global.css) strips list-style on every
-           <ul>; re-enable it here so the print sheet shows actual bullets. */
+           <ul>; re-enable it here so the print sheet shows actual bullets.
+           Flex column so the tailor can reorder bullets via `order`. */
         list-style: disc;
+        display: flex;
+        flex-direction: column;
         margin: 0.4em 0 0.7em;
         padding-left: 1.4em;
         font-size: 10pt;
@@ -365,6 +368,11 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
       }
       .impact-bullets li::marker {
         color: var(--color-brand);
+      }
+      .impact-bullet.tailor-promoted {
+        background: color-mix(in oklab, var(--color-brand) 6%, transparent);
+        border-radius: 4px;
+        padding: 1px 4px;
       }
 
       /* Projects on the print sheet render as a single inline breadcrumb
@@ -603,8 +611,13 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
 
               {role.impactBullets && role.impactBullets.length > 0 && (
                 <ul class="impact-bullets">
-                  {role.impactBullets.map((bullet) => (
-                    <li set:html={bullet} />
+                  {role.impactBullets.map((bullet, idx) => (
+                    <li
+                      class="impact-bullet"
+                      data-bullet-index={idx}
+                      style={`order: ${idx};`}
+                      set:html={bullet}
+                    />
                   ))}
                 </ul>
               )}
