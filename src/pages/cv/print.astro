@@ -143,9 +143,11 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         }
         .role-header {
           flex-wrap: wrap;
+          gap: 4px 12px;
         }
         .role-meta {
           font-size: 9pt;
+          white-space: normal;
         }
         .role-summary,
         .project-title,
@@ -159,6 +161,21 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
           display: block;
           min-width: 0;
           margin-bottom: 0.1em;
+        }
+        .retro-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+          margin: 0.55em 0;
+          font-size: 11pt;
+        }
+        .retro-meta {
+          font-size: 9.5pt;
+          white-space: normal;
+        }
+        .toolbar-lens {
+          /* let the pill row wrap if it can't fit alongside the other items */
+          flex-wrap: wrap;
         }
       }
 
