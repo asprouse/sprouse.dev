@@ -63,3 +63,11 @@ This senior individual contributor position guides technical strategy across API
 - Hybrid work requirement: minimum 25% in-office time
 - Visa sponsorship available
 - Rolling application review (no deadline)
+
+---
+
+## Application questions
+
+### Why Anthropic? (~300 words)
+
+### Additional information (optional, ~200 words)
