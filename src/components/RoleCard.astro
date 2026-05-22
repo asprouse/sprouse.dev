@@ -48,7 +48,6 @@ const slug = slugifyCompany(role.company);
     {
       role.projects.map((project, idx) => (
         <details
-          open
           class="project group/project mt-5"
           data-project-index={idx}
           style={`order: ${idx};`}
