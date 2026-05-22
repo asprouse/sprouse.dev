@@ -33,12 +33,14 @@ This senior individual contributor position guides technical strategy across API
 ## Qualifications
 
 **Required Experience:**
+
 - 12+ years of engineering experience at Staff or Senior Staff level
 - Demonstrated success shaping technical strategy for large-scale API platforms
 - Deep expertise in distributed systems and API architecture
 - Effective communication across organizational boundaries
 
 **Preferred Skills:**
+
 - Product instincts and API design craftsmanship
 - Clear communication with technical and non-technical audiences
 - Ability to lead through influence and trust

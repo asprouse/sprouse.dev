@@ -42,7 +42,10 @@ function slugifyCompany(name) {
 }
 
 function stripHtml(s) {
-  return s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  return s
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function formatYearMonth(ym) {
@@ -128,9 +131,7 @@ export function renderCv({ patch = null, variantSlug } = {}) {
 
     for (const idx of order) {
       const p = role.projects[idx];
-      const techNames = p.technologies
-        .map((s) => resume.technologies[s]?.name || s)
-        .join(', ');
+      const techNames = p.technologies.map((s) => resume.technologies[s]?.name || s).join(', ');
       lines.push(`  • ${p.title || '(Untitled)'}`);
       lines.push(`    ${stripHtml(p.description)}`);
       if (techNames) lines.push(`    Technologies: ${techNames}`);
@@ -149,13 +150,20 @@ export function renderCv({ patch = null, variantSlug } = {}) {
 
   lines.push('SKILLS');
   const skills = deriveSkillsByCategory();
-  const order = ['language', 'framework', 'platform', 'ai', 'tooling', 'library', 'protocol', 'concept'];
+  const order = [
+    'language',
+    'framework',
+    'platform',
+    'ai',
+    'tooling',
+    'library',
+    'protocol',
+    'concept'
+  ];
   for (const cat of order) {
     if (!skills[cat]) continue;
     const items = skills[cat]
-      .map((name) =>
-        emphasizedLower.has(name.toLowerCase().trim()) ? `**${name}**` : name
-      )
+      .map((name) => (emphasizedLower.has(name.toLowerCase().trim()) ? `**${name}**` : name))
       .join(', ');
     lines.push(`${cat.charAt(0).toUpperCase() + cat.slice(1)}: ${items}`);
   }

@@ -166,6 +166,10 @@ await writeFile(outPath, formatted);
 
 console.log(`✓ Wrote ${outPath.replace(root + '/', '')}`);
 console.log(`  Lens:      ${result.variant}`);
-console.log(`  Draft:     ${result.coverLetter.length} chars (~${Math.round(result.coverLetter.split(/\s+/).length)} words)`);
+console.log(
+  `  Draft:     ${result.coverLetter.length} chars (~${Math.round(result.coverLetter.split(/\s+/).length)} words)`
+);
 console.log(`  Strengths: ${result.strengths?.length || 0}`);
-console.log(`  Gaps:      ${result.gaps?.length || 0}  (${inLetter.length} addressed in letter, ${forInterview.length} for interview)`);
+console.log(
+  `  Gaps:      ${result.gaps?.length || 0}  (${inLetter.length} addressed in letter, ${forInterview.length} for interview)`
+);
