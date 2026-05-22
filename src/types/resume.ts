@@ -30,6 +30,14 @@ export interface Resume {
   technologies: {
     [k: string]: TechEntry;
   };
+  /**
+   * Positioning variants. Keys are variant slugs (cto, principal, cofounder).
+   */
+  variants: {
+    cto: VariantEntry;
+    principal: VariantEntry;
+    cofounder: VariantEntry;
+  };
 }
 export interface Person {
   first: string;
@@ -91,4 +99,27 @@ export interface TechEntry {
    * Tooltip-style explanation. May be empty for techs whose name speaks for itself.
    */
   description: string;
+}
+export interface VariantEntry {
+  /**
+   * Human-readable lens name shown in UI (e.g., 'Principal Engineer').
+   */
+  label: string;
+  /**
+   * One-line elevator pitch shown under the H1.
+   */
+  tagline: string;
+  /**
+   * Three scannable proof points (~10 words each).
+   *
+   * @minItems 3
+   * @maxItems 3
+   */
+  proofBullets: [string, string, string];
+  /**
+   * What kind of next role Andrew is open to under this lens.
+   */
+  openTo: string;
+  metaTitle: string;
+  metaDescription: string;
 }

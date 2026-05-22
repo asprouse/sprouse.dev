@@ -5,7 +5,15 @@
   "description": "Canonical schema for the resume.json data file. Validated at build time; TypeScript types are generated from this schema into src/types/resume.ts.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["person", "summary", "experience", "education", "openSource", "technologies"],
+  "required": [
+    "person",
+    "summary",
+    "experience",
+    "education",
+    "openSource",
+    "technologies",
+    "variants"
+  ],
   "properties": {
     "$schema": { "type": "string" },
     "person": { "$ref": "#/$defs/Person" },
@@ -27,6 +35,17 @@
       "description": "Map of tech slug to TechEntry. Slugs are lowercase, hyphen-separated.",
       "additionalProperties": { "$ref": "#/$defs/TechEntry" },
       "propertyNames": { "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+    },
+    "variants": {
+      "type": "object",
+      "description": "Positioning variants. Keys are variant slugs (cto, principal, cofounder).",
+      "required": ["cto", "principal", "cofounder"],
+      "additionalProperties": false,
+      "properties": {
+        "cto": { "$ref": "#/$defs/VariantEntry" },
+        "principal": { "$ref": "#/$defs/VariantEntry" },
+        "cofounder": { "$ref": "#/$defs/VariantEntry" }
+      }
     }
   },
   "$defs": {
@@ -163,6 +182,37 @@
           "type": "string",
           "description": "Tooltip-style explanation. May be empty for techs whose name speaks for itself."
         }
+      }
+    },
+    "VariantEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "tagline", "proofBullets", "openTo", "metaTitle", "metaDescription"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable lens name shown in UI (e.g., 'Principal Engineer')."
+        },
+        "tagline": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One-line elevator pitch shown under the H1."
+        },
+        "proofBullets": {
+          "type": "array",
+          "description": "Three scannable proof points (~10 words each).",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "openTo": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What kind of next role Andrew is open to under this lens."
+        },
+        "metaTitle": { "type": "string", "minLength": 1 },
+        "metaDescription": { "type": "string", "minLength": 1 }
       }
     }
   }

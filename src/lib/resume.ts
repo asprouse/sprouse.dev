@@ -1,11 +1,12 @@
-import resumeJson from '../../resume.json';
+import andrewData from '../../andrew.yml';
 import type { Resume, TechCategory, TechEntry } from '../types/resume';
 import { CURRENT_ERA_FROM, slugifyCompany } from './slug';
 
-// resume.json is validated against schemas/resume.schema.json at build time
+// @modyfi/vite-plugin-yaml parses andrew.yml at build time into a JS module.
+// andrew.yml is validated against schemas/resume.schema.json at build time
 // (via `npm run check`), so this cast is safe — runtime validation would just
 // repeat the build-time check on every cold start.
-export const resume = resumeJson as Resume;
+export const resume = andrewData as Resume;
 
 export { slugifyCompany, CURRENT_ERA_FROM } from './slug';
 

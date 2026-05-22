@@ -40,12 +40,14 @@
     "react-dom": "^19.0.0",
     "streamdown": "^2.5.0",
     "tailwindcss": "^4.3.0",
+    "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.96.0",
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^9.39.4",
+    "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "ajv": "^8.20.0",

@@ -6,6 +6,7 @@
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import yaml from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..', '..');
@@ -64,10 +65,10 @@ function extractBackground(profileMd) {
 
 export async function loadTailorContext() {
   const [resumeRaw, profileMd] = await Promise.all([
-    readFile(join(root, 'resume.json'), 'utf8'),
+    readFile(join(root, 'andrew.yml'), 'utf8'),
     readFile(join(root, 'chatbot/profile.md'), 'utf8')
   ]);
-  const resume = JSON.parse(resumeRaw);
+  const resume = yaml.parse(resumeRaw);
   return {
     skillVocabulary: buildSkillVocabulary(resume),
     roles: formatRoles(resume),

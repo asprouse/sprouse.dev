@@ -3,6 +3,7 @@ import cloudflare from '@astrojs/cloudflare';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import yamlPlugin from '@modyfi/vite-plugin-yaml';
 
 // Alias react-dom/server to the edge variant only for production builds.
 // The .edge build is CommonJS and breaks Vite's dev server, but is required
@@ -21,7 +22,7 @@ export default defineConfig({
     })
   ],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), yamlPlugin()],
     resolve: {
       alias: isBuild
         ? [

@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Validates resume.json against schemas/resume.schema.json using Ajv.
+// Validates andrew.yml against schemas/resume.schema.json using Ajv.
 // Runs as part of `npm run check` and CI. Exits 1 on validation failure.
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import yaml from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 
@@ -12,10 +13,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
 
 const schemaPath = join(repoRoot, 'schemas/resume.schema.json');
-const dataPath = join(repoRoot, 'resume.json');
+const dataPath = join(repoRoot, 'andrew.yml');
 
 const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
-const data = JSON.parse(readFileSync(dataPath, 'utf8'));
+const data = yaml.parse(readFileSync(dataPath, 'utf8'));
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats.default(ajv);
@@ -23,11 +24,11 @@ addFormats.default(ajv);
 const validate = ajv.compile(schema);
 
 if (validate(data)) {
-  console.log('✓ resume.json is valid against schemas/resume.schema.json');
+  console.log('✓ andrew.yml is valid against schemas/resume.schema.json');
   process.exit(0);
 }
 
-console.error('✗ resume.json failed validation:');
+console.error('✗ andrew.yml failed validation:');
 for (const err of validate.errors ?? []) {
   const path = err.instancePath || '(root)';
   console.error(`  ${path}: ${err.message}`);

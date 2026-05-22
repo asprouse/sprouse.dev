@@ -9,3 +9,13 @@ declare namespace Cloudflare {
     ANTHROPIC_API_KEY?: string;
   }
 }
+
+// @modyfi/vite-plugin-yaml transforms *.yml imports into parsed JS modules.
+declare module '*.yml' {
+  const data: unknown;
+  export default data;
+}
+declare module '*.yaml' {
+  const data: unknown;
+  export default data;
+}

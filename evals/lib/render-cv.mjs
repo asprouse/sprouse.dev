@@ -9,28 +9,25 @@
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import yaml from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const resumePath = join(__dirname, '../../resume.json');
-export const resume = JSON.parse(await readFile(resumePath, 'utf8'));
+const resumePath = join(__dirname, '../../andrew.yml');
+export const resume = yaml.parse(await readFile(resumePath, 'utf8'));
 
 const CURRENT_ERA_FROM = '2015-01';
 
+// Pulled from andrew.yml so eval renders use the same lens content as the
+// production page; no hardcoded duplicates.
 const VARIANTS = {
-  cto: {
-    tagline: 'Twenty years shipping production software. Currently CTO. Looking next.',
-    openTo:
-      'Open to CTO at AI-native companies building primary AI products — applied AI, agent platforms, model-adjacent infrastructure.'
-  },
+  cto: { tagline: resume.variants.cto.tagline, openTo: resume.variants.cto.openTo },
   principal: {
-    tagline: 'Twenty years designing primary primitives. IC-first, schema-shaped.',
-    openTo:
-      'Open to Principal / Staff Engineer roles at companies whose product is itself a primary primitive — LLM, runtime, commerce, payments.'
+    tagline: resume.variants.principal.tagline,
+    openTo: resume.variants.principal.openTo
   },
   cofounder: {
-    tagline: 'Two co-founder gigs in. Going application-first next time.',
-    openTo:
-      'Open to technical co-founder roles, application-first — pick a real user problem AI now makes solvable, ship it, and let the dev-tools fall out of the work.'
+    tagline: resume.variants.cofounder.tagline,
+    openTo: resume.variants.cofounder.openTo
   }
 };
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Distills resume.json + variant positioning into LinkedIn paste-ready blocks
+// Distills andrew.yml + variant positioning into LinkedIn paste-ready blocks
 // (Headline, About, per-role Experience), each with a character count next to
 // it so you can see what fits the LinkedIn editor's limits. Overwrites the
 // destination; rely on git for diffs and recovery.
@@ -14,6 +14,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import yaml from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
@@ -32,12 +33,11 @@ if (!['cto', 'principal', 'cofounder'].includes(variantSlug)) {
   process.exit(1);
 }
 
-const resumePath = join(repoRoot, 'resume.json');
-const variantsPath = join(repoRoot, 'src/lib/variants.ts');
+const resumePath = join(repoRoot, 'andrew.yml');
 const destPath = join(repoRoot, 'linkedin.md');
 
-const resume = JSON.parse(readFileSync(resumePath, 'utf8'));
-const variantsSrc = readFileSync(variantsPath, 'utf8');
+const resume = yaml.parse(readFileSync(resumePath, 'utf8'));
+const variantData = resume.variants[variantSlug];
 const existing = existsSync(destPath) ? readFileSync(destPath, 'utf8').trim() : '';
 
 // Keep the same current-era cutoff used by the resume site (2015-01).
@@ -68,7 +68,7 @@ const prompt = `You are producing LinkedIn paste-ready content for Andrew Sprous
 
 LinkedIn is the teaser — the CV at sprouse.dev/cv is the proof. Don't list every project. Compress each role into something a recruiter will skim in 5 seconds.
 
-VARIANT: Andrew is positioning for the "${variantSlug}" lens. Calibrate tone and emphasis accordingly — the variant's tagline, proof bullets, and openTo line are in the <variants-src> block below.
+VARIANT: Andrew is positioning for the "${variantSlug}" lens. Calibrate tone and emphasis accordingly — the variant's tagline, proof bullets, and openTo line are in the <variant> block below.
 
 OUTPUT FORMAT — emit this exact markdown structure, nothing else, no commentary, no code fences:
 
@@ -101,9 +101,9 @@ VOICE RULES:
 - It's fine — encouraged — to mention concrete artifacts and outcomes by name.
 - For the LinkedIn audience: assume the reader has not seen the CV yet. Don't reference "the projects above" or anything that implies more context.
 
-${voiceAnchor}<variants-src>
-${variantsSrc}
-</variants-src>
+${voiceAnchor}<variant>
+${JSON.stringify(variantData, null, 2)}
+</variant>
 
 <resume-summary>
 ${resume.summary}
