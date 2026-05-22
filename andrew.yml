@@ -26,15 +26,10 @@ experience:
     dateRange:
       from: 2018-10
       to: null
-    description:
-      "Co-founded TakeShape in 2018; took the company through Techstars 2019 and a seed raise
-      in 2020. Three product generations under one thesis: customers need their own data (the CMS
-      layer), other services' data (the GraphQL API mesh), and AI agents that use both — all unified
-      behind a single schema. That schema is the throughline that carried customers through two
-      product pivots without forcing rewrites between generations — a JSON Schema-derived DSL I
-      designed that defines a customer's data model, REST and GraphQL APIs, and AI agents in a
-      single artifact. Ships production agents today to enterprise customers including Valvoline.
-      Operate as a player-coach across IC, architecture, hiring, and product direction."
+    description: >-
+      Co-founder and CTO since 2018; three product generations under one thesis — customers need
+      their own data (CMS), other services' data (GraphQL mesh), and AI agents that use both, all
+      unified behind a single schema.
     impactBullets:
       - >-
         Drove the design of a JSON Schema-derived DSL that defines a customer's data model, REST
@@ -186,12 +181,10 @@ experience:
     dateRange:
       from: 2016-07
       to: 2018-09
-    description:
-      "Returned to Ronik after Fair Tread with one goal: validate a thesis I'd been forming
-      since 2013 — that content platforms should be defined by a schema, with the API generated from
-      it. Used client work as the proving ground; every project either confirmed an assumption or
-      surfaced a gap that drove the next iteration. The technology I built during this two-year
-      incubation spun out as TakeShape in October 2018, with Ronik as a founding partner."
+    description: >-
+      Returned to Ronik after Fair Tread to validate a thesis from 2013 — that content platforms
+      should be defined by a schema, with the API generated from it — using client work as the
+      proving ground.
     impactBullets:
       - >-
         Drove a two-year incubation of the schema-first content platform thesis — each client
@@ -245,13 +238,10 @@ experience:
     dateRange:
       from: 2015-07
       to: 2016-07
-    description: Co-founded Fair Tread with CEO Matt Mankins (former CTO of Fast Company, web mail
-      pioneer) on an HTTP 402-based content monetization protocol — nearly a decade before agentic
-      micropayments and the x402 spec made the category mainstream. Three-person team. The protocol
-      didn't reach scale, but the serverless infrastructure I built underneath it (Lambda, edge
-      proxies, payment gateways) became the foundation for everything I shipped at Ronik and
-      TakeShape after. Atri.me, the consumer-side browser extension, hit the front page of Hacker
-      News.
+    description: >-
+      Co-founded Fair Tread with CEO Matt Mankins (former CTO of Fast Company) on an HTTP 402-based
+      content monetization protocol — nearly a decade before agentic micropayments and the x402
+      spec brought the category mainstream. Three-person team.
     impactBullets:
       - >-
         Co-designed an HTTP 402-based content monetization protocol with Matt Mankins (former CTO
