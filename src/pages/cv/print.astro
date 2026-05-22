@@ -367,35 +367,38 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
         color: var(--color-brand);
       }
 
-      .project {
-        margin: 0.45em 0;
+      /* Projects on the print sheet render as a single inline breadcrumb
+         row per role (Projects: A · B · C). The impact bullets above
+         already carry the story; this row exists for breadth + so the
+         tailor's project re-ranking has something visible to act on. */
+      .project-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 6px;
+        margin: 0.4em 0 0;
+        font-size: 9.5pt;
+        color: var(--cv-muted);
         page-break-inside: avoid;
       }
-      .project-title {
-        display: inline;
+      .project-list-label {
         font-weight: 600;
-        font-size: 10pt;
-      }
-      .project-title::after {
-        content: ' — ';
-        color: var(--cv-muted);
-        font-weight: 400;
-      }
-      .project-description {
-        display: inline;
-        font-size: 10pt;
-      }
-      .project-description a {
-        color: var(--cv-ink);
-        text-decoration: underline;
-        text-decoration-color: var(--cv-rule);
-      }
-      .project-tech {
-        display: block;
-        margin-top: 0.2em;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
         font-size: 8.5pt;
+        margin-right: 4px;
+      }
+      .project {
+        color: var(--cv-ink);
+        font-size: 9.5pt;
+      }
+      .project::after {
+        content: ' ·';
         color: var(--cv-muted);
-        font-style: italic;
+        margin-left: 2px;
+      }
+      .project:last-of-type::after {
+        content: '';
       }
 
       .retro-row {
@@ -491,10 +494,6 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
 
       .project.tailor-hidden {
         opacity: 0.32;
-        position: relative;
-      }
-      .project.tailor-hidden .project-title,
-      .project.tailor-hidden .project-description {
         text-decoration: line-through;
         text-decoration-color: var(--cv-muted);
       }
@@ -611,11 +610,11 @@ const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summa
               )}
 
               <div class="project-list">
+                <span class="project-list-label">Projects</span>
                 {role.projects.map((project, idx) => (
-                  <div class="project" data-project-index={idx} style={`order: ${idx};`}>
-                    {project.title && <span class="project-title">{project.title}</span>}
-                    <span class="project-description" set:html={project.description} />
-                  </div>
+                  <span class="project" data-project-index={idx} style={`order: ${idx};`}>
+                    {project.title || 'Project'}
+                  </span>
                 ))}
               </div>
             </div>

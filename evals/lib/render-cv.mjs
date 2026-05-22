@@ -133,12 +133,15 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     }
     const order = [...explicit, ...remaining];
 
-    for (const idx of order) {
-      const p = role.projects[idx];
-      const techNames = p.technologies.map((s) => resume.technologies[s]?.name || s).join(', ');
-      lines.push(`  • ${p.title || '(Untitled)'}`);
-      lines.push(`    ${stripHtml(p.description)}`);
-      if (techNames) lines.push(`    Technologies: ${techNames}`);
+    // Match the print sheet's compact projects-as-breadcrumb rendering:
+    // a single line of project titles per role. The impact bullets above
+    // already carry the story; this row exists so tailor re-ranking has
+    // something visible to score against.
+    const visibleTitles = order
+      .map((idx) => role.projects[idx]?.title || 'Project')
+      .filter(Boolean);
+    if (visibleTitles.length > 0) {
+      lines.push(`  Projects: ${visibleTitles.join(' · ')}`);
       lines.push('');
     }
   }
