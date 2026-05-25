@@ -19,24 +19,24 @@ Option 2 produces a generic assistant cosplaying as me. Option 1 takes effort bu
 
 ## Why not fine-tuning
 
-Fine-tuning a base model on ~200 Q&A pairs is the wrong tool for the job — the dataset is too small to meaningfully shift weights, and a capable base model with a good system prompt + retrieved examples is already excellent at adopting voice from a few hundred samples. Fine-tuning also locks the corpus into a model snapshot; RAG keeps it editable.
+Fine-tuning a base model on ~150 Q&A pairs is the wrong tool for the job — the dataset is too small to meaningfully shift weights, and a capable base model with a good system prompt + retrieved examples is already excellent at adopting voice from a few hundred samples. Fine-tuning also locks the corpus into a model snapshot; RAG keeps it editable.
 
 **Architecture**: persona system prompt + factual base + RAG retrieval over the Q&A corpus. The system prompt sets voice and ground rules ("you are Andrew, decline to speculate, redirect off-topic questions"). A factual base file (`andrew/profile.md`) is included in every prompt — it captures personal and professional facts the bot should always know without retrieval (family, co-founders, recurring phrases). The retriever pulls the most relevant Q&As for each user message and inserts them as grounded examples. The model composes a response in voice using those examples.
 
 ## Categories
 
-Aiming for ~200 questions across 8 categories. The split is opinionated — heavier on character/opinions than a typical resume bot, because "fun + revealing" is the goal:
+Currently ~146 questions across 6 categories. The split is opinionated — heavier on character/opinions than a typical resume bot, because "fun + revealing" is the goal:
 
-| Category                   | Target | What it covers                                             |
-| -------------------------- | ------ | ---------------------------------------------------------- |
-| Origin & arc               | ~25    | How I got into tech, formative jobs, why each move         |
-| TakeShape                  | ~25    | Founder story, what we're building, why now                |
-| Technical taste            | ~30    | Languages, tools, hot takes, overrated/underrated          |
-| Leadership & working style | ~25    | Hiring, running teams, decision-making, conflict           |
-| Opinions & hot takes       | ~25    | Industry, AI, remote work, dinner-party debates            |
-| Personal & character       | ~30    | Brooklyn life, hobbies, what I read/watch, weird interests |
-| Anecdotes                  | ~25    | Specific stories — best day, worst outage, war stories     |
-| Meta & fun                 | ~20    | Bot-as-Andrew jokes, easter eggs, "are you really him?"    |
+| Category                   | Count | What it covers                                             |
+| -------------------------- | ----- | ---------------------------------------------------------- |
+| Origin & arc               | 25    | How I got into tech, formative jobs, why each move         |
+| TakeShape                  | 27    | Founder story, what we're building, why now                |
+| Technical taste            | 30    | Languages, tools, hot takes, overrated/underrated          |
+| Leadership & working style | 25    | Hiring, running teams, decision-making, conflict           |
+| Personal & character       | 30    | Brooklyn life, hobbies, what I read/watch, weird interests |
+| Anecdotes                  | 9     | Specific stories — best day, worst outage, war stories     |
+
+Two categories were planned and then dropped: "Opinions & hot takes" (folded into Technical taste and Leadership) and "Meta & fun" (felt forced when written, didn't earn its place).
 
 ## Authoring format
 
@@ -58,16 +58,18 @@ I grew up in...
 
 ## From markdown to runtime
 
-A small build step parses the markdown, extracts each question/answer/metadata triple, and emits a single JSON file (`andrew/qa.json`) consumed by the runtime. This keeps authoring ergonomic (markdown) while the retrieval layer gets a clean structured input.
+The markdown files are loaded at build time via Vite's `import.meta.glob('andrew/qa/*.md', { query: '?raw', eager: true })` and parsed in-memory by `src/lib/qa-corpus.ts` into a typed `QAEntry[]`. No intermediate JSON artifact — the parsed corpus lives in the bundle directly. This keeps authoring ergonomic (markdown is what I edit) without the friction of a separate build/serialize step.
 
-The build will skip unanswered questions, so the corpus grows incrementally — no stub answers in production.
+Unanswered questions are silently skipped during parsing, so the corpus grows incrementally — no stub answers in production.
+
+Retrieval is BM25, implemented from scratch in `src/lib/retrieval.ts` (k1=1.5, b=0.75). For ~150 documents you don't need embeddings or a vector store — classical sparse retrieval is fast, transparent, and easy to debug.
 
 The factual base (`andrew/profile.md`) is loaded as-is into the system prompt and is not part of the retrieval index — it's grounding context, not retrievable examples.
 
 ## Workflow
 
-I'm filling out one category at a time, in conversation with Claude (Anthropic's model running in Claude Code). Claude drafts the question set for a category, I answer freeform, Claude lightly cleans up wording without flattening voice. Saving rounds across categories rather than doing all 200 in one sitting — fresher answers, less burnout.
+I filled out one category at a time, in conversation with Claude (Anthropic's model running in Claude Code). Claude drafted the question set for a category, I answered freeform, Claude lightly cleaned up wording without flattening voice. Spreading rounds across categories rather than doing all 150 in one sitting — fresher answers, less burnout.
 
 ## Status
 
-This document and the approach were committed before any answers were written. The categories file structure is below; check the file modification dates to see how the corpus has filled in over time.
+The methodology in this doc was committed before any answers were written; the categories have since filled in to the current ~146 entries. Check `git log andrew/qa/` for the evolution. The doc itself is rendered live at [/about-the-bot](https://sprouse.dev/about-the-bot).
