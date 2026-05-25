@@ -23,6 +23,7 @@
     "eval:tailor": "node evals/tailor-eval.mjs",
     "inspect:tailor-prompt": "node scripts/inspect-tailor-prompt.mjs",
     "gen:application": "node scripts/gen-application.mjs",
+    "gen:og": "node scripts/gen-og.mjs",
     "check": "npm run validate:resume && npm run format:check && npm run lint && npm run typecheck"
   },
   "dependencies": {
@@ -59,6 +60,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.6.0",
     "json-schema-to-typescript": "^15.0.4",
+    "playwright": "^1.60.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
