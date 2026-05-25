@@ -51,6 +51,6 @@ const { hash, label } = Astro.props;
       el.addEventListener('click', (e) => e.stopPropagation());
     });
   }
-  bindAnchorLinks();
+  // astro:page-load fires on initial navigation too, so no immediate call needed.
   document.addEventListener('astro:page-load', bindAnchorLinks);
 </script>
