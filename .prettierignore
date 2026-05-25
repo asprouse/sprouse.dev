@@ -6,5 +6,5 @@ node_modules
 package-lock.json
 public/llms.txt
 public/robots.txt
-chatbot/qa
+andrew/qa
 worker-configuration.d.ts

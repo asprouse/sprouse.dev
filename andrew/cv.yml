@@ -1,5 +1,5 @@
-# yaml-language-server: $schema=./schemas/resume.schema.json
-# Canonical profile data. Edited by hand; validated by `npm run validate:resume`.
+# yaml-language-server: $schema=../schemas/resume.schema.json
+# Canonical CV data. Edited by hand; validated by `npm run validate:resume`.
 
 person:
   first: Andrew

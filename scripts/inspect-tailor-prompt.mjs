@@ -6,7 +6,7 @@
 //         less tailor-prompt.dump.txt
 //
 // We can't `import { composeSystemPrompt }` from src/lib/tailor/ here
-// because that module pulls chatbot/profile.md via Vite's `?raw` loader,
+// because that module pulls andrew/profile.md via Vite's `?raw` loader,
 // which only exists inside the Astro build. So this script extracts the
 // INSTRUCTIONS template by string match and reuses the Node-side context
 // loader. If the composition logic in src/lib/tailor/prompt.ts changes

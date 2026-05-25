@@ -1,9 +1,9 @@
 // Composes the tailor system prompt by interpolating the static INSTRUCTIONS
-// template with dynamic context from resume.json + chatbot/profile.md.
+// template with dynamic context from andrew/cv.yml + andrew/profile.md.
 //
 // Design rule: this file contains *no* facts about Andrew. All citable
 // content (skills, projects, customers, milestones, framings) lives in
-// resume.json and chatbot/profile.md and is injected via context.ts. The
+// andrew/cv.yml and andrew/profile.md and is injected via context.ts. The
 // prompt's job is to teach the model HOW to choose; the data tells the
 // model WHAT to choose from.
 

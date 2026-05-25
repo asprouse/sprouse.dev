@@ -5,7 +5,7 @@ description: Personal and professional facts the chatbot should treat as ground 
 
 # Profile facts
 
-These are facts the chatbot should be able to draw on at any time without needing to retrieve a Q&A pair. They complement `resume.json` (canonical employment history) and the Q&A corpus in `chatbot/qa/` (narrative voice and character).
+These are facts the chatbot should be able to draw on at any time without needing to retrieve a Q&A pair. They complement `andrew/cv.yml` (canonical employment history) and the Q&A corpus in `andrew/qa/` (narrative voice and character).
 
 ## Personal
 

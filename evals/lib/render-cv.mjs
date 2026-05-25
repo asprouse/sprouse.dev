@@ -12,12 +12,12 @@ import { fileURLToPath } from 'node:url';
 import yaml from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const resumePath = join(__dirname, '../../andrew.yml');
+const resumePath = join(__dirname, '../../andrew/cv.yml');
 export const resume = yaml.parse(await readFile(resumePath, 'utf8'));
 
 const CURRENT_ERA_FROM = '2015-01';
 
-// Pulled from andrew.yml so eval renders use the same lens content as the
+// Pulled from andrew/cv.yml so eval renders use the same lens content as the
 // production page; no hardcoded duplicates.
 const VARIANTS = {
   cto: { tagline: resume.variants.cto.tagline, openTo: resume.variants.cto.openTo },

@@ -1,10 +1,10 @@
 // All factual context for the tailor prompt is composed here from canonical
-// sources (resume.json, chatbot/profile.md) so the prompt template itself
-// holds only principles and instructions — never duplicated data that can
-// drift from those sources.
+// sources (andrew/cv.yml via lib/resume, andrew/profile.md) so the prompt
+// template itself holds only principles and instructions — never duplicated
+// data that can drift from those sources.
 
 import { CURRENT_ERA_FROM, resume, slugifyCompany } from '../resume';
-import profileMd from '../../../chatbot/profile.md?raw';
+import profileMd from '../../../andrew/profile.md?raw';
 
 export interface TailorContext {
   /** Printable technology names (display form) that appear anywhere in the
@@ -15,7 +15,7 @@ export interface TailorContext {
    *  model needs the retrospective tech stacks to reason about adjacent
    *  skills (e.g., Django at Ronik 2013 → Python adjacency). */
   roles: string;
-  /** chatbot/profile.md body — career-spanning framings (player-coach,
+  /** andrew/profile.md body — career-spanning framings (player-coach,
    *  primary primitives, application-first thesis) and facts not always
    *  visible in role descriptions (Techstars Philadelphia, seed timing). */
   background: string;

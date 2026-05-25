@@ -7,10 +7,10 @@ Thanks for your interest. This is a personal resume site, so the bar for changes
 The shortest path:
 
 1. Fork the repo and clone locally
-2. Replace `resume.json` with your own data (the schema in `schemas/resume.schema.json` will validate)
-3. Replace `chatbot/profile.md` with your persona / voice rules
-4. Replace `chatbot/qa/*.md` with your own Q&A entries (see `chatbot/APPROACH.md` for the format)
-5. Replace `public/illustration/portrait.png` and `public/illustration/original.jpeg`
+2. Replace `andrew/cv.yml` with your own data (the schema in `schemas/resume.schema.json` will validate)
+3. Replace `andrew/profile.md` with your persona / voice rules
+4. Replace `andrew/qa/*.md` with your own Q&A entries (see `andrew/APPROACH.md` for the format)
+5. Replace `src/assets/portrait.jpg` and `src/assets/original-photo.jpeg`
 6. Update `wrangler.jsonc` `name` and the Cloudflare rate-limit `namespace_id` values (they're per-account)
 7. Set `ANTHROPIC_API_KEY` in `.dev.vars` for local dev, and in Cloudflare for production
 8. Regenerate the OG image (`/og` route + screenshot at 1200×630)
@@ -35,7 +35,7 @@ npm run check
 
 Which runs:
 
-- `validate:resume` — `resume.json` against the JSON Schema
+- `validate:resume` — `andrew/cv.yml` against the JSON Schema
 - `format:check` — Prettier
 - `lint` — ESLint
 - `typecheck` — `astro check`

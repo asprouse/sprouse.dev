@@ -21,7 +21,7 @@ Option 2 produces a generic assistant cosplaying as me. Option 1 takes effort bu
 
 Fine-tuning a base model on ~200 Q&A pairs is the wrong tool for the job — the dataset is too small to meaningfully shift weights, and a capable base model with a good system prompt + retrieved examples is already excellent at adopting voice from a few hundred samples. Fine-tuning also locks the corpus into a model snapshot; RAG keeps it editable.
 
-**Architecture**: persona system prompt + factual base + RAG retrieval over the Q&A corpus. The system prompt sets voice and ground rules ("you are Andrew, decline to speculate, redirect off-topic questions"). A factual base file (`chatbot/profile.md`) is included in every prompt — it captures personal and professional facts the bot should always know without retrieval (family, co-founders, recurring phrases). The retriever pulls the most relevant Q&As for each user message and inserts them as grounded examples. The model composes a response in voice using those examples.
+**Architecture**: persona system prompt + factual base + RAG retrieval over the Q&A corpus. The system prompt sets voice and ground rules ("you are Andrew, decline to speculate, redirect off-topic questions"). A factual base file (`andrew/profile.md`) is included in every prompt — it captures personal and professional facts the bot should always know without retrieval (family, co-founders, recurring phrases). The retriever pulls the most relevant Q&As for each user message and inserts them as grounded examples. The model composes a response in voice using those examples.
 
 ## Categories
 
@@ -40,7 +40,7 @@ Aiming for ~200 questions across 8 categories. The split is opinionated — heav
 
 ## Authoring format
 
-Questions and answers live in `chatbot/qa/<NN>-<category-slug>.md` — one markdown file per category. Each file uses YAML frontmatter for category metadata, and an HTML comment before each question for per-question metadata (id, tags). HTML comments render invisibly and stay out of the way while writing.
+Questions and answers live in `andrew/qa/<NN>-<category-slug>.md` — one markdown file per category. Each file uses YAML frontmatter for category metadata, and an HTML comment before each question for per-question metadata (id, tags). HTML comments render invisibly and stay out of the way while writing.
 
 ```markdown
 ---
@@ -58,11 +58,11 @@ I grew up in...
 
 ## From markdown to runtime
 
-A small build step parses the markdown, extracts each question/answer/metadata triple, and emits a single JSON file (`chatbot/qa.json`) consumed by the runtime. This keeps authoring ergonomic (markdown) while the retrieval layer gets a clean structured input.
+A small build step parses the markdown, extracts each question/answer/metadata triple, and emits a single JSON file (`andrew/qa.json`) consumed by the runtime. This keeps authoring ergonomic (markdown) while the retrieval layer gets a clean structured input.
 
 The build will skip unanswered questions, so the corpus grows incrementally — no stub answers in production.
 
-The factual base (`chatbot/profile.md`) is loaded as-is into the system prompt and is not part of the retrieval index — it's grounding context, not retrievable examples.
+The factual base (`andrew/profile.md`) is loaded as-is into the system prompt and is not part of the retrieval index — it's grounding context, not retrievable examples.
 
 ## Workflow
 

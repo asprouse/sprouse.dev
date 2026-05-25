@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Regenerates public/og.png from /og at 1200x630. Boots an astro dev server,
 // takes the screenshot via headless Chromium, then tears down. Run after
-// editing andrew.yml so the OG image reflects the current data.
+// editing andrew/cv.yml so the OG image reflects the current data.
 //
 // Usage:
 //   npm run gen:og              # boots its own dev server

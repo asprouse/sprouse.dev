@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Distills andrew.yml + variant positioning into LinkedIn paste-ready blocks
+// Distills andrew/cv.yml + variant positioning into LinkedIn paste-ready blocks
 // (Headline, About, per-role Experience), each with a character count next to
 // it so you can see what fits the LinkedIn editor's limits. Overwrites the
 // destination; rely on git for diffs and recovery.
@@ -33,7 +33,7 @@ if (!['cto', 'principal', 'cofounder'].includes(variantSlug)) {
   process.exit(1);
 }
 
-const resumePath = join(repoRoot, 'andrew.yml');
+const resumePath = join(repoRoot, 'andrew/cv.yml');
 const destPath = join(repoRoot, 'linkedin.md');
 
 const resume = yaml.parse(readFileSync(resumePath, 'utf8'));

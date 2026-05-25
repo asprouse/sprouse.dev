@@ -68,8 +68,8 @@ function extractBackground(profileMd) {
 
 export async function loadTailorContext() {
   const [resumeRaw, profileMd] = await Promise.all([
-    readFile(join(root, 'andrew.yml'), 'utf8'),
-    readFile(join(root, 'chatbot/profile.md'), 'utf8')
+    readFile(join(root, 'andrew/cv.yml'), 'utf8'),
+    readFile(join(root, 'andrew/profile.md'), 'utf8')
   ]);
   const resume = yaml.parse(resumeRaw);
   return {

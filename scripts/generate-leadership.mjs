@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Distills chatbot/qa/04-leadership.md into chatbot/leadership.md as 5 themed
+// Distills andrew/qa/04-leadership.md into andrew/leadership.md as 5 themed
 // blocks in Andrew's voice. Overwrites the destination; rely on git for diffs
 // and recovery if the regeneration goes sideways.
 //
@@ -21,8 +21,8 @@ if (!process.env.ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const sourcePath = join(repoRoot, 'chatbot/qa/04-leadership.md');
-const destPath = join(repoRoot, 'chatbot/leadership.md');
+const sourcePath = join(repoRoot, 'andrew/qa/04-leadership.md');
+const destPath = join(repoRoot, 'andrew/leadership.md');
 
 const source = readFileSync(sourcePath, 'utf8');
 const existing = existsSync(destPath) ? readFileSync(destPath, 'utf8').trim() : '';

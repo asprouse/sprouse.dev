@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Validates andrew.yml against schemas/resume.schema.json using Ajv.
+// Validates andrew/cv.yml against schemas/resume.schema.json using Ajv.
 // Runs as part of `npm run check` and CI. Exits 1 on validation failure.
 
 import { readFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
 
 const schemaPath = join(repoRoot, 'schemas/resume.schema.json');
-const dataPath = join(repoRoot, 'andrew.yml');
+const dataPath = join(repoRoot, 'andrew/cv.yml');
 
 const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 const data = yaml.parse(readFileSync(dataPath, 'utf8'));
@@ -24,11 +24,11 @@ addFormats.default(ajv);
 const validate = ajv.compile(schema);
 
 if (validate(data)) {
-  console.log('✓ andrew.yml is valid against schemas/resume.schema.json');
+  console.log('✓ andrew/cv.yml is valid against schemas/resume.schema.json');
   process.exit(0);
 }
 
-console.error('✗ andrew.yml failed validation:');
+console.error('✗ andrew/cv.yml failed validation:');
 for (const err of validate.errors ?? []) {
   const path = err.instancePath || '(root)';
   console.error(`  ${path}: ${err.message}`);
