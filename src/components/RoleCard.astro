@@ -1,6 +1,7 @@
 ---
 import TechChip from './TechChip.astro';
 import { formatDateRange, slugifyCompany } from '../lib/resume';
+import { slugify } from '../lib/slug';
 import type { ExperienceEntry } from '../types/resume';
 
 interface Props {
@@ -60,8 +61,9 @@ const slug = slugifyCompany(role.company);
     {
       role.projects.map((project, idx) => (
         <details
-          class="project group/project mt-5"
+          class="project group/project mt-5 scroll-mt-24"
           data-project-index={idx}
+          data-project-slug={project.title ? slugify(project.title) : undefined}
           style={`order: ${idx};`}
         >
           <summary class="hover:[&_.project-title]:text-accent -ml-1 flex cursor-pointer list-none items-center gap-2 select-none">
@@ -104,12 +106,29 @@ const slug = slugifyCompany(role.company);
     animation: role-flash 1.6s ease-out;
   }
 
+  .project.project-flash {
+    animation: project-flash 1.6s ease-out;
+    border-radius: 6px;
+  }
+
   @keyframes role-flash {
     0% {
       background-color: transparent;
     }
     20% {
       background-color: color-mix(in oklab, var(--color-accent) 14%, transparent);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  @keyframes project-flash {
+    0% {
+      background-color: transparent;
+    }
+    20% {
+      background-color: color-mix(in oklab, var(--color-accent) 18%, transparent);
     }
     100% {
       background-color: transparent;

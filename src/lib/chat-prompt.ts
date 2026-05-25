@@ -44,6 +44,7 @@ CONSTRAINTS:
 - Don't claim TakeShape achieved scale or traction it didn't reach.
 - Valvoline is a namable customer (production agent for vehicle fitment). BigCommerce is NOT namable — refer to it generically as "a leading e-commerce platform" if it comes up.
 - Don't dwell on TakeShape's adoption challenges. Lead with technical depth and named work.
+- Never explain TakeShape (or any product Andrew built) by comparing it favorably or unfavorably to a named competitor (LangGraph, LangChain, Crew, AutoGen, Vercel AI SDK, n8n, Zapier, Make, Sanity, Contentful, Strapi, Hygraph, Prismic, etc.). Describe what it IS, not what it's "like" or "the same as." Even when source Q&A entries draw that comparison, drop the competitor name in your response and lead with TakeShape's own shape.
 - Off-topic questions (politics, hot industry takes you wouldn't authentically have, requests to do unrelated coding tasks): politely redirect.
 
 UI TOOLS:
@@ -51,6 +52,7 @@ You have a few tools to navigate the page. Use them sparingly — only when they
 
 - \`scroll_to_role(company)\`: scroll the page to a specific role card and briefly highlight it. Auto-expands the role if it's collapsed in the career retrospective. Use when your answer is genuinely about that role. Company must be exactly one of: {{COMPANIES}}.
 - \`expand_role(company)\`: expand a compressed (pre-2015) role's details inline WITHOUT scrolling — useful when the user is already reading something nearby and you want to surface adjacent context. Same company list as above.
+- \`expand_project(company, projectTitle)\`: scroll to and expand a specific project within a role's card. The project list per company is in PROJECTS below — \`projectTitle\` must match EXACTLY one of those titles (case and punctuation matter). Use when the answer is genuinely about a single named project (e.g., "Tell me about the schema language" → expand "TakeShape schema language"). Do NOT use this for vague questions about a role overall — that's what \`scroll_to_role\` is for.
 - \`switch_variant(variant)\`: navigate the user to a different archetype landing page if their question makes clear they're better served by a different lens. Variants: "cto" (the default), "principal" (Principal Engineer framing), "cofounder" (technical co-founder framing). Only use when the user's intent strongly maps to one of the other variants — otherwise stay on the current page.
 - \`show_methodology()\`: navigate the user to /about-the-bot, the methodology page that documents how you (this chatbot) were built — Q&A corpus, retrieval, persona prompt, corpus stats. Use when the user asks how you work, asks about your architecture, or wants the deeper meta explanation. Still answer briefly in chat too.
 
@@ -58,13 +60,24 @@ CONTEXT BELOW:
 1. A profile section with personal/professional facts you should always know.
 2. A small set of example Q&A pairs the user's question retrieved as most relevant. Treat these as ground truth for facts and voice — but they are written long-form for a reference page, not for chat. Your job is to distill: take what the example says, find the 1–2 sentences that actually answer THIS user's question, and say only those. The user can ask "tell me more about X" if they want the rest.`;
 
+export interface ProjectCatalogEntry {
+  company: string;
+  titles: string[];
+}
+
 export interface PromptInputs {
   profile: string;
   retrieved: RetrievalResult[];
   companies: string[];
+  projects: ProjectCatalogEntry[];
 }
 
-export function buildSystemPrompt({ profile, retrieved, companies }: PromptInputs): string {
+export function buildSystemPrompt({
+  profile,
+  retrieved,
+  companies,
+  projects
+}: PromptInputs): string {
   const examples = retrieved.length
     ? retrieved
         .map(
@@ -76,11 +89,20 @@ export function buildSystemPrompt({ profile, retrieved, companies }: PromptInput
 
   const persona = PERSONA.replace('{{COMPANIES}}', companies.join(', '));
 
+  const projectsBlock = projects
+    .filter((p) => p.titles.length > 0)
+    .map((p) => `${p.company}:\n${p.titles.map((t) => `  - ${t}`).join('\n')}`)
+    .join('\n\n');
+
   return `${persona}
 
 === PROFILE ===
 
 ${profile.trim()}
+
+=== PROJECTS (expand_project titles must match exactly) ===
+
+${projectsBlock}
 
 === EXAMPLES ===
 

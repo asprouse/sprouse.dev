@@ -51,11 +51,9 @@ In our initial mesh demo, when we show adding a field from one service to a shap
 What's hard to convey is *why* you need this product. It's been a more nuanced sell during the API mesh phase — it requires a customer who values having their data centralized as a principle. More simply: it requires a customer who is multi-channel, who needs the same data model across multiple applications, and who sees the value in centralizing that logic in the API layer rather than building it into each client. That said: with AI agents, every website is now multi-channel. There needs to be a website *and* an agent looking at the same data.
 
 <!-- id: takeshape-5 | tags: [agents, runtime, terminology] -->
-## 5. How would you describe TakeShape's agent runtime architecture? Some frameworks talk in nodes and edges (LangGraph), others in states and transitions — where does TakeShape sit?
+## 5. How would you describe TakeShape's agent runtime architecture?
 
-It's not really a difference — it's just terminology. States and transitions versus nodes and edges. You can compare TakeShape agents' states and transitions to LangGraph's nodes and edges; they're describing the same fundamentals.
-
-The actual differentiation is that TakeShape is a complete platform for API integration *and* agents, where your agent lives in close proximity to your data model. We also provide most of the things you'd need to build an agent in one product:
+States and transitions, with deterministic control flow. The interesting part isn't the runtime shape — most agent frameworks land on something equivalent once you draw the graph — it's that TakeShape is a complete platform for API integration *and* agents, with the agent living in close proximity to your data model. Most of what you'd need to build an agent ships in one product:
 
 - Memory
 - A database
@@ -65,7 +63,7 @@ The actual differentiation is that TakeShape is a complete platform for API inte
 
 
 <!-- id: takeshape-6 | tags: [agents, design, technical-decision] -->
-## 6. Tools as GraphQL queries against the mesh — that eliminates a layer of bespoke glue every other agent framework requires. What was the moment that design crystallized?
+## 6. Tools as GraphQL queries against the mesh — when did that design crystallize?
 
 This idea crystallized as soon as LLM providers started integrating built-in tool capabilities into their APIs. We quickly realized the potential of using GraphQL to generate tools.
 

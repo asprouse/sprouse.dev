@@ -2,7 +2,7 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, type UIMessage } from 'ai';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Streamdown } from 'streamdown';
-import { slugifyCompany } from '../lib/slug';
+import { slugify, slugifyCompany } from '../lib/slug';
 
 const PROMPTS = [
   "What's TakeShape's agent architecture?",
@@ -43,6 +43,11 @@ function flashRole(el: HTMLElement) {
   window.setTimeout(() => el.classList.remove('role-flash'), 1700);
 }
 
+function flashProject(el: HTMLElement) {
+  el.classList.add('project-flash');
+  window.setTimeout(() => el.classList.remove('project-flash'), 1700);
+}
+
 function scrollToRole(company: string) {
   const slug = slugifyCompany(company);
   const el = document.getElementById(`role-${slug}`);
@@ -62,6 +67,20 @@ function expandRole(company: string) {
     el.open = true;
   }
   flashRole(el);
+}
+
+function expandProject(company: string, projectTitle: string) {
+  const companySlug = slugifyCompany(company);
+  const titleSlug = slugify(projectTitle);
+  const role = document.getElementById(`role-${companySlug}`);
+  if (!role) return;
+  const project = role.querySelector<HTMLDetailsElement>(
+    `details.project[data-project-slug="${titleSlug}"]`
+  );
+  if (!project) return;
+  if (!project.open) project.open = true;
+  project.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  flashProject(project);
 }
 
 const VARIANT_PATHS: Record<string, string> = {
@@ -113,6 +132,11 @@ function useToolCallDispatcher(messages: UIMessage[]) {
         } else if (part.type === 'tool-expand_role') {
           const input = part.input as { company?: string } | undefined;
           if (input?.company) expandRole(input.company);
+        } else if (part.type === 'tool-expand_project') {
+          const input = part.input as { company?: string; projectTitle?: string } | undefined;
+          if (input?.company && input?.projectTitle) {
+            expandProject(input.company, input.projectTitle);
+          }
         } else if (part.type === 'tool-switch_variant') {
           const input = part.input as { variant?: string } | undefined;
           if (input?.variant) switchVariant(input.variant);

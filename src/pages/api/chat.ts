@@ -3,6 +3,7 @@ import {
   streamText,
   convertToModelMessages,
   safeValidateUIMessages,
+  stepCountIs,
   tool,
   type UIMessage
 } from 'ai';
@@ -18,6 +19,10 @@ export const prerender = false;
 
 const index = buildIndex(corpus);
 const COMPANY_NAMES = resume.experience.map((r) => r.company);
+const PROJECT_CATALOG = resume.experience.map((r) => ({
+  company: r.company,
+  titles: r.projects.map((p) => p.title).filter((t): t is string => Boolean(t))
+}));
 
 // Policy caps applied on top of the AI SDK's structural validation. The SDK
 // validates message shape; these caps enforce that nobody can shovel
@@ -100,7 +105,8 @@ export const POST: APIRoute = async ({ request }) => {
   const system = buildSystemPrompt({
     profile,
     retrieved,
-    companies: COMPANY_NAMES
+    companies: COMPANY_NAMES,
+    projects: PROJECT_CATALOG
   });
 
   const anthropic = createAnthropic({ apiKey });
@@ -110,6 +116,11 @@ export const POST: APIRoute = async ({ request }) => {
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 200,
     temperature: 0.7,
+    // Allow one model turn after a tool call so the model produces the
+    // spoken answer alongside the UI side-effect. Without this, calls to
+    // expand_project / scroll_to_role / etc. stop the stream with
+    // finishReason=tool-calls and the user sees an empty bubble.
+    stopWhen: stepCountIs(2),
     tools: {
       scroll_to_role: tool({
         description:
@@ -130,6 +141,19 @@ export const POST: APIRoute = async ({ request }) => {
           company: z.string().describe(`Company name. Must be one of: ${COMPANY_NAMES.join(', ')}.`)
         }),
         execute: async ({ company }) => ({ expanded: company })
+      }),
+      expand_project: tool({
+        description:
+          'Scroll to and expand a specific project card within a role. Use when the answer is genuinely about one named project, not the role overall. projectTitle must match exactly one of the titles listed in the PROJECTS section of the system prompt for the given company.',
+        inputSchema: z.object({
+          company: z
+            .string()
+            .describe(`Company name. Must be one of: ${COMPANY_NAMES.join(', ')}.`),
+          projectTitle: z
+            .string()
+            .describe('Exact project title as listed in the PROJECTS section of the system prompt.')
+        }),
+        execute: async ({ company, projectTitle }) => ({ expanded: `${company}:${projectTitle}` })
       }),
       switch_variant: tool({
         description:

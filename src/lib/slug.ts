@@ -1,11 +1,13 @@
 // Tiny standalone module so client-side code (Chat.tsx) can import the
 // slugifier without pulling resume.json (44 KB) into the browser bundle.
-export function slugifyCompany(name: string): string {
-  return name
+export function slugify(s: string): string {
+  return s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
+
+export const slugifyCompany = slugify;
 
 // Cutoff that splits the "current era" (since this date) from the
 // "career retrospective" everywhere it shows up:
