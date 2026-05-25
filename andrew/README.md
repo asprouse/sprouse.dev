@@ -18,7 +18,7 @@ When you change something here:
 
 - **`cv.yml`** → run `npm run validate:resume` to confirm the schema still passes. If you change the variants' tagline or openTo, also run `npm run gen:og` to refresh `public/og.png`. If you change anything material, re-run `npm run eval:tailor` to see whether tailored CV scores shifted.
 - **`profile.md`** → no validation; chatbot picks it up at next build. The tailor prompt also injects this, so a change here changes summaries the tailor can produce.
-- **`qa/*.md`** → parsed at build time; new entries appear in chatbot retrieval automatically. If you change `04-leadership.md`, the `/cv` leadership section won't update until you run `npm run gen:leadership` (or hand-edit `leadership.md`).
+- **`qa/*.md`** → pre-parsed into `src/lib/qa-corpus.generated.ts` (gitignored) by `npm run gen:qa-corpus`. The regen runs automatically before `dev`, `build`, and `typecheck`, so editing a .md file and running any of those picks up the change. If you change `04-leadership.md`, the `/cv` leadership section won't update until you run `npm run gen:leadership` (or hand-edit `leadership.md`).
 - **`leadership.md`** → either regenerate from `qa/04-leadership.md` via `npm run gen:leadership`, or hand-edit directly.
 - **`APPROACH.md`** → renders at `/about-the-bot` on next build. No other consumers.
 
@@ -26,4 +26,4 @@ When you change something here:
 
 - Resume schema lives in `schemas/resume.schema.json` (so multiple data files could share it if needed)
 - Portrait images live in `src/assets/` (Astro's `<Image>` pipeline requires `src/`, not `public/`)
-- Generated artifacts that other tools write: `linkedin.md` (from `npm run gen:linkedin`), `public/og.png` (from `npm run gen:og`), `tailor-prompt.dump.txt` (from `npm run inspect:tailor-prompt`), `cover-letters/*.md` (from `npm run gen:application`)
+- Generated artifacts that other tools write: `src/lib/qa-corpus.generated.ts` (from `npm run gen:qa-corpus`, run automatically before dev/build/typecheck), `linkedin.md` (from `npm run gen:linkedin`), `public/og.png` (from `npm run gen:og`), `tailor-prompt.dump.txt` (from `npm run inspect:tailor-prompt`), `cover-letters/*.md` (from `npm run gen:application`)
