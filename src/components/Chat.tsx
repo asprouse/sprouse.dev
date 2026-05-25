@@ -48,39 +48,48 @@ function flashProject(el: HTMLElement) {
   window.setTimeout(() => el.classList.remove('project-flash'), 1700);
 }
 
-function scrollToRole(company: string) {
-  const slug = slugifyCompany(company);
-  const el = document.getElementById(`role-${slug}`);
-  if (!el) return;
-  if (el instanceof HTMLDetailsElement) {
-    el.open = true;
+// Role cards only render on /cv. Treat the bot's navigation tools as deep
+// links: set a URL fragment (#role-{slug} or #project-{companySlug}-{titleSlug})
+// and let the browser handle scroll. A hashchange / page-load listener
+// opens the target <details> and runs the flash highlight.
+function applyFragment(hash: string) {
+  if (typeof window === 'undefined') return;
+  const target = `#${hash}`;
+  if (window.location.pathname !== '/cv') {
+    void navigateClient(`/cv${target}`);
+    return;
   }
-  el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
-  flashRole(el);
+  if (window.location.hash !== target) {
+    window.location.hash = hash;
+  } else {
+    runHashSideEffects();
+  }
+}
+
+function runHashSideEffects() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+  const el = document.getElementById(hash);
+  if (!el) return;
+  if (hash.startsWith('project-')) {
+    if (el instanceof HTMLDetailsElement && !el.open) el.open = true;
+    flashProject(el);
+  } else if (hash.startsWith('role-')) {
+    if (el instanceof HTMLDetailsElement && !el.open) el.open = true;
+    flashRole(el);
+  }
+}
+
+function scrollToRole(company: string) {
+  applyFragment(`role-${slugifyCompany(company)}`);
 }
 
 function expandRole(company: string) {
-  const slug = slugifyCompany(company);
-  const el = document.getElementById(`role-${slug}`);
-  if (!el) return;
-  if (el instanceof HTMLDetailsElement && !el.open) {
-    el.open = true;
-  }
-  flashRole(el);
+  applyFragment(`role-${slugifyCompany(company)}`);
 }
 
 function expandProject(company: string, projectTitle: string) {
-  const companySlug = slugifyCompany(company);
-  const titleSlug = slugify(projectTitle);
-  const role = document.getElementById(`role-${companySlug}`);
-  if (!role) return;
-  const project = role.querySelector<HTMLDetailsElement>(
-    `details.project[data-project-slug="${titleSlug}"]`
-  );
-  if (!project) return;
-  if (!project.open) project.open = true;
-  project.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
-  flashProject(project);
+  applyFragment(`project-${slugifyCompany(company)}-${slugify(projectTitle)}`);
 }
 
 const VARIANT_PATHS: Record<string, string> = {
@@ -110,6 +119,42 @@ function switchVariant(variant: string) {
 
 function showMethodology() {
   void navigateClient('/about-the-bot');
+}
+
+interface ToolPillInfo {
+  label: string;
+  rerun: () => void;
+}
+
+function describeTool(part: UIPart): ToolPillInfo | null {
+  const input = part.input as Record<string, unknown> | undefined;
+  switch (part.type) {
+    case 'tool-scroll_to_role': {
+      const company = typeof input?.company === 'string' ? input.company : null;
+      if (!company) return null;
+      return { label: `Scrolled to ${company}`, rerun: () => scrollToRole(company) };
+    }
+    case 'tool-expand_role': {
+      const company = typeof input?.company === 'string' ? input.company : null;
+      if (!company) return null;
+      return { label: `Expanded ${company}`, rerun: () => expandRole(company) };
+    }
+    case 'tool-expand_project': {
+      const company = typeof input?.company === 'string' ? input.company : null;
+      const title = typeof input?.projectTitle === 'string' ? input.projectTitle : null;
+      if (!company || !title) return null;
+      return { label: `Opened "${title}"`, rerun: () => expandProject(company, title) };
+    }
+    case 'tool-switch_variant': {
+      const variant = typeof input?.variant === 'string' ? input.variant : null;
+      if (!variant) return null;
+      return { label: `Switched to ${variant} lens`, rerun: () => switchVariant(variant) };
+    }
+    case 'tool-show_methodology':
+      return { label: 'Opened "How it works"', rerun: () => showMethodology() };
+    default:
+      return null;
+  }
 }
 
 function useToolCallDispatcher(messages: UIMessage[]) {
@@ -164,6 +209,21 @@ export default function Chat() {
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   useToolCallDispatcher(messages);
+
+  // Run the open/flash effects whenever the URL fragment changes — covers
+  // (a) tool fires on /cv (setting hash triggers hashchange), (b) tool
+  // fires elsewhere and navigates to /cv#... (astro:page-load fires once
+  // the new DOM is in place), and (c) any direct deep link via address bar.
+  useEffect(() => {
+    runHashSideEffects();
+    const handler = () => runHashSideEffects();
+    window.addEventListener('hashchange', handler);
+    document.addEventListener('astro:page-load', handler);
+    return () => {
+      window.removeEventListener('hashchange', handler);
+      document.removeEventListener('astro:page-load', handler);
+    };
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -441,7 +501,17 @@ function Message({ message }: { message: UIMessage }) {
       </div>
     );
   }
-  if (!text) {
+  const parts = (message as { parts?: UIPart[] }).parts ?? [];
+  const toolPills = parts
+    .filter(
+      (p) =>
+        p.type?.startsWith('tool-') &&
+        (p.state === 'input-available' || p.state === 'output-available')
+    )
+    .map((p) => ({ id: p.toolCallId ?? '', pill: describeTool(p) }))
+    .filter((entry): entry is { id: string; pill: ToolPillInfo } => entry.pill !== null);
+
+  if (!text && toolPills.length === 0) {
     return (
       <div className="max-w-[95%] self-start">
         <span className="text-muted text-[14px]">…</span>
@@ -456,7 +526,37 @@ function Message({ message }: { message: UIMessage }) {
         chatbot the chunk never downloads unless a response contains a code block, so
         we accept the build-time footprint.
       */}
-      <Streamdown className="chat-markdown text-[14px] leading-relaxed">{text}</Streamdown>
+      {text && (
+        <Streamdown className="chat-markdown text-[14px] leading-relaxed">{text}</Streamdown>
+      )}
+      {toolPills.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {toolPills.map(({ id, pill }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={pill.rerun}
+              className="border-rule text-muted hover:border-accent hover:text-accent inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] transition-colors"
+              title="Re-run this action"
+            >
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17 17 7M9 7h8v8" />
+              </svg>
+              {pill.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 ---
+import AnchorLink from './AnchorLink.astro';
 import TechChip from './TechChip.astro';
 import { formatDateRange, slugifyCompany } from '../lib/resume';
 import type { ExperienceEntry } from '../types/resume';
@@ -17,7 +18,7 @@ const slug = slugifyCompany(role.company);
   class="compressed-role group/role border-rule scroll-mt-24 border-t transition-colors first:border-t-0"
 >
   <summary
-    class="hover:[&_.company]:text-accent flex cursor-pointer list-none items-center gap-3 py-3 select-none"
+    class="hover:[&_.company]:text-accent has-anchor-link flex cursor-pointer list-none items-center gap-3 py-3 select-none"
   >
     <svg
       class="text-muted-2 h-3 w-3 shrink-0 transition-transform duration-150 group-open/role:rotate-90"
@@ -42,6 +43,7 @@ const slug = slugifyCompany(role.company);
         {formatDateRange(role.dateRange.from, role.dateRange.to)}
       </span>
     </span>
+    <AnchorLink hash={`role-${slug}`} label={`Permalink to ${role.company}`} />
   </summary>
 
   <div class="pt-1 pb-5 pl-6">

@@ -1,4 +1,5 @@
 ---
+import AnchorLink from './AnchorLink.astro';
 import TechChip from './TechChip.astro';
 import { formatDateRange, slugifyCompany } from '../lib/resume';
 import { slugify } from '../lib/slug';
@@ -17,7 +18,10 @@ const slug = slugifyCompany(role.company);
   data-role-slug={slug}
   class="role border-rule scroll-mt-24 border-t py-7 transition-colors first:border-t-0 first:pt-0"
 >
-  <h3 class="mb-1 text-lg font-semibold tracking-tight">{role.company}</h3>
+  <h3 class="has-anchor-link mb-1 flex items-center gap-2 text-lg font-semibold tracking-tight">
+    {role.company}
+    <AnchorLink hash={`role-${slug}`} label={`Permalink to ${role.company}`} />
+  </h3>
 
   <div class="text-muted mb-3.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[13px]">
     <span class="whitespace-nowrap">{role.title}</span>
@@ -61,12 +65,13 @@ const slug = slugifyCompany(role.company);
     {
       role.projects.map((project, idx) => (
         <details
+          id={project.title ? `project-${slug}-${slugify(project.title)}` : undefined}
           class="project group/project mt-5 scroll-mt-24"
           data-project-index={idx}
           data-project-slug={project.title ? slugify(project.title) : undefined}
           style={`order: ${idx};`}
         >
-          <summary class="hover:[&_.project-title]:text-accent -ml-1 flex cursor-pointer list-none items-center gap-2 select-none">
+          <summary class="hover:[&_.project-title]:text-accent has-anchor-link -ml-1 flex cursor-pointer list-none items-center gap-2 select-none">
             <svg
               class="text-muted-2 h-3 w-3 shrink-0 transition-transform duration-150 group-open/project:rotate-90"
               viewBox="0 0 12 12"
@@ -83,6 +88,12 @@ const slug = slugifyCompany(role.company);
               <h4 class="project-title m-0 text-[15px] font-semibold tracking-tight transition-colors">
                 {project.title}
               </h4>
+            )}
+            {project.title && (
+              <AnchorLink
+                hash={`project-${slug}-${slugify(project.title)}`}
+                label={`Permalink to ${project.title}`}
+              />
             )}
           </summary>
           <div class="border-rule mt-1.5 ml-1.5 border-l pl-4">
