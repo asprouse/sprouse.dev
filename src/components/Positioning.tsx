@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   applyPatch,
   clearPatch,
@@ -60,8 +60,7 @@ export default function Positioning({ options, currentSlug }: Props) {
     dialogRef.current?.close();
   }
 
-  async function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function runSubmit() {
     const value = jd.trim();
     if (value.length < 40) {
       setError('Paste a longer job description (a few sentences at minimum).');
@@ -94,19 +93,6 @@ export default function Positioning({ options, currentSlug }: Props) {
   function onReset() {
     clearPatch();
     closeDialog();
-  }
-
-  function onSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value;
-    if (value === CUSTOM) {
-      openDialog();
-      return;
-    }
-    if (tailored) {
-      clearPatch();
-    }
-    const next = options.find((o) => o.slug === value);
-    if (next) window.location.href = next.path;
   }
 
   return (
@@ -162,7 +148,16 @@ export default function Positioning({ options, currentSlug }: Props) {
       <select
         className="positioning-select"
         value={tailored ? CUSTOM : currentSlug}
-        onChange={onSelectChange}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (value === CUSTOM) {
+            openDialog();
+            return;
+          }
+          if (tailored) clearPatch();
+          const next = options.find((o) => o.slug === value);
+          if (next) window.location.href = next.path;
+        }}
         aria-label="Positioning"
       >
         {options.map((opt) => (
@@ -174,7 +169,13 @@ export default function Positioning({ options, currentSlug }: Props) {
       </select>
 
       <dialog ref={dialogRef} className="positioning-dialog" onClose={() => setSubmitState('idle')}>
-        <form method="dialog" onSubmit={submit}>
+        <form
+          method="dialog"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void runSubmit();
+          }}
+        >
           <div className="positioning-dialog-head">
             <h2>{tailored ? 'Edit your job description' : 'Tailor from a job description'}</h2>
             <p>

@@ -13,7 +13,6 @@ const { hash, label } = Astro.props;
   href={`#${hash}`}
   class="anchor-link text-muted-2 hover:text-accent inline-flex shrink-0 items-center opacity-0 transition-opacity"
   aria-label={label}
-  onclick="event.stopPropagation()"
 >
   <svg
     width="14"
@@ -40,3 +39,18 @@ const { hash, label } = Astro.props;
     opacity: 1;
   }
 </style>
+
+<script>
+  // When an anchor link sits inside a <summary>, a bubbled click would
+  // toggle the parent <details>. Stop the bubble at the anchor itself.
+  // Idempotent — safe to re-run on every astro:page-load.
+  function bindAnchorLinks() {
+    document.querySelectorAll<HTMLAnchorElement>('a.anchor-link').forEach((el) => {
+      if (el.dataset.anchorBound) return;
+      el.dataset.anchorBound = 'true';
+      el.addEventListener('click', (e) => e.stopPropagation());
+    });
+  }
+  bindAnchorLinks();
+  document.addEventListener('astro:page-load', bindAnchorLinks);
+</script>
