@@ -55,6 +55,11 @@ try {
   });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'networkidle' });
+  // Hide Astro's dev toolbar — it's a fixed-position web component at the
+  // bottom-center of the viewport and would otherwise appear in the OG.
+  await page.addStyleTag({
+    content: 'astro-dev-toolbar, astro-dev-overlay { display: none !important; }'
+  });
   // Wait for Inter Variable to finish loading so the screenshot uses it
   // rather than a system fallback font. The callback runs in the page's
   // browser context, not in Node, so `document` is a real global there.
