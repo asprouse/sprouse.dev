@@ -155,6 +155,7 @@ export default function Chat() {
   // - On close: return focus to the toggle button (a11y norm)
   useEffect(() => {
     if (!open) return;
+    const toggle = toggleRef.current;
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -184,7 +185,7 @@ export default function Chat() {
     return () => {
       window.removeEventListener('keydown', onKey);
       window.clearTimeout(t);
-      toggleRef.current?.focus();
+      toggle?.focus();
     };
   }, [open]);
 
