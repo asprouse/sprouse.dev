@@ -15,8 +15,9 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderCv } from './lib/render-cv.mjs';
-import { evaluate } from './lib/evaluator.mjs';
+import { renderCv } from './lib/render-cv.ts';
+import { evaluate, type EvaluationResult } from './lib/evaluator.ts';
+import type { TailorPatch } from '../src/lib/tailor/schema.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +26,7 @@ const jdPath = join(__dirname, 'jds', jdName);
 const TAILOR_URL = process.env.TAILOR_URL || 'http://localhost:4321/api/tailor';
 const N_RUNS = Number(process.env.N_RUNS || 3);
 
-async function postTailor(jd) {
+async function postTailor(jd: string): Promise<TailorPatch> {
   const res = await fetch(TAILOR_URL, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -34,29 +35,27 @@ async function postTailor(jd) {
   if (!res.ok) {
     throw new Error(`Tailor failed: ${res.status} ${await res.text()}`);
   }
-  return res.json();
+  return res.json() as Promise<TailorPatch>;
 }
 
-function avg(scores) {
+function avg(scores: EvaluationResult[]): number {
   return scores.reduce((s, x) => s + x.rating, 0) / scores.length;
 }
 
-function bar(score) {
+function bar(score: number): string {
   const filled = Math.round(score);
   return '█'.repeat(filled) + '░'.repeat(10 - filled);
 }
 
-async function main() {
+async function main(): Promise<void> {
   const jd = await readFile(jdPath, 'utf8');
   console.log(`JD:        ${jdName}`);
   console.log(`Tailor:    ${TAILOR_URL}`);
   console.log(`Runs/side: ${N_RUNS}`);
   console.log('');
 
-  // Step 1: render untailored
   const beforeCv = renderCv();
 
-  // Step 2: fetch tailor patch
   console.log('→ Fetching tailor patch...');
   const patch = await postTailor(jd);
   console.log(
@@ -65,10 +64,8 @@ async function main() {
   console.log(`  tailor rationale: ${patch.rationale}`);
   console.log('');
 
-  // Step 3: render tailored
   const afterCv = renderCv({ patch, variantSlug: patch.variant });
 
-  // Step 4: evaluate
   console.log(`→ Evaluating before (${N_RUNS} runs)...`);
   const beforeScores = await Promise.all(
     Array.from({ length: N_RUNS }, () => evaluate({ jd, cv: beforeCv }))
@@ -97,7 +94,6 @@ async function main() {
   console.log('');
   console.log(`Δ      ${delta >= 0 ? '+' : ''}${delta.toFixed(2)} points`);
 
-  // Step 5: save run artifact
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const outDir = join(__dirname, 'runs');
   await mkdir(outDir, { recursive: true });
@@ -124,7 +120,7 @@ async function main() {
   console.log(`\nSaved: evals/runs/${stamp}-${jdName.replace(/\.md$/, '')}.json`);
 }
 
-main().catch((err) => {
-  console.error('\nEval failed:', err.message);
+main().catch((err: unknown) => {
+  console.error('\nEval failed:', err instanceof Error ? err.message : String(err));
   process.exit(1);
 });

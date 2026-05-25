@@ -14,7 +14,38 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Anthropic from '@anthropic-ai/sdk';
-import { loadApiKey, loadTailorContext } from './lib/context.mjs';
+import { loadApiKey, loadTailorContext } from './lib/context.ts';
+
+interface Question {
+  heading: string;
+  notes: string;
+}
+
+interface Strength {
+  jdRequirement: string;
+  evidence: string;
+}
+
+interface Gap {
+  jdRequirement: string;
+  status: 'adjacent' | 'missing';
+  handledInDrafts: boolean;
+  suggestion: string;
+}
+
+interface Answer {
+  question: string;
+  notes: string;
+  draft: string;
+}
+
+interface ApplicationResult {
+  variant: 'cto' | 'principal' | 'cofounder';
+  variantRationale: string;
+  answers: Answer[];
+  strengths: Strength[];
+  gaps: Gap[];
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -28,25 +59,22 @@ if (!jdArg) {
 const jdPath = jdArg.startsWith('/') ? jdArg : join(root, jdArg);
 const fullJdText = await readFile(jdPath, 'utf8');
 
-// Split out the application questions section if present. Everything before
-// the `## Application questions` heading is the JD itself; what follows is
-// parsed into a list of questions.
 const APP_Q_HEADING = /^##\s+Application questions\s*$/m;
 const splitIdx = fullJdText.search(APP_Q_HEADING);
 const jdBody = (splitIdx === -1 ? fullJdText : fullJdText.slice(0, splitIdx)).trim();
 const questionsBlock = splitIdx === -1 ? '' : fullJdText.slice(splitIdx);
 
-function parseQuestions(block) {
+function parseQuestions(block: string): Question[] {
   if (!block) {
     return [{ heading: 'Cover letter', notes: '~300 words' }];
   }
-  const questions = [];
+  const questions: Question[] = [];
   for (const line of block.split('\n')) {
     const m = line.match(/^###\s+(.+?)\s*$/);
-    if (!m) continue;
+    if (!m?.[1]) continue;
     const heading = m[1].trim();
     const notesMatch = heading.match(/^(.+?)\s*[(]\s*(.+?)\s*[)]\s*$/);
-    if (notesMatch) {
+    if (notesMatch?.[1] && notesMatch[2]) {
       questions.push({ heading: notesMatch[1].trim(), notes: notesMatch[2].trim() });
     } else {
       questions.push({ heading, notes: '' });
@@ -157,7 +185,7 @@ const response = await client.messages.create({
 });
 
 const text = response.content
-  .filter((c) => c.type === 'text')
+  .filter((c): c is Anthropic.TextBlock => c.type === 'text')
   .map((c) => c.text)
   .join('');
 
@@ -167,23 +195,23 @@ if (!match) {
   process.exit(1);
 }
 
-let result;
+let result: ApplicationResult;
 try {
-  result = JSON.parse(match[0]);
+  result = JSON.parse(match[0]) as ApplicationResult;
 } catch (err) {
-  console.error('Failed to parse JSON:', err.message);
+  console.error('Failed to parse JSON:', (err as Error).message);
   console.error('Raw:\n', match[0]);
   process.exit(1);
 }
 
 const jdName = basename(jdPath, '.md');
 
-function fmtStrengths(items) {
+function fmtStrengths(items: Strength[] | undefined): string {
   if (!items || items.length === 0) return '_(none)_';
   return items.map((s) => `- **${s.jdRequirement}** → ${s.evidence}`).join('\n');
 }
 
-function fmtGaps(items) {
+function fmtGaps(items: Gap[] | undefined): string {
   if (!items || items.length === 0) return '_(none)_';
   return items.map((g) => `- **${g.jdRequirement}** *(${g.status})* — ${g.suggestion}`).join('\n');
 }

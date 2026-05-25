@@ -6,14 +6,14 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { compile } from 'json-schema-to-typescript';
+import { compile, type JSONSchema } from 'json-schema-to-typescript';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
 const schemaPath = join(repoRoot, 'schemas/resume.schema.json');
 const outPath = join(repoRoot, 'src/types/resume.ts');
 
-const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
+const schema = JSON.parse(readFileSync(schemaPath, 'utf8')) as JSONSchema;
 
 const banner = `// AUTO-GENERATED — do not edit by hand.
 // Source of truth: schemas/resume.schema.json

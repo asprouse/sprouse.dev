@@ -7,20 +7,27 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'yaml';
+import type { Resume } from '../../src/types/resume.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..', '..');
 
 const CURRENT_ERA_FROM = '2015-01';
 
-function slugifyCompany(name) {
+export interface TailorContext {
+  skillVocabulary: string[];
+  roles: string;
+  background: string;
+}
+
+function slugifyCompany(name: string): string {
   return name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
-function formatRoles(resume) {
+function formatRoles(resume: Resume): string {
   return resume.experience
     .map((role) => {
       const slug = slugifyCompany(role.company);
@@ -43,9 +50,9 @@ function formatRoles(resume) {
     .join('\n\n');
 }
 
-function buildSkillVocabulary(resume) {
-  const seen = new Set();
-  const vocab = [];
+function buildSkillVocabulary(resume: Resume): string[] {
+  const seen = new Set<string>();
+  const vocab: string[] = [];
   for (const role of resume.experience) {
     const isRetro = role.dateRange.from < CURRENT_ERA_FROM;
     for (const project of role.projects) {
@@ -62,16 +69,16 @@ function buildSkillVocabulary(resume) {
   return vocab;
 }
 
-function extractBackground(profileMd) {
+function extractBackground(profileMd: string): string {
   return profileMd.replace(/^---[\s\S]*?---\n+/, '').trim();
 }
 
-export async function loadTailorContext() {
+export async function loadTailorContext(): Promise<TailorContext> {
   const [resumeRaw, profileMd] = await Promise.all([
     readFile(join(root, 'andrew/cv.yml'), 'utf8'),
     readFile(join(root, 'andrew/profile.md'), 'utf8')
   ]);
-  const resume = yaml.parse(resumeRaw);
+  const resume = yaml.parse(resumeRaw) as Resume;
   return {
     skillVocabulary: buildSkillVocabulary(resume),
     roles: formatRoles(resume),
@@ -79,12 +86,12 @@ export async function loadTailorContext() {
   };
 }
 
-export async function loadApiKey() {
+export async function loadApiKey(): Promise<string> {
   if (process.env.ANTHROPIC_API_KEY) return process.env.ANTHROPIC_API_KEY;
   try {
     const vars = await readFile(join(root, '.dev.vars'), 'utf8');
     const m = vars.match(/^ANTHROPIC_API_KEY\s*=\s*(.+)$/m);
-    if (m) return m[1].replace(/^["']|["']$/g, '').trim();
+    if (m?.[1]) return m[1].replace(/^["']|["']$/g, '').trim();
   } catch {
     // fall through
   }

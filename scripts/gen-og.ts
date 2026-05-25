@@ -6,7 +6,7 @@
 // Usage:
 //   npm run gen:og              # boots its own dev server
 //   OG_URL=http://localhost:4321/og npm run gen:og   # reuses a running dev
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,7 +20,7 @@ const DEFAULT_PORT = 4322;
 const url = process.env.OG_URL || `http://localhost:${DEFAULT_PORT}/og`;
 const useExisting = !!process.env.OG_URL;
 
-async function waitForServer(targetUrl, timeoutMs = 60_000) {
+async function waitForServer(targetUrl: string, timeoutMs = 60_000): Promise<void> {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -34,15 +34,14 @@ async function waitForServer(targetUrl, timeoutMs = 60_000) {
   throw new Error(`Server at ${targetUrl} did not respond within ${timeoutMs}ms`);
 }
 
-let server;
+let server: ChildProcess | undefined;
 if (!useExisting) {
   console.log('→ Booting astro dev on port', DEFAULT_PORT);
   server = spawn('npx', ['astro', 'dev', '--port', String(DEFAULT_PORT)], {
     cwd: root,
     stdio: ['ignore', 'pipe', 'inherit']
   });
-  // Drain stdout to prevent the child from blocking on a full pipe buffer.
-  server.stdout.on('data', () => {});
+  server.stdout?.on('data', () => {});
   await waitForServer(url);
 }
 
@@ -67,7 +66,6 @@ try {
   // Wait for Inter Variable to finish loading so the screenshot uses it
   // rather than a system fallback font. The callback runs in the page's
   // browser context, not in Node, so `document` is a real global there.
-  // eslint-disable-next-line no-undef
   await page.evaluate(() => document.fonts.ready);
   const buffer = await page.screenshot({
     clip: { x: 0, y: 0, width: 1200, height: 630 }

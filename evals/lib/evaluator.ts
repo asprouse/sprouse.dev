@@ -8,12 +8,12 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-async function getApiKey() {
+async function getApiKey(): Promise<string> {
   if (process.env.ANTHROPIC_API_KEY) return process.env.ANTHROPIC_API_KEY;
   try {
     const vars = await readFile(join(__dirname, '../../.dev.vars'), 'utf8');
     const m = vars.match(/^ANTHROPIC_API_KEY\s*=\s*(.+)$/m);
-    if (m) return m[1].replace(/^["']|["']$/g, '').trim();
+    if (m?.[1]) return m[1].replace(/^["']|["']$/g, '').trim();
   } catch {
     // fall through
   }
@@ -41,7 +41,22 @@ Consider:
 Output strictly valid JSON, no other text, no markdown fences:
 { "rating": <integer 1-10>, "rationale": "<2-3 sentence rationale>" }`;
 
-export async function evaluate({ jd, cv, model = 'claude-sonnet-4-5' }) {
+export interface EvaluateInput {
+  jd: string;
+  cv: string;
+  model?: string;
+}
+
+export interface EvaluationResult {
+  rating: number;
+  rationale: string;
+}
+
+export async function evaluate({
+  jd,
+  cv,
+  model = 'claude-sonnet-4-5'
+}: EvaluateInput): Promise<EvaluationResult> {
   const response = await client.messages.create({
     model,
     max_tokens: 500,
@@ -55,15 +70,15 @@ export async function evaluate({ jd, cv, model = 'claude-sonnet-4-5' }) {
   });
 
   const text = response.content
-    .filter((c) => c.type === 'text')
+    .filter((c): c is Anthropic.TextBlock => c.type === 'text')
     .map((c) => c.text)
     .join('');
 
   const match = text.match(/\{[\s\S]*\}/);
   if (!match) throw new Error(`No JSON in evaluator response: ${text}`);
-  const parsed = JSON.parse(match[0]);
+  const parsed = JSON.parse(match[0]) as Partial<EvaluationResult>;
   if (typeof parsed.rating !== 'number' || typeof parsed.rationale !== 'string') {
     throw new Error(`Malformed evaluator response: ${JSON.stringify(parsed)}`);
   }
-  return parsed;
+  return { rating: parsed.rating, rationale: parsed.rationale };
 }

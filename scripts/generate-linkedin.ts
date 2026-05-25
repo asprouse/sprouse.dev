@@ -5,7 +5,7 @@
 // destination; rely on git for diffs and recovery.
 //
 // Usage:
-//   node scripts/generate-linkedin.mjs [variant]
+//   node scripts/generate-linkedin.ts [variant]
 //     variant: cto (default) | principal | cofounder
 //
 // Reads ANTHROPIC_API_KEY from the environment, or from .dev.vars if present.
@@ -15,6 +15,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import yaml from 'yaml';
+import type { Resume } from '../src/types/resume.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
@@ -27,7 +28,8 @@ if (!process.env.ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const variantSlug = process.argv[2] || 'cto';
+type VariantSlug = 'cto' | 'principal' | 'cofounder';
+const variantSlug = (process.argv[2] || 'cto') as VariantSlug;
 if (!['cto', 'principal', 'cofounder'].includes(variantSlug)) {
   console.error(`Unknown variant: ${variantSlug}. Use cto, principal, or cofounder.`);
   process.exit(1);
@@ -36,16 +38,13 @@ if (!['cto', 'principal', 'cofounder'].includes(variantSlug)) {
 const resumePath = join(repoRoot, 'andrew/cv.yml');
 const destPath = join(repoRoot, 'linkedin.md');
 
-const resume = yaml.parse(readFileSync(resumePath, 'utf8'));
+const resume = yaml.parse(readFileSync(resumePath, 'utf8')) as Resume;
 const variantData = resume.variants[variantSlug];
 const existing = existsSync(destPath) ? readFileSync(destPath, 'utf8').trim() : '';
 
-// Keep the same current-era cutoff used by the resume site (2015-01).
 const CURRENT_ERA_FROM = '2015-01';
 const currentEra = resume.experience.filter((r) => r.dateRange.from >= CURRENT_ERA_FROM);
 
-// Strip the full project tech arrays — LinkedIn copy shouldn't enumerate the
-// stack, and trimming keeps the prompt focused.
 const rolesPayload = currentEra.map((r) => ({
   company: r.company,
   title: r.title,
@@ -123,8 +122,8 @@ const response = await client.messages.create({
 });
 
 const block = response.content[0];
-if (block.type !== 'text') {
-  console.error('Expected a text block in the response, got:', block.type);
+if (!block || block.type !== 'text') {
+  console.error('Expected a text block in the response, got:', block?.type);
   process.exit(1);
 }
 

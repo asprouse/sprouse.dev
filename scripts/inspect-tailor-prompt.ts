@@ -14,7 +14,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadTailorContext } from './lib/context.mjs';
+import { loadTailorContext } from './lib/context.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -26,6 +26,10 @@ if (!match) {
   process.exit(1);
 }
 const template = match[1];
+if (!template) {
+  console.error('INSTRUCTIONS template body was empty');
+  process.exit(1);
+}
 
 const ctx = await loadTailorContext();
 const composed = template

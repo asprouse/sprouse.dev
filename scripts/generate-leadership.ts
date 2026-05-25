@@ -58,8 +58,8 @@ const response = await client.messages.create({
 });
 
 const block = response.content[0];
-if (block.type !== 'text') {
-  console.error('Expected a text block in the response, got:', block.type);
+if (!block || block.type !== 'text') {
+  console.error('Expected a text block in the response, got:', block?.type);
   process.exit(1);
 }
 

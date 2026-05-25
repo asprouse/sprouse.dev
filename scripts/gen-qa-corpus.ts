@@ -14,25 +14,27 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import type { QAEntry } from '../src/lib/qa-corpus.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const qaDir = join(root, 'andrew/qa');
 const outPath = join(root, 'src/lib/qa-corpus.generated.ts');
 
-// Parser is duplicated from src/lib/qa-corpus.ts on purpose — that file is
-// TS and used at runtime; running it through `tsx` here would add a
-// dev dep. The logic is small enough that a parallel JS copy is cheaper
-// than the indirection. Keep the two in sync; the runtime types live there.
+// Parser is duplicated from src/lib/qa-corpus.ts on purpose. The runtime
+// version is imported by Vite into the Cloudflare worker bundle; running
+// the same module here would pull in Vite-y types/exports we don't need.
+// The logic is small enough that a parallel copy is cheaper than the
+// indirection. Keep the two in sync.
 const FRONTMATTER_RE = /^---\r?\n([\s\S]+?)\r?\n---\r?\n/;
 const METADATA_RE = /<!--\s*id:\s*([\w-]+)\s*\|\s*tags:\s*\[([^\]]*)\]\s*-->/g;
 
-function extractField(frontmatter, key) {
+function extractField(frontmatter: string, key: string): string {
   const m = frontmatter.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'));
   return m?.[1]?.trim() ?? '';
 }
 
-function parseFile(content) {
+function parseFile(content: string): QAEntry[] {
   const fmMatch = content.match(FRONTMATTER_RE);
   if (!fmMatch?.[1]) return [];
   const fm = fmMatch[1];
@@ -42,7 +44,7 @@ function parseFile(content) {
 
   const body = content.slice(fmMatch[0].length);
   const matches = [...body.matchAll(METADATA_RE)];
-  const entries = [];
+  const entries: QAEntry[] = [];
 
   for (let i = 0; i < matches.length; i++) {
     const m = matches[i];
@@ -77,7 +79,7 @@ function parseFile(content) {
 
 const files = (await readdir(qaDir)).filter((f) => f.endsWith('.md')).sort();
 
-const corpus = [];
+const corpus: QAEntry[] = [];
 for (const file of files) {
   const content = await readFile(join(qaDir, file), 'utf8');
   corpus.push(...parseFile(content));
@@ -88,7 +90,7 @@ const banner = `// AUTO-GENERATED — do not edit by hand.
 // Regenerate with: npm run gen:qa-corpus
 //
 // Pre-parsed at build time so the worker doesn't pay markdown-parse cost
-// on every cold start. See scripts/gen-qa-corpus.mjs for the generator.
+// on every cold start. See scripts/gen-qa-corpus.ts for the generator.
 
 import type { QAEntry } from './qa-corpus';
 

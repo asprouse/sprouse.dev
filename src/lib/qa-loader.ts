@@ -1,7 +1,7 @@
 import type { QAEntry } from './qa-corpus';
 import { generatedCorpus } from './qa-corpus.generated';
 
-// Corpus is pre-parsed at build time by scripts/gen-qa-corpus.mjs so the
+// Corpus is pre-parsed at build time by scripts/gen-qa-corpus.ts so the
 // worker doesn't have to run regex-based markdown parsing on every cold
 // start. The .generated file is gitignored; predev / prebuild / pretypecheck
 // regen it from andrew/qa/*.md.

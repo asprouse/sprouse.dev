@@ -15,8 +15,8 @@ const repoRoot = join(__dirname, '..');
 const schemaPath = join(repoRoot, 'schemas/resume.schema.json');
 const dataPath = join(repoRoot, 'andrew/cv.yml');
 
-const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
-const data = yaml.parse(readFileSync(dataPath, 'utf8'));
+const schema = JSON.parse(readFileSync(schemaPath, 'utf8')) as object;
+const data: unknown = yaml.parse(readFileSync(dataPath, 'utf8'));
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 addFormats.default(ajv);

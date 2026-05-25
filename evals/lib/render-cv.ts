@@ -1,4 +1,4 @@
-// Pure-JS CV renderer: takes resume.json + an optional TailorPatch and
+// Pure-TS CV renderer: takes resume.json + an optional TailorPatch and
 // produces a plain-text rendering equivalent to what a hiring manager would
 // see on the print sheet. Used by the eval harness to feed before/after
 // versions of the CV to the evaluator.
@@ -10,16 +10,18 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'yaml';
+import type { Resume, TechEntry } from '../../src/types/resume.ts';
+import type { TailorPatch } from '../../src/lib/tailor/schema.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const resumePath = join(__dirname, '../../andrew/cv.yml');
-export const resume = yaml.parse(await readFile(resumePath, 'utf8'));
+export const resume = yaml.parse(await readFile(resumePath, 'utf8')) as Resume;
 
 const CURRENT_ERA_FROM = '2015-01';
 
-// Pulled from andrew/cv.yml so eval renders use the same lens content as the
-// production page; no hardcoded duplicates.
-const VARIANTS = {
+type VariantSlug = 'cto' | 'principal' | 'cofounder';
+
+const VARIANTS: Record<VariantSlug, { tagline: string; openTo: string }> = {
   cto: { tagline: resume.variants.cto.tagline, openTo: resume.variants.cto.openTo },
   principal: {
     tagline: resume.variants.principal.tagline,
@@ -31,33 +33,33 @@ const VARIANTS = {
   }
 };
 
-function slugifyCompany(name) {
+function slugifyCompany(name: string): string {
   return name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
-function stripHtml(s) {
+function stripHtml(s: string): string {
   return s
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
-function formatYearMonth(ym) {
+function formatYearMonth(ym: string): string {
   const [year, month] = ym.split('-');
-  if (!month) return year;
+  if (!month) return year ?? ym;
   const date = new Date(Number(year), Number(month) - 1);
   return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
 }
 
-function formatDateRange(from, to) {
+function formatDateRange(from: string, to: string | null): string {
   return `${formatYearMonth(from)} – ${to ? formatYearMonth(to) : 'Present'}`;
 }
 
-function deriveSkillsByCategory() {
-  const usage = new Map();
+function deriveSkillsByCategory(): Record<string, string[]> {
+  const usage = new Map<string, TechEntry>();
   for (const role of resume.experience) {
     const isRetro = role.dateRange.from < CURRENT_ERA_FROM;
     for (const project of role.projects) {
@@ -69,16 +71,21 @@ function deriveSkillsByCategory() {
       }
     }
   }
-  const byCategory = {};
+  const byCategory: Record<string, string[]> = {};
   for (const [, tech] of usage) {
     if (!byCategory[tech.category]) byCategory[tech.category] = [];
-    byCategory[tech.category].push(tech.name);
+    byCategory[tech.category]!.push(tech.name);
   }
   return byCategory;
 }
 
-export function renderCv({ patch = null, variantSlug } = {}) {
-  const lensSlug = variantSlug || patch?.variant || 'cto';
+export interface RenderCvOptions {
+  patch?: TailorPatch | null;
+  variantSlug?: VariantSlug;
+}
+
+export function renderCv({ patch = null, variantSlug }: RenderCvOptions = {}): string {
+  const lensSlug: VariantSlug = variantSlug || patch?.variant || 'cto';
   const variant = VARIANTS[lensSlug];
   const { person, experience } = resume;
   const fullName = `${person.first} ${person.last}`;
@@ -87,10 +94,10 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     (patch?.emphasizedSkills || []).map((s) => s.toLowerCase().trim())
   );
 
-  const roleOverrides = new Map();
+  const roleOverrides = new Map<string, TailorPatch['roles'][number]>();
   for (const r of patch?.roles || []) roleOverrides.set(r.companySlug, r);
 
-  const lines = [];
+  const lines: string[] = [];
   lines.push(fullName);
   lines.push(`Lens: ${lensSlug}`);
   lines.push(variant.tagline);
@@ -117,9 +124,9 @@ export function renderCv({ patch = null, variantSlug } = {}) {
 
     if (role.impactBullets && role.impactBullets.length > 0) {
       const bExplicit = (override?.impactBulletIndices || []).filter(
-        (i) => i >= 0 && i < role.impactBullets.length
+        (i) => i >= 0 && i < role.impactBullets!.length
       );
-      const bRemaining = [];
+      const bRemaining: number[] = [];
       for (let i = 0; i < role.impactBullets.length; i++) {
         if (!bExplicit.includes(i)) bRemaining.push(i);
       }
@@ -127,13 +134,11 @@ export function renderCv({ patch = null, variantSlug } = {}) {
       lines.push('');
       lines.push('Impact:');
       for (const idx of bOrder) {
-        lines.push(`  • ${stripHtml(role.impactBullets[idx])}`);
+        const bullet = role.impactBullets[idx];
+        if (bullet) lines.push(`  • ${stripHtml(bullet)}`);
       }
     }
     lines.push('');
-
-    // Projects are not rendered on the print sheet — bullets carry the
-    // story; project-level detail lives on /cv. Eval renderer mirrors print.
   }
 
   if (retrospective.length > 0) {
@@ -158,8 +163,9 @@ export function renderCv({ patch = null, variantSlug } = {}) {
     'concept'
   ];
   for (const cat of order) {
-    if (!skills[cat]) continue;
-    const items = skills[cat]
+    const list = skills[cat];
+    if (!list) continue;
+    const items = list
       .map((name) => (emphasizedLower.has(name.toLowerCase().trim()) ? `**${name}**` : name))
       .join(', ');
     lines.push(`${cat.charAt(0).toUpperCase() + cat.slice(1)}: ${items}`);
