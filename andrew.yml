@@ -12,6 +12,7 @@ person:
     website: https://sprouse.dev
     linkedin: https://www.linkedin.com/in/andrewsprouse-941b611a
     github: https://github.com/asprouse
+tagline: Twenty years building production software. Currently CTO. Open to what's next.
 summary: 'Engineering leader and co-founder with two decades of experience shipping production
   software across media, agency, and SaaS. Builder at heart — most comfortable as a player-coach who
   designs systems, writes the hard code, and grows the team that takes it the rest of the way.
@@ -1313,7 +1314,7 @@ technologies:
 variants:
   cto:
     label: CTO
-    tagline: Twenty years shipping production software. Currently CTO. Looking next.
+    tagline: Twenty years building production software. Currently CTO. Open to what's next.
     openTo: Open to CTO at AI-native companies building primary AI products — applied AI, agent
       platforms, model-adjacent infrastructure.
     metaTitle: Andrew Sprouse — CTO, builder of AI agent infrastructure

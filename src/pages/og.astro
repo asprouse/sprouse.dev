@@ -1,21 +1,15 @@
 ---
 // Standalone OG card layout — captured at 1200x630 to produce public/og.png.
-// Run `npm run gen:og` after editing andrew.yml to refresh the PNG; the
-// content here is data-driven so the page always reflects the current YAML.
+// Run `npm run gen:og` after editing andrew.yml to refresh the PNG. Content
+// matches the homepage's name + tagline so the social card and the landing
+// page give the same first impression.
 import '../styles/global.css';
 import { resume } from '../lib/resume';
-import { VARIANTS } from '../lib/variants';
 
 export const prerender = true;
 
-const { person, experience } = resume;
+const { person, tagline } = resume;
 const fullName = `${person.first} ${person.last}`;
-const currentRole = experience.find((r) => r.dateRange.to === null);
-const roleLine = currentRole
-  ? `${currentRole.title} · ${currentRole.company} · ${person.location.city}, ${person.location.state}`
-  : `${person.location.city}, ${person.location.state}`;
-// The CTO variant's openTo is the canonical "what I'm open to" line.
-const openTo = VARIANTS.cto.openTo;
 ---
 
 <!doctype html>
@@ -75,29 +69,17 @@ const openTo = VARIANTS.cto.openTo;
         font-weight: 700;
         letter-spacing: -0.035em;
         line-height: 1.02;
-        margin: 0 0 18px;
-      }
-
-      .role {
-        font-size: 30px;
-        color: #57534e;
-        margin: 0 0 36px;
-      }
-
-      .rule {
-        width: 110px;
-        height: 5px;
-        background: var(--color-brand);
-        border-radius: 2px;
         margin: 0 0 28px;
       }
 
-      .summary {
-        font-size: 26px;
+      .tagline {
+        font-size: 36px;
         color: #0c0a09;
-        line-height: 1.4;
+        line-height: 1.25;
+        font-weight: 500;
+        letter-spacing: -0.01em;
         margin: 0;
-        max-width: 38ch;
+        max-width: 22ch;
       }
     </style>
   </head>
@@ -111,9 +93,7 @@ const openTo = VARIANTS.cto.openTo;
       </div>
       <div class="text">
         <h1>{fullName}</h1>
-        <p class="role">{roleLine}</p>
-        <div class="rule"></div>
-        <p class="summary">{openTo}</p>
+        <p class="tagline">{tagline}</p>
       </div>
     </div>
   </body>

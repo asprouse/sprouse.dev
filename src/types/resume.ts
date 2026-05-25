@@ -20,6 +20,10 @@ export type TechCategory =
 export interface Resume {
   $schema?: string;
   person: Person;
+  /**
+   * Canonical one-line elevator pitch shown on the homepage and OG image. Variant-specific taglines (variants[X].tagline) override per CV lens.
+   */
+  tagline: string;
   summary: string;
   experience: ExperienceEntry[];
   education: EducationEntry[];

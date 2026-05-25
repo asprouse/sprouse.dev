@@ -7,6 +7,7 @@
   "additionalProperties": false,
   "required": [
     "person",
+    "tagline",
     "summary",
     "experience",
     "education",
@@ -17,6 +18,11 @@
   "properties": {
     "$schema": { "type": "string" },
     "person": { "$ref": "#/$defs/Person" },
+    "tagline": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical one-line elevator pitch shown on the homepage and OG image. Variant-specific taglines (variants[X].tagline) override per CV lens."
+    },
     "summary": { "type": "string", "minLength": 1 },
     "experience": {
       "type": "array",
