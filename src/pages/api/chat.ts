@@ -108,7 +108,7 @@ export const POST: APIRoute = async ({ request }) => {
     model: anthropic('claude-sonnet-4-6'),
     system,
     messages: await convertToModelMessages(messages),
-    maxOutputTokens: 800,
+    maxOutputTokens: 200,
     temperature: 0.7,
     tools: {
       scroll_to_role: tool({
