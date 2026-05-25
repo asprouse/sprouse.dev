@@ -58,7 +58,12 @@ I grew up in...
 
 ## From markdown to runtime
 
-The markdown files are loaded at build time via Vite's `import.meta.glob('andrew/qa/*.md', { query: '?raw', eager: true })` and parsed in-memory by `src/lib/qa-corpus.ts` into a typed `QAEntry[]`. No intermediate JSON artifact — the parsed corpus lives in the bundle directly. This keeps authoring ergonomic (markdown is what I edit) without the friction of a separate build/serialize step.
+Two-step:
+
+1. **Build time** — Vite's `import.meta.glob('andrew/qa/*.md', { query: '?raw', eager: true })` reads every matching markdown file and inlines its contents as string literals into the worker bundle. There's no intermediate JSON artifact and no disk I/O on the worker; the markdown text travels with the deployed code.
+2. **Cold start** — the first time a worker instance boots, `src/lib/qa-corpus.ts` parses those baked-in strings into a typed `QAEntry[]`. The parsed corpus sits in module-scope memory and serves every subsequent request without re-parsing.
+
+For ~150 documents, the cold-start parse is fast enough that pre-emitting a JSON file would be premature optimization. If the corpus grows past ~1000 or parse cost shows up in p50 latency, that's the time to swap in a build-time JSON emitter.
 
 Unanswered questions are silently skipped during parsing, so the corpus grows incrementally — no stub answers in production.
 
