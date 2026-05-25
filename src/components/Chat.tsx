@@ -378,6 +378,7 @@ export default function Chat() {
             onChange={(e) => setInput(e.target.value)}
             disabled={isBusy}
             suppressHydrationWarning
+            aria-label="Ask Andrew a question"
             className="bg-surface text-ink border-rule focus:border-accent flex-1 rounded-lg border px-3 py-2 text-[14px] transition-colors outline-none disabled:opacity-50"
           />
           {isBusy ? (

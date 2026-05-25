@@ -190,6 +190,7 @@ export default function Positioning({ options, currentSlug }: Props) {
             rows={10}
             disabled={submitState === 'loading'}
             autoFocus
+            aria-label="Job description"
           />
           {error && <p className="positioning-dialog-error">{error}</p>}
           <div className="positioning-dialog-actions">
