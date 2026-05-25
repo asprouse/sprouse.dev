@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import portraitImg from '../assets/portrait.jpg';
+import originalPhotoImg from '../assets/original-photo.jpeg';
 import promptText from '../../illustration/prompt.txt?raw';
 ---
 
@@ -9,11 +12,12 @@ import promptText from '../../illustration/prompt.txt?raw';
     aria-label="Show the source photo and AI prompt used to create this illustration"
     aria-expanded="false"
   >
-    <img
-      src="/illustration/portrait.jpg"
+    <Image
+      src={portraitImg}
       alt="Pencil-and-watercolor illustration of Andrew Sprouse generated from a photograph."
-      width="180"
-      height="240"
+      width={180}
+      height={240}
+      loading="eager"
       class="bg-surface block h-auto w-full rounded-lg shadow-sm transition-all duration-200 ease-out group-focus-within:-translate-y-0.5 group-focus-within:shadow-lg group-hover:-translate-y-0.5 group-hover:shadow-lg"
     />
     <span
@@ -31,11 +35,11 @@ import promptText from '../../illustration/prompt.txt?raw';
   >
     <div class="grid grid-cols-[120px_1fr] gap-4 max-md:grid-cols-[100px_1fr] max-md:gap-3">
       <figure class="m-0">
-        <img
-          src="/illustration/original.jpeg"
+        <Image
+          src={originalPhotoImg}
           alt="Original photograph of Andrew Sprouse, used as input to the illustration prompt."
-          width="160"
-          height="213"
+          width={160}
+          height={213}
           loading="lazy"
           class="block h-auto w-full rounded-md"
         />

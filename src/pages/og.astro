@@ -4,6 +4,8 @@
 // matches the homepage's name + tagline so the social card and the landing
 // page give the same first impression.
 import '../styles/global.css';
+import { Image } from 'astro:assets';
+import portraitImg from '../assets/portrait.jpg';
 import { resume } from '../lib/resume';
 
 export const prerender = true;
@@ -86,9 +88,11 @@ const fullName = `${person.first} ${person.last}`;
   <body>
     <div class="card">
       <div class="portrait">
-        <img
-          src="/illustration/portrait.jpg"
+        <Image
+          src={portraitImg}
           alt="Pencil-and-watercolor illustration of Andrew Sprouse."
+          width={300}
+          height={400}
         />
       </div>
       <div class="text">
