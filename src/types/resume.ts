@@ -121,13 +121,6 @@ export interface VariantEntry {
    */
   tagline: string;
   /**
-   * Three scannable proof points (~10 words each).
-   *
-   * @minItems 3
-   * @maxItems 3
-   */
-  proofBullets: [string, string, string];
-  /**
    * What kind of next role Andrew is open to under this lens.
    */
   openTo: string;

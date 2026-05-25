@@ -1314,10 +1314,6 @@ variants:
   cto:
     label: CTO
     tagline: Twenty years shipping production software. Currently CTO. Looking next.
-    proofBullets:
-      - Designed TakeShape's schema language and AI agent runtime
-      - Shipped production agents to enterprise customers including Valvoline
-      - 'Led TakeShape through two pivots: CMS → API mesh → agent platform'
     openTo: Open to CTO at AI-native companies building primary AI products — applied AI, agent
       platforms, model-adjacent infrastructure.
     metaTitle: Andrew Sprouse — CTO, builder of AI agent infrastructure
@@ -1326,28 +1322,21 @@ variants:
       AI-native company.
   principal:
     label: Principal Engineer
-    tagline: Twenty years designing primary primitives. IC-first, schema-shaped.
-    proofBullets:
-      - Built a JSON Schema-derived agent runtime end-to-end at TakeShape
-      - Shipped an HTTP-402 paywall in 2015, nine years before x402
-      - 'Open-source: Mozilla Nunjucks (12k★), Serverless Framework webpack plugin'
-    openTo: Open to Principal / Staff Engineer roles at companies whose product is itself a primary
-      primitive — LLM, runtime, commerce, payments.
-    metaTitle: Andrew Sprouse — Principal Engineer, twenty years of primary primitives
-    metaDescription:
-      Designed and shipped systems for two decades — from Fair Tread's HTTP-402 paywall
-      (nine years before x402) to TakeShape's agent runtime. Looking for Principal Engineer work at
-      a company whose product is itself a primary primitive.
+    tagline: Twenty years shipping production software. IC-first, schema-shaped.
+    openTo: >-
+      Open to Principal / Staff Engineer roles at companies whose product is foundational
+      technology — model labs, runtimes, commerce backbones, payment rails.
+    metaTitle: Andrew Sprouse — Principal Engineer, twenty years of shipping production software
+    metaDescription: >-
+      Designed and shipped production systems for two decades — from Fair Tread's HTTP-402
+      paywall (nine years before x402) to TakeShape's schema language and agent runtime. Looking
+      for Principal Engineer work at a company whose product is foundational technology.
   cofounder:
     label: Co-founder
     tagline: Two co-founder gigs in. Going application-first next time.
-    proofBullets:
-      - TakeShape + Fair Tread — two co-founder gigs through Techstars
-      - Raised a seed round, navigated three product pivots in seven years
-      - 'Application-first thesis: ship the product, let the platform fall out'
     openTo: Open to technical co-founder roles, application-first — pick a real user problem AI now
       makes solvable, ship it, and let the dev-tools fall out of the work.
     metaTitle: Andrew Sprouse — Technical co-founder, application-first
-    metaDescription: Two prior co-founder gigs through Techstars, a seed round, and three product
+    metaDescription: Two prior co-founder gigs through Techstars, a seed round, and multiple product
       pivots. Looking to do it again, application-first, with a non-technical co-founder who handles
       the business side.

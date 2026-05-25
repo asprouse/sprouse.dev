@@ -53,22 +53,8 @@ const retrospective = experience.filter((r) => r.dateRange.from < CURRENT_ERA_FR
           <SocialChip network="linkedin" href={person.links.linkedin} />
         </div>
 
-        <ul class="mt-7 max-w-[62ch] list-none space-y-2 p-0">
-          {
-            variant.proofBullets.map((bullet) => (
-              <li class="text-ink flex items-start gap-2.5 text-[15px] leading-[1.45]">
-                <span
-                  class="bg-accent mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full"
-                  aria-hidden="true"
-                />
-                <span>{bullet}</span>
-              </li>
-            ))
-          }
-        </ul>
-
         <div
-          class="border-rule bg-surface mt-6 max-w-[62ch] rounded-lg border p-3.5 text-[14px] leading-relaxed"
+          class="border-rule bg-surface mt-7 max-w-[62ch] rounded-lg border p-3.5 text-[14px] leading-relaxed"
         >
           <span class="text-ink font-medium">{variant.openTo}</span>
         </div>

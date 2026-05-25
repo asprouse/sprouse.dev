@@ -1,7 +1,7 @@
 // Positioning variants ("lenses"). The hand-written content (tagline, openTo,
-// proofBullets, metaTitle, metaDescription) lives in andrew.yml under
-// `variants:` — see VariantEntry in the schema. This file derives the runtime
-// shape (slug + URL path + label) and exposes it as VARIANTS for components.
+// metaTitle, metaDescription) lives in andrew.yml under `variants:` — see
+// VariantEntry in the schema. This file derives the runtime shape
+// (slug + URL path + label) and exposes it as VARIANTS for components.
 import { resume } from './resume';
 import type { VariantEntry } from '../types/resume';
 

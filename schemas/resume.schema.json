@@ -194,7 +194,7 @@
     "VariantEntry": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["label", "tagline", "proofBullets", "openTo", "metaTitle", "metaDescription"],
+      "required": ["label", "tagline", "openTo", "metaTitle", "metaDescription"],
       "properties": {
         "label": {
           "type": "string",
@@ -205,13 +205,6 @@
           "type": "string",
           "minLength": 1,
           "description": "One-line elevator pitch shown under the H1."
-        },
-        "proofBullets": {
-          "type": "array",
-          "description": "Three scannable proof points (~10 words each).",
-          "minItems": 3,
-          "maxItems": 3,
-          "items": { "type": "string", "minLength": 1 }
         },
         "openTo": {
           "type": "string",
