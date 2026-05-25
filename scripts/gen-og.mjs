@@ -49,9 +49,13 @@ if (!useExisting) {
 try {
   console.log('→ Loading', url);
   const browser = await chromium.launch();
+  // 1× capture (deviceScaleFactor: 1) keeps the PNG at 1200×630 pixels — the
+  // size every major OG consumer (LinkedIn, Twitter, FB, Slack) downsamples
+  // to anyway. Going 2× quadruples the file size for no visible gain in
+  // feeds.
   const ctx = await browser.newContext({
     viewport: { width: 1200, height: 630 },
-    deviceScaleFactor: 2
+    deviceScaleFactor: 1
   });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'networkidle' });
