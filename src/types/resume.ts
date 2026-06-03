@@ -68,13 +68,17 @@ export interface ExperienceEntry {
    * Outcome-led summary of the role — what was driven and what it produced. 3–6 items, third-person resume tone, each lead with an action verb (Drove, Designed, Shipped, Led).
    *
    * @minItems 3
-   * @maxItems 6
+   * @maxItems 10
    */
   impactBullets?:
     | [string, string, string]
     | [string, string, string, string]
     | [string, string, string, string, string]
-    | [string, string, string, string, string, string];
+    | [string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string]
+    | [string, string, string, string, string, string, string, string, string, string];
   projects: Project[];
 }
 export interface DateRange {

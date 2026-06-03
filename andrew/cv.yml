@@ -28,32 +28,43 @@ experience:
       from: 2018-10
       to: null
     description: >-
-      Co-founder and CTO since 2018; three product generations under one thesis — customers need
-      their own data (CMS), other services' data (GraphQL mesh), and AI agents that use both, all
-      unified behind a single schema.
+      Co-founder and CTO since 2018; 10 years building a developer-focused data platform. Three
+      product generations under one thesis — customers' own data (CMS), other services' data
+      (GraphQL mesh), and AI agents that use both, all unified behind a single schema. Scaled from
+      0 to 1 through Techstars 2019, a $2M seed, and into production with 100+ enterprise clients
+      and $1M+ ARR.
     impactBullets:
       - >-
+        Co-founded the company; drove the technical narrative through Techstars 2019 and a 2020
+        seed raise ($2M), then operated as player-coach to grow the platform to 100+ enterprise
+        clients and $1M+ ARR.
+      - >-
         Drove the design of a JSON Schema-derived DSL that defines a customer's data model, REST
-        and GraphQL APIs, and AI agents in a single artifact — the throughline that carried
-        customers through two product pivots without forcing schema rewrites between generations.
+        and GraphQL APIs, and AI agents in a single artifact — the load-bearing primitive under
+        three product generations: CMS, GraphQL mesh, and AI agents.
       - >-
         Architected the agent runtime end-to-end (sessions, threads, conversation history, hosted
         GraphQL/REST endpoints with multi-provider routing across Anthropic, OpenAI, Google AI,
         AWS Bedrock, and Azure OpenAI) — running production agents today.
       - >-
-        Shipped production agents to enterprise customers including Valvoline, combining product,
-        inventory, and vehicle data into single grounded reasoning steps.
-      - >-
-        Led the 2019 pivot to a GraphQL API mesh that unified third-party REST and GraphQL services
-        with customer data into one queryable, indexed graph — the primitive that made the agent
-        platform possible.
+        Designed and shipped the 2019 GraphQL API mesh that unified third-party REST and GraphQL
+        services with customer data into one queryable, indexed graph — the data layer the agent
+        platform was built on.
       - >-
         Wrote and open-sourced the first Serverless Framework webpack plugin to make
         TypeScript-everywhere on AWS Lambda practical — adopted broadly enough that the Serverless
         Framework co-creator landed as the second-largest contributor.
       - >-
-        Took the company through Techstars 2019 and a 2020 seed raise; operates as a player-coach
-        across IC, architecture, hiring, and product direction.
+        Led the engineering team's migration to AI-assisted development by integrating Claude into
+        the developer toolkit, shifting workflow toward agent orchestration and 2–5x feature
+        velocity.
+      - >-
+        Established a data-driven engineering culture using a "5 Whys" root-cause analysis
+        framework, resolving architectural disagreements with data rather than opinion.
+      - >-
+        Mentored individual contributors with progressively complex business-critical projects,
+        building team cohesion through the transition to remote work.
+
     projects:
       - title: TakeShape schema language
         description:
