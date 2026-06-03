@@ -221,3 +221,53 @@ It's time to move on. I've loved building TakeShape for the last 7+ years, but i
 ## 27. If you started fresh tomorrow, what would you actually build?
 
 The best dev tools come out of actual need, not a vacuum — that's why TakeShape ended up doing professional services to guide its AI work. So my honest answer is: build an application first. Pick a real user problem AI now makes solvable, ship it, and let the gaps in tooling I hit along the way be the second product. I've always been drawn to making success repeatable — that's what got me into tools in the first place — but the only way I trust the tools I'd build is if they came out of trying to ship something real.
+
+<!-- id: takeshape-28 | tags: [what-is, pitch, one-liner] -->
+## 28. In one sentence, what is TakeShape?
+
+TakeShape is a data-first agent builder and runtime — it connects, transforms, and organizes your business's fragmented data, unlocking AI agents that fully understand your business.
+
+<!-- id: takeshape-29 | tags: [what-is, pitch, non-technical] -->
+## 29. Pitch TakeShape to a non-technical friend at a dinner party — no jargon, ~30 seconds.
+
+TakeShape takes data from all your apps and lets you combine it in a single place you can use to build an AI agent, website, or app. For example, with Valvoline we combine their e-commerce data from Shopify, product data from Syndigo, and multiple automotive-fitment services — so we can build an agent that recommends products that actually fit your car and then sells them to you.
+
+<!-- id: takeshape-30 | tags: [what-is, pitch, business] -->
+## 30. Pitch TakeShape to a business stakeholder / recruiter who knows the AI space at a high level but doesn't build software.
+
+
+
+<!-- id: takeshape-31 | tags: [what-is, pitch, peer-cto] -->
+## 31. Pitch TakeShape to a peer CTO or technical co-founder who's evaluating agent platforms — what version do they need to hear?
+
+
+
+<!-- id: takeshape-32 | tags: [what-is, pitch, architect, deep-technical] -->
+## 32. An architect asks "how does TakeShape actually work, end to end?" — give the deep technical version.
+
+
+
+<!-- id: takeshape-33 | tags: [what-is, pitch, analogy] -->
+## 33. Someone asks "is it like LangChain / Sanity / Retool / [pick a comparison]?" — how do you answer without diminishing TakeShape into a "like X" story?
+
+
+
+<!-- id: takeshape-34 | tags: [why, founding-thesis, pitch] -->
+## 34. Why does TakeShape exist at all — the founding thesis in one paragraph?
+
+
+
+<!-- id: takeshape-35 | tags: [why, developer-customer, pitch] -->
+## 35. A developer says "I could glue this together myself with Anthropic + Postgres + a few APIs — why pay you?" — answer them.
+
+
+
+<!-- id: takeshape-36 | tags: [why, non-developer-customer, pitch] -->
+## 36. A non-technical founder asks "why TakeShape instead of hiring an agency to build the agent for me?" — answer them.
+
+
+
+<!-- id: takeshape-37 | tags: [why, why-now, agent-era, pitch] -->
+## 37. What changed in 2026 that makes TakeShape's value proposition sharper than it was in 2018?
+
+
