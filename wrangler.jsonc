@@ -43,6 +43,15 @@
           "limit": 5,
           "period": 60
         }
+      },
+      {
+        "name": "FETCH_JD_RATE_LIMITER",
+        "type": "ratelimit",
+        "namespace_id": "4",
+        "simple": {
+          "limit": 5,
+          "period": 60
+        }
       }
     ]
   }

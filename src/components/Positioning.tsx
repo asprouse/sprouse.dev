@@ -22,6 +22,7 @@ interface Props {
 
 const CUSTOM = 'custom';
 type SubmitState = 'idle' | 'loading' | 'error';
+type FetchState = 'idle' | 'loading' | 'error';
 
 export default function Positioning({ options, currentSlug }: Props) {
   // Lazy initializers read the URL hash once during the first render so the
@@ -35,6 +36,8 @@ export default function Positioning({ options, currentSlug }: Props) {
     return readStateFromHash()?.jd ?? '';
   });
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
+  const [fetchState, setFetchState] = useState<FetchState>('idle');
+  const [jdUrl, setJdUrl] = useState('');
   const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -58,6 +61,30 @@ export default function Positioning({ options, currentSlug }: Props) {
 
   function closeDialog() {
     dialogRef.current?.close();
+  }
+
+  async function runFetch() {
+    const url = jdUrl.trim();
+    if (!url) return;
+    setFetchState('loading');
+    setError(null);
+    try {
+      const res = await fetch('/api/fetch-jd', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(body?.error || `Fetch failed (${res.status})`);
+      }
+      const { text } = (await res.json()) as { text: string; title?: string };
+      setJd(text);
+      setFetchState('idle');
+    } catch (err) {
+      setFetchState('error');
+      setError(err instanceof Error ? err.message : 'Fetch failed.');
+    }
   }
 
   async function runSubmit() {
@@ -183,6 +210,31 @@ export default function Positioning({ options, currentSlug }: Props) {
               isn&rsquo;t fabricated &mdash; only what&rsquo;s already there gets reframed.
             </p>
           </div>
+          <div className="positioning-dialog-url-row">
+            <input
+              type="url"
+              className="positioning-dialog-url-input"
+              placeholder="Or paste a job posting URL"
+              value={jdUrl}
+              onChange={(e) => setJdUrl(e.target.value)}
+              disabled={fetchState === 'loading' || submitState === 'loading'}
+              aria-label="Job posting URL"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  void runFetch();
+                }
+              }}
+            />
+            <button
+              type="button"
+              className="dialog-btn"
+              onClick={() => void runFetch()}
+              disabled={!jdUrl.trim() || fetchState === 'loading' || submitState === 'loading'}
+            >
+              {fetchState === 'loading' ? 'Fetching…' : 'Fetch'}
+            </button>
+          </div>
           <textarea
             className="positioning-dialog-textarea"
             placeholder="Paste a job description — full text or just the key parts."
@@ -285,6 +337,27 @@ export default function Positioning({ options, currentSlug }: Props) {
           font-size: 13px;
           color: var(--color-muted, #57534e);
           line-height: 1.45;
+        }
+        .positioning-dialog-url-row {
+          display: flex;
+          gap: 8px;
+          width: min(600px, 88vw);
+          margin-bottom: 8px;
+        }
+        .positioning-dialog-url-input {
+          flex: 1;
+          padding: 8px 10px;
+          border: 1px solid var(--color-rule, #d6d3d1);
+          border-radius: 8px;
+          font-family: inherit;
+          font-size: 13px;
+          color: var(--color-ink, #0c0a09);
+          background: var(--color-surface, #ffffff);
+        }
+        .positioning-dialog-url-input:focus {
+          outline: 2px solid color-mix(in oklab, var(--color-brand) 60%, transparent);
+          outline-offset: 1px;
+          border-color: var(--color-brand);
         }
         .positioning-dialog-textarea {
           width: min(600px, 88vw);
