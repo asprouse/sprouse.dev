@@ -44,3 +44,6 @@ src/lib/qa-corpus.generated.ts
 
 # Cover letter drafts from `npm run gen:cover-letter`
 cover-letters/
+
+# Personal notes (warm-intro lists, contact research, etc.)
+notes/
