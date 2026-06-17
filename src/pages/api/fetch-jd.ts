@@ -13,9 +13,9 @@ Return ONLY the job-specific content for THIS role:
 - Requirements / qualifications / "What you bring"
 - Location, work model (remote/hybrid/onsite), comp if listed
 
-Drop everything else. No preamble, no "Here is the job description:", no markdown fences. Plain text, blank line between sections.
+CRITICAL: Copy the actual wording from the source text. Do NOT paraphrase, summarize, or invent requirements. If the input doesn't contain enough job-posting content to extract (JS-rendered page with no body text, 404, login wall, list of unrelated jobs, etc.), output exactly: NO_JD_FOUND
 
-If the input doesn't actually contain a job posting (404, login wall, list of unrelated jobs, etc.), output exactly: NO_JD_FOUND`;
+Drop everything else. No preamble, no "Here is the job description:", no markdown fences. Plain text, blank line between sections.`;
 
 async function distillJobDescription(
   rawText: string,
