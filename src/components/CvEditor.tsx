@@ -50,7 +50,9 @@ export default function CvEditor() {
       if (!parsed || typeof parsed !== 'object' || !parsed.person || !parsed.experience) {
         return {
           preview: lastValidRef.current,
-          parseError: 'JSON parses but is not a Resume (missing person/experience).' as string | null
+          parseError: 'JSON parses but is not a Resume (missing person/experience).' as
+            | string
+            | null
         };
       }
       lastValidRef.current = parsed;

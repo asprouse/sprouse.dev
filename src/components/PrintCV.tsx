@@ -165,9 +165,7 @@ export default function PrintCV({ resume, lens }: Props) {
 
         {retrospective.length > 0 && (
           <section>
-            <h2 className="section">
-              Career retrospective ({formatYearRange(retrospective)})
-            </h2>
+            <h2 className="section">Career retrospective ({formatYearRange(retrospective)})</h2>
             {retrospective.map((role) => (
               <div className="retro-row" key={slugifyCompany(role.company) + role.dateRange.from}>
                 <span>
