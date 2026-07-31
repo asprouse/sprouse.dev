@@ -1,0 +1,26 @@
+---
+// Ephemeral CV editor — paste/edit resume JSON in the browser, live-preview
+// the print CV, print to PDF. Client-only Monaco island; all state lives in
+// localStorage so this works on any device signed into sprouse.dev.
+// Inter Variable font + resets come in via global.css.
+import '../../styles/global.css';
+import CvEditor from '../../components/CvEditor';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>CV Editor — Andrew Sprouse</title>
+    <meta
+      name="description"
+      content="Ephemeral resume JSON editor for on-the-go PDF customization."
+    />
+  </head>
+  <body>
+    <CvEditor client:only="react" />
+  </body>
+</html>
