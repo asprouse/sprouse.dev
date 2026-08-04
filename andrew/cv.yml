@@ -1325,7 +1325,8 @@ technologies:
 variants:
   cto:
     label: CTO
-    tagline: Twenty years building production software. Currently CTO. Open to what's next.
+    tagline: Engineering leader and co-founder with two decades of shipping production
+      software. Currently CTO at TakeShape, building AI agent infrastructure.
     openTo: Open to CTO at AI-native companies building primary AI products — applied AI, agent
       platforms, model-adjacent infrastructure.
     metaTitle: Andrew Sprouse — CTO, builder of AI agent infrastructure
@@ -1334,7 +1335,9 @@ variants:
       AI-native company.
   principal:
     label: Principal Engineer
-    tagline: Twenty years shipping production software. IC-first, schema-shaped.
+    tagline: Twenty years designing and shipping production systems, currently as
+      co-founder and CTO. Most at home as a hands-on architect — schemas, runtimes,
+      and the plumbing that makes agents trustworthy.
     openTo: >-
       Open to Principal / Staff Engineer roles at companies whose product is foundational
       technology — model labs, runtimes, commerce backbones, payment rails.
@@ -1345,7 +1348,9 @@ variants:
       for Principal Engineer work at a company whose product is foundational technology.
   cofounder:
     label: Co-founder
-    tagline: Two co-founder gigs in. Going application-first next time.
+    tagline: Engineering leader and two-time technical co-founder — Techstars, seed
+      round, multiple product pivots. Ready to build the next one with a business
+      co-founder.
     openTo: Open to technical co-founder roles, application-first — pick a real user problem AI now
       makes solvable, ship it, and let the dev-tools fall out of the work.
     metaTitle: Andrew Sprouse — Technical co-founder, application-first

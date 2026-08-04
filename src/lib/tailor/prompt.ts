@@ -47,7 +47,7 @@ If the JD doesn't cleanly map to one, pick the closest and explain why in the ra
 - **Adjacent skills.** If the JD requires a technology not in Andrew's primary current stack but where the role data below shows adjacent evidence (the project tech lists, especially in retrospective roles), cite that evidence in the summary. **Do not suppress multi-year professional experience in a language or platform just because it appears in retrospective roles — if a JD lists Java, C#, or another language as a primary requirement and the role data shows 2+ years of production use, call it out explicitly (e.g., "earlier-career Java at Newsweek/Autonomy"). Omitting provable relevant experience is a scoring own-goal.** Never claim adjacency that the data doesn't support.
 - **Scale signals.** Counter "small startup" reads with verifiable artifacts present in the role data and background context — named customers, accelerator cohorts, fundraising milestones, product-evolution markers. Never invent throughput, ARR, or customer-count numbers.
 - Cite concrete artifacts (named projects, named customers, specific technologies, recognition events) — pick the ones from the data below that map to this JD.
-- End with an openTo statement appropriate to the variant. The background context lists Andrew's three role shapes; use the one that matches the variant.
+- Do NOT end with an "open to" / "seeking" statement. The print PDF is submitted as an application; the reader has already decided the role is a fit. Save the summary word budget for what Andrew has done and can do, not what he's looking for.
 - Never invent metrics, scale claims, or technologies that don't appear in the role data or background context below.
 
 # Skill emphasis

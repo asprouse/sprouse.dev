@@ -50,9 +50,11 @@ const skillGroups = PRINT_GROUPS.map((g) => ({
   items: g.categories.flatMap((c) => derivedSkills[c].map((s) => s.tech.name))
 })).filter((g) => g.items.length > 0);
 
-// Summary lead = the variant's tagline. Closer = its openTo. Falls back to
-// resume.json summary if the resume has no current role (forked clones).
-const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summary;
+// Print/PDF surface uses just the variant tagline — openTo reads as a
+// filter and can undercut the application. openTo still renders on the
+// site view in Resume.astro for people evaluating whether to reach out.
+// Falls back to resume.json summary if there's no current role.
+const summaryText = currentRole ? variant.tagline : summary;
 ---
 
 <!doctype html>

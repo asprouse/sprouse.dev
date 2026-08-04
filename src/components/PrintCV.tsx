@@ -106,7 +106,8 @@ export default function PrintCV({ resume, lens }: Props) {
     items: g.categories.flatMap((c) => derived[c].map((s) => s.tech.name))
   })).filter((g) => g.items.length > 0);
 
-  const summaryText = currentRole ? `${variant.tagline} ${variant.openTo}` : summary;
+  // openTo is a site-view filter, not application-appropriate. See print.astro.
+  const summaryText = currentRole ? variant.tagline : summary;
 
   return (
     <>
