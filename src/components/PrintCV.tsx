@@ -123,7 +123,7 @@ export default function PrintCV({ resume, lens }: Props) {
             {' · '}
             <a href={person.links.github}>github.com/asprouse</a>
             {' · '}
-            <a href={person.links.linkedin}>linkedin.com/in/andrewsprouse</a>
+            <a href={person.links.linkedin}>linkedin.com/in/andrew-sprouse</a>
             {' · '}
             <a href={person.links.website}>sprouse.dev</a>
           </p>
