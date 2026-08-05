@@ -29,6 +29,7 @@
     "inspect:tailor-prompt": "node scripts/inspect-tailor-prompt.ts",
     "gen:application": "node scripts/gen-application.ts",
     "gen:cover-letter-pdf": "node scripts/gen-cover-letter-pdf.ts",
+    "gen:resume-pdf": "node scripts/gen-resume-pdf.ts",
     "gen:og": "node scripts/gen-og.ts",
     "check": "npm run validate:resume && npm run format:check && npm run lint && npm run typecheck"
   },
