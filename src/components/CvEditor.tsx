@@ -6,7 +6,7 @@
 // refresh. No server round-trip; safe to use on any device signed into
 // sprouse.dev.
 import Editor, { type BeforeMount, type OnChange } from '@monaco-editor/react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { resume as baseResume } from '../lib/resume';
 import type { Resume } from '../types/resume';
 import { VARIANTS, VARIANT_ORDER, type VariantSlug } from '../lib/variants';
@@ -37,30 +37,41 @@ function readInitialJson(): string {
   return stored ?? stableStringify(baseResume);
 }
 
+function parseResumeText(text: string): { valid: Resume | null; error: string | null } {
+  try {
+    const parsed = JSON.parse(text) as Resume;
+    if (!parsed || typeof parsed !== 'object' || !parsed.person || !parsed.experience) {
+      return {
+        valid: null,
+        error: 'JSON parses but is not a Resume (missing person/experience).'
+      };
+    }
+    return { valid: parsed, error: null };
+  } catch (err) {
+    return { valid: null, error: (err as Error).message };
+  }
+}
+
 export default function CvEditor() {
   const [text, setText] = useState<string>(() => readInitialJson());
   const [lens, setLens] = useState<VariantSlug>(() => readInitialLens());
-  const lastValidRef = useRef<Resume>(baseResume);
+  // Last successful parse — kept in state so a mid-edit invalid JSON leaves
+  // the previous good preview on screen instead of blanking.
+  const [lastValid, setLastValid] = useState<Resume>(
+    () => parseResumeText(readInitialJson()).valid ?? baseResume
+  );
+  const [prevText, setPrevText] = useState<string>(text);
 
-  // Parse once per text change; keep the last-valid resume so a bad edit
-  // doesn't blank the preview.
-  const { preview, parseError } = useMemo(() => {
-    try {
-      const parsed = JSON.parse(text) as Resume;
-      if (!parsed || typeof parsed !== 'object' || !parsed.person || !parsed.experience) {
-        return {
-          preview: lastValidRef.current,
-          parseError: 'JSON parses but is not a Resume (missing person/experience).' as
-            | string
-            | null
-        };
-      }
-      lastValidRef.current = parsed;
-      return { preview: parsed, parseError: null as string | null };
-    } catch (err) {
-      return { preview: lastValidRef.current, parseError: (err as Error).message as string | null };
-    }
-  }, [text]);
+  const { valid: currentValid, error: parseError } = parseResumeText(text);
+
+  // Documented React pattern for syncing derived state to an input change:
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  if (text !== prevText) {
+    setPrevText(text);
+    if (currentValid !== null) setLastValid(currentValid);
+  }
+
+  const preview = currentValid ?? lastValid;
 
   // Persist to localStorage.
   useEffect(() => {
