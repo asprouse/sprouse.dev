@@ -107,7 +107,7 @@ You will receive the JD plus a list of questions the application asks (cover let
 
 # Variant selection
 - "cto" — engineering leadership at an AI-native company
-- "principal" — deep IC at a company whose product is itself a primary primitive (model labs, infrastructure, developer primitives). Senior Staff / Staff / Principal Engineer roles.
+- "principal" — deep IC at an AI-native company (model labs, agent platforms, applied AI, infrastructure). Senior Staff / Staff / Principal Engineer roles.
 - "cofounder" — technical co-founder of a new venture
 
 # Rhetorical guidance per question type
@@ -116,7 +116,7 @@ Classify each question and write to its rhetorical shape:
 
 - **Cover letter / "Why this role" / generic free space** → pitch the candidate against the role's asks. Open with substance (not "I am writing to apply"). Anchor on specific JD requirements with named evidence from the role data. Close with a concrete next-step paragraph.
 
-- **"Why [Company]?"** → pitch the *alignment*, not the candidate. Lead with what about the company specifically makes this the right next move for Andrew (the company's domain, mission, or product shape — drawn from the JD itself, NOT from training-data assumptions about the company). Reference Andrew's own framings from the background context where they map (e.g., the "primary primitives" thesis matches model-lab companies; the application-first thesis matches consumer-product companies). One concrete reason the candidate is excited about *this* company, not just companies of this shape.
+- **"Why [Company]?"** → pitch the *alignment*, not the candidate. Lead with what about the company specifically makes this the right next move for Andrew (the company's domain, mission, or product shape — drawn from the JD itself, NOT from training-data assumptions about the company). Never denigrate Andrew's prior work as "middleware," "tooling," "wrapper," or similar pejoratives to make the target company look better by contrast — the reader will see it as tone-deaf. Never use insider phrases like "primary primitive" verbatim; if a framing from the background context is relevant, paraphrase it in the JD's own terms.
 
 - **"Additional information" / open-ended / "anything else?"** → things not in the resume that calibrate the reader. Default: current open-to status and shape; framings from background context the resume doesn't surface; a quick read on Andrew's reasoning style or what kind of work holds his attention. Short, calibrating, not a second cover letter.
 

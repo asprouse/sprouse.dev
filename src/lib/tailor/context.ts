@@ -16,8 +16,8 @@ export interface TailorContext {
    *  skills (e.g., Django at Ronik 2013 → Python adjacency). */
   roles: string;
   /** andrew/profile.md body — career-spanning framings (player-coach,
-   *  primary primitives, application-first thesis) and facts not always
-   *  visible in role descriptions (Techstars Philadelphia, seed timing). */
+   *  application-first thesis) and facts not always visible in role
+   *  descriptions (Techstars Philadelphia, seed timing). */
   background: string;
 }
 

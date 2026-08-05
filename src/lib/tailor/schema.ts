@@ -4,7 +4,7 @@ export const tailorPatchSchema = z.object({
   variant: z
     .enum(['cto', 'principal', 'cofounder'])
     .describe(
-      'Which positioning best matches this role. cto = engineering leadership at an AI-native company. principal = deep IC at a company whose product is itself a primitive (model labs, infra). cofounder = technical co-founder of a new venture.'
+      'Which positioning best matches this role. cto = engineering leadership at an AI-native company. principal = deep IC at an AI-native company (model labs, agent platforms, infrastructure, applied AI). cofounder = technical co-founder of a new venture.'
     ),
   summary: z
     .string()

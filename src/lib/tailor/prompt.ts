@@ -27,7 +27,7 @@ Read the JD. Re-rank Andrew's existing projects, hide irrelevant ones, pick the 
 # Positioning variants
 
 - "cto": engineering leadership at an AI-native company. JDs that say CTO, VP Eng (skip unless small/early), Head of Engineering, founding engineer with leadership scope.
-- "principal": deep IC at a company whose product is itself a primary primitive (model labs, infrastructure, developer-tools/primitives). Look for "principal engineer", "staff engineer", "senior staff engineer", "founding engineer" at companies whose product is itself a primary primitive.
+- "principal": deep IC at an AI-native company — model labs, agent platforms, infrastructure, or applied AI. Look for "principal engineer", "staff engineer", "senior staff engineer", "founding engineer" titles.
 - "cofounder": technical co-founder of a new venture. Look for "founding CTO", "technical co-founder", early-stage with equity.
 
 If the JD doesn't cleanly map to one, pick the closest and explain why in the rationale.
@@ -43,7 +43,7 @@ If the JD doesn't cleanly map to one, pick the closest and explain why in the ra
 
 - 3–6 sentences, ~200–900 chars total. Third-person resume tone (no "I").
 - Lead with framing that matches the JD's seniority shape.
-- **Founder → IC reframe.** When the JD describes an IC role (Staff, Senior Staff, Principal, founding engineer with IC scope) but Andrew's current role title (in the role data) implies leadership (CTO, founder, head of engineering, VP), reframe the *work* described in the role data — primary primitives designed and built — as IC-scope artifacts. Use "designed/built/architected" verbs, not management framing. A leadership title alongside the IC work is evidence of scope and trust, not a misalignment.
+- **Founder → IC reframe.** When the JD describes an IC role (Staff, Senior Staff, Principal, founding engineer with IC scope) but Andrew's current role title (in the role data) implies leadership (CTO, founder, head of engineering, VP), reframe the *work* described in the role data — the specific systems, DSLs, runtimes, and services he designed and built — as IC-scope artifacts. Use "designed/built/architected" verbs, not management framing. A leadership title alongside the IC work is evidence of scope and trust, not a misalignment.
 - **Adjacent skills.** If the JD requires a technology not in Andrew's primary current stack but where the role data below shows adjacent evidence (the project tech lists, especially in retrospective roles), cite that evidence in the summary. **Do not suppress multi-year professional experience in a language or platform just because it appears in retrospective roles — if a JD lists Java, C#, or another language as a primary requirement and the role data shows 2+ years of production use, call it out explicitly (e.g., "earlier-career Java at Newsweek/Autonomy"). Omitting provable relevant experience is a scoring own-goal.** Never claim adjacency that the data doesn't support.
 - **Scale signals.** Counter "small startup" reads with verifiable artifacts present in the role data and background context — named customers, accelerator cohorts, fundraising milestones, product-evolution markers. Never invent throughput, ARR, or customer-count numbers.
 - Cite concrete artifacts (named projects, named customers, specific technologies, recognition events) — pick the ones from the data below that map to this JD.
@@ -72,7 +72,7 @@ Career-spanning facts and framings that the chatbot uses as ground truth. The ro
 
 # Rationale
 
-Write one short paragraph (2–4 sentences) explaining what you changed and why. The user reads this. Be concrete: "Promoted X project because the JD emphasizes Y. Hid Z since the JD is W. Picked variant V because the company is building primary primitives."
+Write one short paragraph (2–4 sentences) explaining what you changed and why. The user reads this. Be concrete: "Promoted X project because the JD emphasizes Y. Hid Z since the JD is W. Picked variant V because the JD calls for [specific role shape]."
 
 Now produce the structured patch for the JD that follows.`;
 
