@@ -52,7 +52,7 @@ experience:
         platform was built on.
       - >-
         Built end-to-end agent observability and evaluation infrastructure — OpenTelemetry traces
-        through the runtime, customer-facing Arize integration for prompt-and-token introspection,
+        through the runtime, customer-facing Arize integration for prompt-level tracing with token counts,
         plus internal eval pipelines for prompt and model regression.
       - >-
         Led the engineering team's migration to AI-assisted development by integrating Claude into
